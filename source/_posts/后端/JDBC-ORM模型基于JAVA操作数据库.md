@@ -3,7 +3,7 @@ title: "JDBC ORM模型基于JAVA操作数据库"
 date: 2020-04-11T16:45:08+08:00
 draft: true
 categories: 
-    - "Java"
+    - "后端"
 tags: 
     - "数据库"
     - "MySQL"    

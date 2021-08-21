@@ -2,7 +2,7 @@
 title: "JVM 类的加载机制"
 date: 2020-04-10T19:36:59+08:00
 categories: 
-    - "Java"
+    - "后端"
 tags: 
     - "JVM"  
 ---

@@ -2,9 +2,10 @@
 title: "Java CAS并发原语"
 date: 2020-04-10T19:44:35+08:00
 categories: 
-    - "Java"
+    - "后端"
 tags: 
-    - "多线程"    
+    - "Java"
+    - “锁”    
 ---
 
 在Java并发中，我们最初接触的应该就是synchronized关键字了，但是synchronized属于重量级锁，很多时候会引起性能问题，volatile也是个不错的选择，但是volatile不能保证原子性，只能在某些场合下使用。
