@@ -1,6 +1,0 @@
-title: Search
-type: search
-------------
-
-
-
