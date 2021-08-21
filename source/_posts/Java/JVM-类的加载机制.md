@@ -9,7 +9,7 @@ tags:
 
 从类被加载到虚拟机内存中开始，到卸御出内存为止，它的整个生命周期分为7个阶段，加载(Loading)、验证(Verification)、准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)、卸御(Unloading)。其中验证、准备、解析三个部分统称为连接。
 
-![](/media/2020/jvm-classloader.webp)
+![](/images/posts/2020/jvm-classloader.webp)
 <!--more-->
 
 ## Java类加载机制的七个阶段
@@ -166,7 +166,7 @@ Hello ShuYi.
 
 下图中展示了类加载器直接的关系和双亲委派模型
 
-![双亲委派模型](/media/2020/classloader2.webp)
+![双亲委派模型](/images/posts/2020/classloader2.webp)
 
 从图中我们发现除启动类加载器外，每个加载器都有父的类加载器。
 

@@ -33,7 +33,7 @@ Quartz对任务调度的领域问题进行了高度的抽象，提出了调度�
    
 1. ThreadPool：Scheduler使用一个线程池作为任务运行的基础设施，任务通过共享线程池中的线程提高运行效率。
 
-![](/media/2020/quartz.png)
+![](/images/posts/2020/quartz.png)
 
 Scheduler、Trigger和Job是Quartz的三大核心组件。
 
@@ -43,7 +43,7 @@ Scheduler、Trigger和Job是Quartz的三大核心组件。
 
 一个 Quartz 集群中的每个节点是一个独立的 Quartz 应用，它又管理着其他的节点。意思是你必须对每个节点分别启动或停止。不像许多应用服务器的集群，独立的 Quartz 节点并不与另一其的节点或是管理节点通信。Quartz 应用是通过数据库表来感知到另一应用的。
 
-![](/media/2020/quartz-distributed.webp)
+![](/images/posts/2020/quartz-distributed.webp)
 
 ## 实战
 

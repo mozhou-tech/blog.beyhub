@@ -98,6 +98,6 @@ public static void main(String[] args) {
 
 然后在我本机的运行结果如下：
 
-![](/media/2020/arraylist-linkedlist.webp)
+![](/images/posts/2020/arraylist-linkedlist.webp)
 
 > 由此可见在程序执行过程中，对大量数据的增删改查时就会面临效率问题，所以对于ArrayList和LinkedList的选择，多数情况下如果查询操作较多ArrayList的效果更好.如果删除,插入较多LinkedList的效果较好.当然，具体怎么用还看具体的需求.

@@ -20,7 +20,7 @@ BPMN(Business Process Model and Notation)，业务流程建模和标注。 Notat
 
 下图为一个订单流程的描述：
 
-![](/media/2020/bpmn.png)
+![](/images/posts/2020/bpmn.png)
 
 ## 特点
 

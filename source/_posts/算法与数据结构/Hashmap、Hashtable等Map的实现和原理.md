@@ -11,7 +11,7 @@ tags:
 Map 集合和 Collection 集合不同，Map 集合是基于键（key）/值（value）的映射，Collection中的集合，元素是孤立存在的，向集合中存储元素采用一个个元素的方式存储；Map中的集合，元素是成对存在的，每个元素由键与值两部分组成，通过键可以找对所对应的值。
 
 Collection中的集合称为单列集合，Map中的集合称为双列集合。需要注意的是，Map中的集合不能包含重复的键，值可以重复；每个键只能对应一个值。
-![](/media/2020/map-interface-1.png)
+![](/images/posts/2020/map-interface-1.png)
 
 <!--more-->
 

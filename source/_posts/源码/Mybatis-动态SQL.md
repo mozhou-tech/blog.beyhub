@@ -11,7 +11,7 @@ tags:
 
 使用动态 SQL 并非一件易事，但借助可用于任何 SQL 映射语句中的强大的动态 SQL 语言，MyBatis 显著地提升了这一特性的易用性。
 
-![](/media/2020/mybatis.png)
+![](/images/posts/2020/mybatis.png)
 
 <!--more-->
 
