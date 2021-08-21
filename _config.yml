@@ -146,6 +146,23 @@ markdown_it_plus:
         enable: true
     - plugin:
         name: markdown-it-mark
-        enable: false  
+        enable: true  
+
+# Markdown-it config
+## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki
+markdown:
+  render:
+    html: true
+
+toc:
+  maxdepth: 3
+  class: toc
+  slugify: transliteration
+  decodeEntities: false
+  anchor:
+    position: after
+    symbol: '#'
+    style: header-anchor
+
 
   

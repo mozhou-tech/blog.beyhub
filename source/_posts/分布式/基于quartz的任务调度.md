@@ -3,10 +3,9 @@ title: "基于quartz的任务调度"
 date: 2020-04-10T09:28:50+08:00
 draft: true
 categories:
-  - "Java"
-tags:
-  - "开源组件"
   - "分布式"
+tags:
+  - "定时任务"
 ---
 
 Quartz是一个Java下作业控制的开源框架。Quartz用来创建或简单或复杂的调度时间表，执行Java下任意数量的作业。

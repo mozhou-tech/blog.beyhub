@@ -4,7 +4,7 @@ date: 2020-04-10T15:34:49+08:00
 categories:
     - "Java" 
 tags:
-    - "多线程"
+    - "锁"
 ---
 
 synchronized 的本质就是一个可重入锁，大致分为以下两类
