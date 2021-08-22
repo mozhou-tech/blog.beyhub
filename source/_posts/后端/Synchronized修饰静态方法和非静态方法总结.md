@@ -2,9 +2,9 @@
 title: "Synchronized修饰静态方法和非静态方法总结"
 date: 2020-04-10T15:34:49+08:00
 categories:
-    - "Java" 
+    - "后端" 
 tags:
-    - "锁"
+    - 锁
 ---
 
 synchronized 的本质就是一个可重入锁，大致分为以下两类

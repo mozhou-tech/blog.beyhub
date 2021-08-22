@@ -2,10 +2,11 @@
 title: "Java中synchronized详解"
 date: 2020-04-10T14:40:21+08:00
 categories:
-    - "高并发" 
+    - "后端" 
 tags: 
-    - "Java"    
-    - "锁"
+    - Java    
+    - 锁
+    - 高并发
 toc: true
 ---
 
