@@ -2,6 +2,7 @@
 
 - [x] 2021年，你该学习的几种编程语言【翻译】
 - [x] 为啥那么多码农都在写技术文章？
+- [ ] https://www.baeldung.com/java-spi
 - [ ] 低代码技术实现（连载）
 - [ ] 你所不了解的排序算法
 - [ ] 研发协作中的团队共识
@@ -15,4 +16,30 @@
 - [ ] https://gitee.com/pychfarm_admin/spring-analysis   spring 源码解析
 - [ ] https://github.com/diguage/jdk-source-analysis  jdk源码解析
 - [ ] https://www.baeldung.com/java-memory-leaks 理解Java中的内存泄漏
-
+- [ ] https://blog.csdn.net/maitian_2008/article/details/119202986 Sentinel限流熔断
+- [ ] https://blog.csdn.net/weixin_39969448/article/details/111003621
+- [ ] 京东:说下JVM内存模型与]ava线程内存模型的区别?
+- [ ] 腾讯:IVM的GC执行时机是任何时候都可以吗?安全点知道吗?
+- [ ] 美团:CMS垃圾收集器的并发更新失败是怎么回事?如何优化?
+- [ ] 阿里:高并发系统为何建议选择G1垃圾收集器?
+- [ ] 拼多多:线上系统GC问题如何快速定位与分析?
+- [ ] 阿里:阿里巴巴Arthas实现原理能大概说下吗?
+- [ ] 百度:单机几十万并发的系统IVM如何优化?
+- [ ] 阿里:解释下IVM垃圾收集底层的三色标记算法?
+- [ ] 美团:Volatile底层的内存屏障是如何实现的?
+- [ ] 滴滴:能说说Mysql索引底层B+树结构与算法吗?
+- [ ] 滴滴:聚集索引与覆盖索引与索引下推到底是什么?
+- [ ] 阿里:能说说Mysql并发支撑底层Buffer Pool机制吗?=
+- [ ] 拼多多:能说下Mysql事务底层实现原理吗?
+- [ ] 唯品会:MVCC机制是如何保证事务的隔离性的?
+- [ ] 京东:超高并发下使用事务时如何避免死锁?
+- [ ] 京东:对线上千万级大表加字段时，性能极慢问题如何处理?
+- [ ] 谈谈你对SpringlOC的理解
+- [ ] 简单描述下Spring Bean的生命周期 
+- [ ] BeanFactory和FactoryBean有什么区别
+- [ ] Spring中用到哪些设计模式
+- [ ] BeanFactorv和ApplicationContext的区别 
+- [ ] 谈谈你对循环依赖的理解 
+- [ ] Spring的AOP的底层实现原理
+- [ ] Spring的事务是如何回滚的? 
+- [ ] 谈一下对Spring事务传播特性的理解

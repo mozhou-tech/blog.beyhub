@@ -14,7 +14,7 @@ timezone: ""
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://whoiscat.com
-permalink: p/:hash/
+permalink: p/:post/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -175,9 +175,9 @@ jsonContent:
     author: false        
 
 toc:
-  maxdepth: 3
+  maxDepth: 3
   class: toc
-  slugify: transliteration
+  slugify: false
   decodeEntities: false
   anchor:
     position: after
