@@ -1,12 +1,12 @@
 ---
-title: "Java中synchronized详解"
-date: 2020-04-10T14:40:21+08:00
+title: Java JUC包中的锁
+date: 2021-08-10T14:40:21+08:00
 categories:
-    - "后端" 
+    - 后端
 tags: 
-    - Java    
+    - Java
     - 锁
-    - 高并发
+    - JUC
 toc: true
 ---
 

@@ -9,13 +9,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@iktakahiro/markdown-it-katex@^3.0.3":
-  version "3.1.0"
-  resolved "https://registry.nlark.com/@iktakahiro/markdown-it-katex/download/@iktakahiro/markdown-it-katex-3.1.0.tgz#cd40c1037f038ab00cbfee2464604435848deae9"
-  integrity sha1-zUDBA38DirAMv+4kZGBENYSN6uk=
-  dependencies:
-    katex "^0.10.0"
-
 "@types/d3-array@^1":
   version "1.2.9"
   resolved "https://registry.nlark.com/@types/d3-array/download/@types/d3-array-1.2.9.tgz?cache=0&sync_timestamp=1624707662964&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fd3-array%2Fdownload%2F%40types%2Fd3-array-1.2.9.tgz#c7dc78992cd8ca5c850243a265fd257ea56df1fa"
@@ -715,7 +708,7 @@ cliui@^4.0.0:
     strip-ansi "^4.0.0"
     wrap-ansi "^2.0.0"
 
-clone@^2.1.1:
+clone@^2.1.0:
   version "2.1.2"
   resolved "https://registry.nlark.com/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
@@ -1785,6 +1778,11 @@ he@^1.2.0:
   resolved "https://registry.npm.taobao.org/he/download/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha1-hK5l+n6vsWX922FWauFLrwVmTw8=
 
+hexo-blog-encrypt@^3.1.6:
+  version "3.1.6"
+  resolved "https://registry.npm.taobao.org/hexo-blog-encrypt/download/hexo-blog-encrypt-3.1.6.tgz#953db1b2c8f415a7224db23a02cae7a063a65fe2"
+  integrity sha1-lT2xssj0FaciTbI6AsrnoGOmX+I=
+
 hexo-bunyan@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/hexo-bunyan/download/hexo-bunyan-1.0.0.tgz#b2106b26547b232f0195db863cb5d5ff8527fd36"
@@ -2007,26 +2005,6 @@ hexo-renderer-ejs@^1.0.0:
   dependencies:
     ejs "^2.6.1"
 
-hexo-renderer-markdown-it-plus@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.nlark.com/hexo-renderer-markdown-it-plus/download/hexo-renderer-markdown-it-plus-1.0.4.tgz#b0962e75bafa4940ade9c1d7a97dfe50dd034066"
-  integrity sha1-sJYudbr6SUCt6cHXqX3+UN0DQGY=
-  dependencies:
-    "@iktakahiro/markdown-it-katex" "^3.0.3"
-    clone "^2.1.1"
-    highlight.js "^9.12.0"
-    markdown-it "^8.3.1"
-    markdown-it-abbr "^1.0.4"
-    markdown-it-deflist "^2.0.3"
-    markdown-it-emoji "^1.4.0"
-    markdown-it-footnote "^3.0.1"
-    markdown-it-ins "^2.0.0"
-    markdown-it-mark "^2.0.0"
-    markdown-it-sub "^1.0.0"
-    markdown-it-sup "^1.0.0"
-    markdown-it-toc "^1.1.0"
-    uslug "^1.0.4"
-
 hexo-renderer-markdown-it@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npm.taobao.org/hexo-renderer-markdown-it/download/hexo-renderer-markdown-it-5.0.0.tgz#bbc270a3154ed8b7c464573617ca35f35b4ff966"
@@ -2189,7 +2167,7 @@ highlight.js@^10.7.1:
   resolved "https://registry.nlark.com/highlight.js/download/highlight.js-10.7.3.tgz#697272e3991356e40c3cac566a74eef681756531"
   integrity sha1-aXJy45kTVuQMPKxWanTu9oF1ZTE=
 
-highlight.js@^9.12.0, highlight.js@^9.4.0:
+highlight.js@^9.4.0:
   version "9.18.5"
   resolved "https://registry.nlark.com/highlight.js/download/highlight.js-9.18.5.tgz#d18a359867f378c138d6819edfc2a8acd5f29825"
   integrity sha1-0Yo1mGfzeME41oGe38KorNXymCU=
@@ -2527,13 +2505,6 @@ jsonparse@^1.2.0:
   resolved "https://registry.nlark.com/jsonparse/download/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
   integrity sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=
 
-katex@^0.10.0:
-  version "0.10.2"
-  resolved "https://registry.nlark.com/katex/download/katex-0.10.2.tgz#39973edbb65eda5b6f9e7f41648781e557dd4932"
-  integrity sha1-OZc+27Ze2ltvnn9BZIeB5VfdSTI=
-  dependencies:
-    commander "^2.19.0"
-
 katex@^0.6.0:
   version "0.6.0"
   resolved "https://registry.nlark.com/katex/download/katex-0.6.0.tgz#12418e09121c05c92041b6b3b9fb6bab213cb6f3"
@@ -2644,13 +2615,6 @@ lcid@^2.0.0:
   integrity sha1-bvXS32DlL4LrIopMNz6NHzlyU88=
   dependencies:
     invert-kv "^2.0.0"
-
-linkify-it@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.nlark.com/linkify-it/download/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
-  integrity sha1-47VGl+eL+RXHCjis14/QngBYsc8=
-  dependencies:
-    uc.micro "^1.0.1"
 
 linkify-it@^3.0.1:
   version "3.0.2"
@@ -2843,11 +2807,6 @@ markdown-it-footnote@^3.0.1:
   resolved "https://registry.nlark.com/markdown-it-footnote/download/markdown-it-footnote-3.0.3.tgz#e0e4c0d67390a4c5f0c75f73be605c7c190ca4d8"
   integrity sha1-4OTA1nOQpMXwx19zvmBcfBkMpNg=
 
-markdown-it-ins@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/markdown-it-ins/download/markdown-it-ins-2.0.0.tgz#a5aa6a30f1e2f71e9497567cfdff40f1fde67483"
-  integrity sha1-papqMPHi9x6Ul1Z8/f9A8f3mdIM=
-
 markdown-it-ins@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npm.taobao.org/markdown-it-ins/download/markdown-it-ins-3.0.1.tgz#c09356b917cf1dbf73add0b275d67ab8c73d4b4d"
@@ -2859,11 +2818,6 @@ markdown-it-katex@^2.0.3:
   integrity sha1-17hqGuoLnWSW+rTnkZoY/e9YnDk=
   dependencies:
     katex "^0.6.0"
-
-markdown-it-mark@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/markdown-it-mark/download/markdown-it-mark-2.0.0.tgz#46a1aa947105aed8188978e0a016179e404f42c7"
-  integrity sha1-RqGqlHEFrtgYiXjgoBYXnkBPQsc=
 
 markdown-it-mark@^3.0.0:
   version "3.0.1"
@@ -2887,10 +2841,13 @@ markdown-it-sup@^1.0.0:
   resolved "https://registry.npm.taobao.org/markdown-it-sup/download/markdown-it-sup-1.0.0.tgz#cb9c9ff91a5255ac08f3fd3d63286e15df0a1fc3"
   integrity sha1-y5yf+RpSVawI8/09YyhuFd8KH8M=
 
-markdown-it-toc@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.nlark.com/markdown-it-toc/download/markdown-it-toc-1.1.0.tgz#6d189858e32b3deb4ff3ad2713fa927439c957e0"
-  integrity sha1-bRiYWOMrPetP860nE/qSdDnJV+A=
+markdown-it-toc-and-anchor@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.npm.taobao.org/markdown-it-toc-and-anchor/download/markdown-it-toc-and-anchor-4.2.0.tgz#d1613327cc63c61f82cd66cbac5564f4db12c0e9"
+  integrity sha1-0WEzJ8xjxh+CzWbLrFVk9NsSwOk=
+  dependencies:
+    clone "^2.1.0"
+    uslug "^1.0.4"
 
 markdown-it@^11.0.0:
   version "11.0.1"
@@ -2911,17 +2868,6 @@ markdown-it@^12.0.4:
     argparse "^2.0.1"
     entities "~2.1.0"
     linkify-it "^3.0.1"
-    mdurl "^1.0.1"
-    uc.micro "^1.0.5"
-
-markdown-it@^8.3.1:
-  version "8.4.2"
-  resolved "https://registry.nlark.com/markdown-it/download/markdown-it-8.4.2.tgz?cache=0&sync_timestamp=1627929816808&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fmarkdown-it%2Fdownload%2Fmarkdown-it-8.4.2.tgz#386f98998dc15a37722aa7722084f4020bdd9b54"
-  integrity sha1-OG+YmY3BWjdyKqdyIIT0Agvdm1Q=
-  dependencies:
-    argparse "^1.0.7"
-    entities "~1.1.1"
-    linkify-it "^2.0.0"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 

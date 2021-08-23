@@ -2,4 +2,4 @@
 Name:
     full_link: http://example.com/full-image.png
     thumb_link: http://example.com/thumb-image.png
-    descr: "这是一个描述"
+    descr: 这是一个描述
