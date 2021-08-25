@@ -8,6 +8,7 @@ tags:
     - 锁
     - JUC
 toc: true
+draft: true
 ---
 
 synchronized 是 Java 中的关键字，是利用锁的机制来实现同步的。锁机制有如下两种特性：

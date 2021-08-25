@@ -43,3 +43,6 @@
 - [ ] Spring的AOP的底层实现原理
 - [ ] Spring的事务是如何回滚的? 
 - [ ] 谈一下对Spring事务传播特性的理解
+- [ ] RPC调用原理
+- [ ] https://www.baeldung.com/javax-validation  JavaBean 属性值验证的正确姿势
+- [ ] RMI远程调用
