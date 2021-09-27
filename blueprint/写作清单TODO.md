@@ -3,9 +3,6 @@
 - [x] 2021年，你该学习的几种编程语言【翻译】
 - [x] 为啥那么多码农都在写技术文章？
 - [ ] https://www.baeldung.com/java-spi
-- [ ] 低代码技术实现（连载）
-- [ ] 你所不了解的排序算法
-- [ ] 研发协作中的团队共识
 - [ ] 研发团队如何新陈代谢，不断进步
 - [ ] DDD领域事件实现方案
 - [ ] 如何开始Spring源码的阅读？
@@ -45,4 +42,11 @@
 - [ ] 谈一下对Spring事务传播特性的理解
 - [ ] RPC调用原理
 - [ ] https://www.baeldung.com/javax-validation  JavaBean 属性值验证的正确姿势
+- [ ] https://dev.mysql.com/doc/refman/8.0/en/innodb-multi-versioning.html
+- [ ] https://dev.mysql.com/doc/refman/8.0/en/mysql-acid.html
+- [ ] https://dev.mysql.com/doc/refman/8.0/en/innodb-architecture.html
 - [ ] RMI远程调用
+- [ ] 架构思想：DDD驱动的微服务设计
+- [ ] Spring 是如何解决循环依赖问题的？
+- [ ] https://medium.com/platform-engineer/understanding-java-memory-model-1d0863f6d973
+- [ ] https://medium.com/platform-engineer/understanding-jvm-architecture-22c0ddf09722
