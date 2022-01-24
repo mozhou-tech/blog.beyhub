@@ -261,6 +261,11 @@ acorn@^6.1.1:
   resolved "https://registry.nlark.com/acorn/download/acorn-6.4.2.tgz#35866fd710528e92de10cf06016498e47e39e1e6"
   integrity sha1-NYZv1xBSjpLeEM8GAWSY5H454eY=
 
+afinn-165@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/afinn-165/-/afinn-165-1.0.4.tgz#3abf6b8922dd5db84d84e0abd155924381dd73a4"
+  integrity sha512-7+Wlx3BImrK0HiG6y3lU4xX7SpBPSSu8T9iguPMlaueRFxjbYwAQrp9lqZUuFikqKbd/en8lVREILvP2J80uJA==
+
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
   resolved "https://registry.npm.taobao.org/align-text/download/align-text-0.1.4.tgz#0cd90a561093f35d0a99256c22b7069433fad117"
@@ -346,6 +351,13 @@ anymatch@~3.1.2:
   dependencies:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
+
+apparatus@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/apparatus/-/apparatus-0.0.10.tgz#81ea756772ada77863db54ceee8202c109bdca3e"
+  integrity sha512-KLy/ugo33KZA7nugtQ7O0E1c8kQ52N3IvD/XgIh4w/Nr28ypfkwDfA67F1ev4N1m5D+BOk1+b2dEJDfpj/VvZg==
+  dependencies:
+    sylvester ">= 0.0.8"
 
 archy@^1.0.0:
   version "1.0.0"
@@ -1449,7 +1461,7 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   resolved "https://registry.npm.taobao.org/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-esprima@^4.0.0:
+esprima@^4.0.0, esprima@^4.0.1:
   version "4.0.1"
   resolved "https://registry.nlark.com/esprima/download/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
   integrity sha1-E7BM2z5sXRnfkatph6hpVhmwqnE=
@@ -1998,6 +2010,13 @@ hexo-pagination@1.0.0:
   resolved "https://registry.nlark.com/hexo-pagination/download/hexo-pagination-1.0.0.tgz#c9c0ca3665267b9e9d0a89fc3edcaf3276907dc1"
   integrity sha1-ycDKNmUme56dCon8PtyvMnaQfcE=
 
+hexo-related-posts@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/hexo-related-posts/-/hexo-related-posts-1.5.0.tgz#e32c4c2aa8de8c42d7d856989326d289992652ec"
+  integrity sha512-MVei1/jGpCdapSPypkhVNVkLAFd/O71QD61sSYLREoZqQsn1eNzYvSwsR4wKGa0O+Ea3GpKYPlLuFNmWpEG/ew==
+  dependencies:
+    natural "^2.1.5"
+
 hexo-renderer-ejs@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/hexo-renderer-ejs/download/hexo-renderer-ejs-1.0.0.tgz#43c4de49eeae224036a457df860eb1c14c68b4b4"
@@ -2134,10 +2153,10 @@ hexo@^3.0.0:
     titlecase "^1.1.2"
     warehouse "^2.2.0"
 
-hexo@^5.0.0:
-  version "5.4.0"
-  resolved "https://registry.npm.taobao.org/hexo/download/hexo-5.4.0.tgz#77d57fa1c29f3ab05964fe4ebd9c44e23df51b37"
-  integrity sha1-d9V/ocKfOrBZZP5OvZxE4j31Gzc=
+hexo@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/hexo/-/hexo-5.4.1.tgz#a552bf7a25af7d4d7535839bcf3e7f1ff03c4593"
+  integrity sha512-20tyZB8TfaddneySZZ40mGFsN/V9nlolToUnA2KhRVl1wl6uWT10mnziVjLMhQfaYddqCwD36NvOamGS3DOLhQ==
   dependencies:
     abbrev "^1.1.1"
     archy "^1.0.0"
@@ -2150,6 +2169,7 @@ hexo@^5.0.0:
     hexo-log "^2.0.0"
     hexo-util "^2.4.0"
     js-yaml "^4.0.0"
+    js-yaml-js-types "^1.0.0"
     micromatch "^4.0.2"
     moment "^2.22.2"
     moment-timezone "^0.5.21"
@@ -2485,6 +2505,13 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.npm.taobao.org/isobject/download/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
+js-yaml-js-types@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/js-yaml-js-types/-/js-yaml-js-types-1.0.0.tgz#bf17cb75c7587c698294d15bbfa5f9b8b10b874b"
+  integrity sha512-UNjPwuoaj4mcHkJCJSF6l4MgkzoFjG+JJkBXMYNvjgO3yE9gTeRt+E6PN022vduz/daZZ7HmlEiSEE36NrGE4w==
+  dependencies:
+    esprima "^4.0.1"
+
 js-yaml@^3.12.0, js-yaml@^3.13.1, js-yaml@^3.6.1, js-yaml@^3.8.1:
   version "3.14.1"
   resolved "https://registry.nlark.com/js-yaml/download/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
@@ -2499,6 +2526,18 @@ js-yaml@^4.0.0:
   integrity sha1-wftl+PUBeQHN0slRhkuhhFihBgI=
   dependencies:
     argparse "^2.0.1"
+
+json-stable-stringify@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300646ed445f88c4f9af"
+  integrity sha1-mnWdOcXy/1A/1TAGRu1EX4jE+a8=
+  dependencies:
+    jsonify "~0.0.0"
+
+jsonify@~0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
+  integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
 
 jsonparse@^1.2.0:
   version "1.3.1"
@@ -3112,6 +3151,18 @@ nanomatch@^1.2.9:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+natural@^2.1.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/natural/-/natural-2.4.5.tgz#6507e445b204071e54daebe02a5914eb966f5ea5"
+  integrity sha512-fxQou4ubo6Rzf7XL0jjwtC2vHm6Sdicu7ztcE0k1ODZs+d1UzcKF1Hu2IwE2y7OgzU3Sa9o8obw7rnyNrjsd1A==
+  dependencies:
+    afinn-165 "^1.0.2"
+    apparatus "^0.0.10"
+    json-stable-stringify "^1.0.1"
+    sylvester "^0.0.12"
+    underscore "^1.9.1"
+    wordnet-db "^3.1.11"
 
 ncp@~2.0.0:
   version "2.0.0"
@@ -3967,6 +4018,16 @@ swig-templates@^2.0.3:
     optimist "~0.6"
     uglify-js "2.6.0"
 
+"sylvester@>= 0.0.8":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/sylvester/-/sylvester-0.0.21.tgz#2987b1ce2bd2f38b0dce2a34388884bfa4400ea7"
+  integrity sha1-KYexzivS84sNzio0OIiEv6RADqc=
+
+sylvester@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/sylvester/-/sylvester-0.0.12.tgz#5a884415cd2d002c57e7a3aac99462a75ce9fdb4"
+  integrity sha1-WohEFc0tACxX56OqyZRip1zp/bQ=
+
 text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.nlark.com/text-table/download/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
@@ -4114,6 +4175,11 @@ uglify-to-browserify@~1.0.0:
   resolved "https://registry.npm.taobao.org/uglify-to-browserify/download/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
   integrity sha1-bgkk1r2mta/jSeOabWMoUKD4grc=
 
+underscore@^1.9.1:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.2.tgz#276cea1e8b9722a8dbed0100a407dda572125881"
+  integrity sha512-ekY1NhRzq0B08g4bGuX4wd2jZx5GnKz6mKSqFL4nqBlfyMGiG10gDFhDTMEfYmDL6Jy0FUIZp7wiRB+0BP7J2g==
+
 union-value@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/union-value/download/union-value-1.0.1.tgz#0b6fe7b835aecda61c6ea4d4f02c14221e109847"
@@ -4231,6 +4297,11 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.npm.taobao.org/window-size/download/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
   integrity sha1-VDjNLqk7IC76Ohn+iIeu58lPnJ0=
+
+wordnet-db@^3.1.11:
+  version "3.1.14"
+  resolved "https://registry.yarnpkg.com/wordnet-db/-/wordnet-db-3.1.14.tgz#7ba1ec2cb5730393f0856efcc738a60085426199"
+  integrity sha512-zVyFsvE+mq9MCmwXUWHIcpfbrHHClZWZiVOzKSxNJruIcFn2RbY55zkhiAMMxM8zCVSmtNiViq8FsAZSFpMYag==
 
 wordwrap@0.0.2:
   version "0.0.2"
