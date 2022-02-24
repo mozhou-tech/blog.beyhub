@@ -118,6 +118,12 @@ public class DemoTest {
 
 针对各个基本类型的包装类型，如：Integer，Double，Long等，这些属于引用类型，我们直接在局部方法里面使用包装类型赋值，那么数据真正的内存分配还是在堆内存里面，这里有个隐式的拆装箱来自动完成转换，数据的指针是在栈上，包装类型的出现主要是为了基本类型能够用在泛型的设计上和使用null值，而基本类型则拥有更好的计算性能，这一点我们也需要注意。
 
+#### 为什么说Integer是不可变类
+
+值的改变不会影响方法外的引用，这是因为与String类似，所有的包装类都是final类，即不可变类。
+
+Integer类型的HashCode为其值。
+
 ### 语法
 
 #### equals和==区别(null哪个能用)
@@ -178,48 +184,6 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
 
 ## Java进阶
 
-### JVM执行引擎
-
-#### 什么是解释器，什么是 JIT 编译器？
-
-**解释器**： 当 Java 虚拟机启动时会根据预定义的规范对字节码采用逐行解释的方式执行，将每条字节码中的内容“翻译”为对应平台的本地机器指令执行。
-
-**编译器**：
-
-> 1、*动态编译*（dynamic compilation）指的是“在运行时进行编译”；与之相对的是事前编译（ahead-of-time compilation，简称AOT），也叫*静态编译*（static compilation）。
-> 2、*JIT*编译（just-in-time compilation）狭义来说是当某段代码即将第一次被执行时进行编译，因而叫“即时编译”。*JIT编译是动态编译的一种特例*。JIT编译一词后来被*泛化*，时常与动态编译等价；但要注意广义与狭义的JIT编译所指的区别。
-> 3、*自适应动态编译*（adaptive dynamic compilation）也是一种动态编译，但它通常执行的时机比JIT编译迟，先让程序“以某种式”先运行起来，收集一些信息之后再做动态编译。这样的编译可以更加优化。
-
-解释器的执行，抽象的看是这样的：
-输入的代码 -> [ 解释器 解释执行 ] -> 执行结果
-而要JIT编译然后再执行的话，抽象的看则是：
-输入的代码 -> [ 编译器 编译 ] -> 编译后的代码 -> [ 执行 ] -> 执行结果
-说JIT比解释快，其实说的是**“执行编译后的代码”比“解释器解释执行”要快**，并不是说“编译”这个动作比“解释”这个动作快。
-
-**为什么不全部编译**: 对一般的Java方法而言，编译后代码的大小相对于字节码的大小，膨胀比达到10x是很正常的。同上面说的时间开销一样，这里的空间开销也是，只有对执行频繁的代码才值得编译，如果把所有代码都编译则会显著增加代码所占空间，导致“代码爆炸”。
-
-#### 为什么HotSopt有Server和Client两个不同的编译器
-
-HotSpot虚拟机中内置了两个即时编译器：Client Complier和Server Complier，简称为C1、C2编译器，分别用在客户端和服务端。目前主流的HotSpot虚拟机中默认是采用解释器与其中一个编译器直接配合的方式工作。程序使用哪个编译器，取决于虚拟机运行的模式。HotSpot虚拟机会根据自身版本与宿主机器的硬件性能自动选择运行模式，用户也可以使用“-client”或“-server”参数去强制指定虚拟机运行在Client模式或Server模式。
-
-用Client Complier获取更高的*编译速度*，用Server Complier 来获取更好的*编译质量*。为什么提供多个即时编译器与为什么提供多个垃圾收集器类似，都是为了适应不同的应用场景。
-
-#### 为什么说 Java 语言是半编译半解释型语言？
-
-Java是一个半解释半编译型语言，早期java是通过解释器来执行，效率低下；后期进行优化，解释器在原本的c++字节码解释器基础上，扩充了模板解释器，效率有了明显提升；后来又加入了JIT（即时编译），效率就更加得到了提升。
-
-解释器：当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即执行。
-
-编译器：在程序运行后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码之后，可以获取更高的执行效率。
-
-两者的协作：在程序运行环境中内存资源限制较大时，可以使用解释执行节约内存，反之可以使用编译执行来提升效率。当通过编译器优化时，发现并没有起到优化作用，，可以通过逆优化退回到解释状态继续执行。
-
-![img](file:///Users/jerrylau/workspace/writting/whoiscat.com/knowledge/resume/images/ba83857ecf9f344e4972fd551c4973d653952.png@648w_454h_80q?lastModify=1637145977)
-
-#### bytecode存在的意义
-
-为了保证WORA，JVM使用Java字节码这种介于Java和机器语言之间的中间语言。**字节码是部署Java代码的最小单位。**
-
 ### 对象模型
 
 #### 对象头
@@ -236,7 +200,7 @@ Java是一个半解释半编译型语言，早期java是通过解释器来执行
    >   {
    >       public static int a = 1;
    >       public int b;
-   >       
+   >                   
    >       public Model(int b) {
    >           this.b = b;
    >       }
@@ -262,7 +226,7 @@ Java是一个半解释半编译型语言，早期java是通过解释器来执行
    >   </dependency>
    >   # 使用方法
    >   # log.info("{}", VM.current().details());
-   >       
+   >                   
    >   # log.info("{}",ClassLayout.parseClass(String.class).toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >        OFFSET  SIZE      TYPE DESCRIPTION               VALUE
@@ -276,7 +240,7 @@ Java是一个半解释半编译型语言，早期java是通过解释器来执行
    >            22     2           (loss due to the next object alignment)
    >       Instance size: 24 bytes
    >       Space losses: 0 bytes internal + 2 bytes external = 2 bytes total
-   >       
+   >                   
    >   # log.info("{}",ClassLayout.parseInstance("www.flydean.com").toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >      OFFSET  SIZE      TYPE DESCRIPTION                               VALUE
@@ -310,7 +274,83 @@ OOP-Klass Model（Ordinary Object Point-Klass Model）指的是普通对象指�
 1. 实例数据
 2. 对齐填充
 
-### JVM内存管理
+### JVM
+
+#### 什么是解释器，什么是 JIT 编译器？
+
+**解释器**： 当 Java 虚拟机启动时会根据预定义的规范对字节码采用逐行解释的方式执行，将每条字节码中的内容“翻译”为对应平台的本地机器指令执行。
+
+**编译器**：
+
+> 1、*动态编译*（dynamic compilation）指的是“在运行时进行编译”；与之相对的是事前编译（ahead-of-time compilation，简称AOT），也叫*静态编译*（static compilation）。
+> 2、*JIT*编译（just-in-time compilation）狭义来说是当某段代码即将第一次被执行时进行编译，因而叫“即时编译”。*JIT编译是动态编译的一种特例*。JIT编译一词后来被*泛化*，时常与动态编译等价；但要注意广义与狭义的JIT编译所指的区别。
+> 3、*自适应动态编译*（adaptive dynamic compilation）也是一种动态编译，但它通常执行的时机比JIT编译迟，先让程序“以某种式”先运行起来，收集一些信息之后再做动态编译。这样的编译可以更加优化。
+
+解释器的执行，抽象的看是这样的：
+输入的代码 -> [ 解释器 解释执行 ] -> 执行结果
+而要JIT编译然后再执行的话，抽象的看则是：
+输入的代码 -> [ 编译器 编译 ] -> 编译后的代码 -> [ 执行 ] -> 执行结果
+说JIT比解释快，其实说的是**“执行编译后的代码”比“解释器解释执行”要快**，并不是说“编译”这个动作比“解释”这个动作快。
+
+**为什么不全部编译**: 对一般的Java方法而言，编译后代码的大小相对于字节码的大小，膨胀比达到10x是很正常的。同上面说的时间开销一样，这里的空间开销也是，只有对执行频繁的代码才值得编译，如果把所有代码都编译则会显著增加代码所占空间，导致“代码爆炸”。
+
+#### 触发JIT的条件是什么
+
+1. JVM是依据**方法的调用次数**以及**循环回边的执行次数**来触发JIT的
+2. JVM将在0层、2层和3层执行状态时进行profiling，其中包括方法的调用次数和循环回边的执行次数
+   - 循环回边是一个控制流程图中的概念，在字节码中，可以简单理解为**往回跳**的指令
+   - 在即时编译过程中，JVM会识别循环的头部和尾部，**循环尾部到循环头部的控制流就是真正意义上的循环回边**
+   - C1将在**循环回边**插入**循环回边计数器**的代码
+   - 解释执行和C1代码中增加循环回边计数的**位置**并不相同，但这不会对程序造成影响
+   - JVM不会对这些**计数器**进行**同步**操作，因此收集到的执行次数也**不是精确值**
+   - 只要该数值**足够大**，就能表示对应的方法包含热点代码
+3. 在不启动分层编译时，当方法的调用次数和循环回边的次数的和超过-XX:CompileThreshold，便会触发JIT
+   - 使用**C1**时，该值为**1500**
+   - 使用**C2**时，该值为**10000**
+4. 当启用分层编译时，阈值大小是动态调整的
+   - **阈值 \* 系数**
+
+#### 为什么HotSopt有Server和Client两种编译器
+
+HotSpot虚拟机中内置了两个即时编译器：Client Complier和Server Complier，简称为C1、C2编译器，分别用在客户端和服务端。目前主流的HotSpot虚拟机中默认是采用解释器与其中一个编译器直接配合的方式工作。程序使用哪个编译器，取决于虚拟机运行的模式。HotSpot虚拟机会根据自身版本与宿主机器的硬件性能自动选择运行模式，用户也可以使用“-client”或“-server”参数去强制指定虚拟机运行在Client模式或Server模式。
+
+用Client Complier获取更高的*编译速度*，用Server Complier 来获取更好的*编译质量*。为什么提供多个即时编译器与为什么提供多个垃圾收集器类似，都是为了适应不同的应用场景。
+
+编译路径（分层编译）：
+
+![img](images/jvm-advanced-jit-path.png)
+
+1. 1层和4层是
+
+   终止状态
+
+   - 当一个**方法**被**终止状态**编译后，如果**编译后的代码没有失效**，那么JVM**不会再次发出该方法的编译请求**
+
+2. 通常情况下，热点方法会被3层的C1编译，然后再被4层的C2编译
+
+3. 如果方法的字节码数目较少（如getter/setter），并且3层的profiling没有可收集的数据
+
+   - JVM会断定**该方法对于C1和C2的执行效率相同**
+   - JVM会在3层的C1编译后，**直接选用1层的C1编译**
+   - 由于1层是**终止状态**，JVM不会继续用4层的C2编译
+
+4. 在C1忙碌的情况下，JVM在**解释执行过程**中对程序进行**profiling**，而后直接由4层的C2编译
+
+5. 在C2忙碌的情况下，方法会被2层的C1编译，然后再被3层的C1编译，以减少方法在3层的执行时间
+
+#### 为什么说 Java 语言是半编译半解释型语言？
+
+Java是一个半解释半编译型语言，早期java是通过解释器来执行，效率低下；后期进行优化，解释器在原本的c++字节码解释器基础上，扩充了模板解释器，效率有了明显提升；后来又加入了JIT（即时编译），效率就更加得到了提升。
+
+解释器：当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即执行。
+
+编译器：在程序运行后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码之后，可以获取更高的执行效率。
+
+两者的协作：在程序运行环境中内存资源限制较大时，可以使用解释执行节约内存，反之可以使用编译执行来提升效率。当通过编译器优化时，发现并没有起到优化作用，，可以通过逆优化退回到解释状态继续执行。
+
+![img](file:///Users/jerrylau/workspace/writting/whoiscat.com/knowledge/resume/images/ba83857ecf9f344e4972fd551c4973d653952.png@648w_454h_80q?lastModify=1637145977)
+
+#### JVM类的加载机制
 
 #### 内存分区相关参数有哪些
 
@@ -319,6 +359,320 @@ OOP-Klass Model（Ordinary Object Point-Klass Model）指的是普通对象指�
 | -XX:StringTableSize=4901        | 要求为素数 | 字符串池大小     |
 | -XX:+PrintStringTableStatistics | -          |                  |
 | -XX:-UseCompressedOops          |            | 默认开启指针压缩 |
+
+#### JVM堆的新生代、老年代
+
+Xms 用来指定初始堆内存，**默认占系统内存1/64**,java应用启动后jvm会向操作系统申请内存，在申请的内存到达Xms之前，所有申请的内存不用了会还给操作系统，当申请的内存达到Xms，那么Xms之前的内存只会清空不会还给操作系统，而申请超过初始内存小于最大内存这些内存也会归还给操作系统，如果程序启动默认就会申请很多内存，建议把Xmx和Xms设置成一样。
+
+Xmx 用来指定最大堆大小，**默认占系统内存1/4**，当申请的内存超过最大堆内存就会造成堆OutOfMemoryError，导致程序直接挂掉。
+
+Xmn指定年轻代大小，Xmx=Xmn+老年代（不包含PermSize或MetaSpace）
+
+当垃圾收集器触发GC的时候会对堆内存长时间没用的对象分代进行回收，**新生代和老年代内存占比为1:2**。
+
+|        | 新生代                                                       | 老年代                                                       |
+| ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| GC     | G1  jdk9<br />ParallelGC jdk1.8**                            | CMS<br />G1                                                  |
+| 比例   | 分为Eden区，s1，s0三个区域，分别内存占比8:1:1                | sun官方建议为整个堆的3/8                                     |
+| GC步骤 | 当新创建一个对象，这个对象首先会到Eden区，如果Eden区放满了，会产生一次young GC 这次GC会把Eden区没有用到的对象回收掉，并把可用对象复制到Survival 区，并记录这些对象一次GC年龄。<br />当Eden区内存满了后，GC收集器会触发复制算法，将Eden区的存活对象复制到s0或者s1,s0和s1始终保持有一个空的区域，当s1或s0其中一个满了，也会触发一次GC并把可用对象赋值到另一个空区域，当GC到一定次数后依然存活的对象会进入老年代。<br />当 YGC 发生时候，由于 To 区太小，存活的对象直接进入到老年代,老年代占用量逐渐变大。 | 当经过多次GC的对象年龄达到一个阈值而没有被回收或者比较大的对象，会直接进入老年代，当老年代内存满了，会触发full GC这个时候会清理整个堆内存未被使用的对象，GC时老年代采用的是标记整理算法。 |
+
+- 堆内存使用情况 jmap -heap <pid>
+- 查看堆中的对象 jmap -histo <pid>
+- 统计GC发生情况 jstat -gcutil <pid>
+- 是否使用CMS jinfo -flag UseConcMarkSweepGC <pid>
+
+#### JVM有哪些参数？
+
+标准参数（-），所有的JVM实现都必须实现这些参数的功能，而且向后兼容；
+非标准参数（-X），默认jvm实现这些参数的功能，但是并不保证所有jvm实现都满足，且不保证向后兼容；
+非Stable参数（-XX），此类参数各个jvm实现会有所不同，将来可能会随时取消，需要慎重使用；
+
+| JDK  | 参数名称                       | 可选值  | 说明                                                         | 分类 |
+| ---- | ------------------------------ | ------- | ------------------------------------------------------------ | ---- |
+| 1.7  | -XX:MaxPermSize                | 1g/512m | JDK1.7之前设置永久代大小                                     | 内存 |
+|      | -XX:+PrintGCDateStamps         | -/+     |                                                              | 内存 |
+|      | -XX:+PrintGCDetails            | -/+     |                                                              | 内存 |
+|      | -XX:+PrintHeapAtGC             | -/+     |                                                              | 内存 |
+|      | -XX:+PrintTenuringDistribution | -/+     |                                                              | 内存 |
+|      | -XX:+UseAdaptiveSizePolicy     | -/+     |                                                              | 内存 |
+|      | -XX:+UseConcMarkSweepGC        | -/+     | 使用CMS                                                      | 内存 |
+|      | -XX:SurvivorRatio              |         | 生还者池的大小,默认是2                                       | 内存 |
+|      | -Xss                           |         | 每个线程的Stack大小<br />而最佳值应该是128K,默认值好像是512k.<br />设置过小会导致应用启动失败 | 内存 |
+|      | -verbose:gc / -XX:+PrintGC     | -/+     |                                                              | 内存 |
+|      | -Xloggc:gc.log                 |         | 指定垃圾收集日志文件                                         | 内存 |
+|      | -ea                            | -/+     | -ea就是中的ea就是enable assertion的意思，即 “启用断言”。加了-ea参数后可以使用 `assert <表达式>` 的写法。当然，不加-ea并不是不能写 `assert xxx` ，实际上依然是可以这么写，并且也能通过编译，只是在运行的时候实际是不起作用的。 |      |
+
+#### JVM堆的常见问题及优化方案
+
+| 问题                          | 分析优化                                                     |
+| ----------------------------- | ------------------------------------------------------------ |
+| 频繁发生FCG，导致应用经常卡顿 | Jstat -gcutil <pid>查看FGC次数<br />1. 新生代SurvivorTo区域太小，对象被分配到老年代，导致老年代对象不断增加（1.8中默认开启AdaptiveSizePolicy，可能会导致该问题）<br />2. 大对象过多，可以尝试对象池 |
+
+#### GC垃圾收集器
+
+查看当前支持的垃圾回收器：java -XX:+UnlockDiagnosticVMOptions -XX:+PrintFlagsFinal -version
+
+为方便理解 GC 算法时，需要先介绍一些常见的名词
+
+- mutator，应用程序的线程
+- collector，用于进行垃圾回收的线程
+- concurrent（并发），指 collector 与 mutator 可以并发执行
+- parallel（并行），指 collector 是多线程的，可以利用多核 CPU 工作
+- young/old(也称Tenured) 代，根据大多数对象“朝生夕死”的特点，现代 GC 都是分代
+- mark标记
+- sweep清理
+- compact整理（整理内存碎片）
+- 一个 gc 算法可以同时具有 concurrent/parallel 的特性，或者只具有一个。
+- <img src="images/image-20220223231210749.png" alt="image-20220223231210749" style="zoom:50%;" />
+
+| 垃圾收集器                            | 作用分代 | 算法            | 优点                                                         | 缺点                                                         |
+| ------------------------------------- | -------- | --------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| -XX:+UseParNewGC                      | Young    |                 |                                                              |                                                              |
+| -XX:+UseSerialGC                      | Young    | 标记复制        |                                                              | 单线程，无并发                                               |
+| -XX:+UseSerialOldGC                   | Old      | 标记整理        |                                                              | 单线程，无并发                                               |
+| +UseParallelGC<br />+UseParallelOldGC | Old      |                 |                                                              |                                                              |
+| +UseConcMarkSweepGC                   | Old      |                 | 多线程并发标记，停顿短                                       | 没有compact，产生内存碎片<br />CMF问题：剩余空间足够，但没有足够的<br />连续空间存储对象，会降级为SerialGC<br />（G1出来CMS没人维护，所以没有Parallel版本） |
+| -XX:+UseG1GC                          |          | 三色标记 + SATB | 多线程并发标记，高吞吐，低延迟；<br />取代CMS具备内存整理功能；可指定期望STW时间；适合大堆； | 最小存储单元为512Byte，浪费内存                              |
+| -XX:+UseZGC                           |          |                 |                                                              |                                                              |
+
+- PS/PO
+
+  > UseAdaptiveSizePolicy只在使用UseParallelGC或UseParallelOldGC的时候用它
+  >
+  > 运行是会STW，所以不存在和mutator线程之间的同步问题
+  > ![image-20220223231304712](images/image-20220223231304712.png)
+
+- CMS Cocurrent-Mark-Sweep
+
+  > CMS并非没有暂停，而是用两次短暂停来替代串行标记整理算法的长暂停，它的收集周期是这样：
+  > 初始标记(CMS-initial-mark) -> 并发标记(CMS-concurrent-mark) -> 重新标记(CMS-remark) -> 并发清除(CMS-concurrent-sweep) ->并发重设状态等待下次CMS的触发(CMS-concurrent-reset)。
+  >
+  > ![Java 垃圾回收权威指北- Keep Coding](images/O1CN01eiAx891z69sKEdsdy_!!581166664.jpg)
+  >
+  > 1. 解决CMF问题，可以使用下列两个参数，这两个参数缺一不可，第一个表示 old 区占用量超过 60% 时开始执行 CMS，第二个参数禁用掉 JVM 的自适应策略，如果不设置这个 JVM 可能会忽略第一个参数。-XX:CMSInitiatingOccupancyFraction=**60**  -XX:+UseCMSInitiatingOccupancyOnly
+  > 2. GC日志中的Promotion failure 一般是由于 heap 内存碎片过多导致检测空间足够，但是真正晋级时却没有足够连续的空间，监控 old 代碎片可以用下面的选项 -XX:+PrintGCDetails -XX:+PrintPromotionFailure -XX:PrintFLSStatistics=1
+  > 3. 尽可能提供较大的 old 空间，但是最好不要超过 32G，[超过了就没法用压缩指针了](https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html#compressed_oops)。
+  > 4. 尽早执行 CMS，即修改 initiating occupancy 参数
+  > 5. 应用尽量不要去分配巨型对象
+  
+- G1
+
+  > **G1的特点：**
+  >
+  > 1. 面向服务端应用的垃圾收集器
+  > 2. 并行与并发：G1能充分利用多CPU、**多核**环境使用多个CPU或CPU核心来缩短`STW`（Stop-The-World）停顿时间。
+  > 3. 分代收集：G1物理上不分代，但逻辑上仍然有分代的概念。
+  > 4. 空间整合：不会产生内存空间碎片，收集后可提供规整的可用内存，整理空闲空间更快。
+  > 5. 可预测的停顿(它可以有计划的避免在整个JAVA堆中进行全区域的垃圾收集)
+  > 6. 适用于不需要实现很高吞吐量的场景
+  > 7. JAVA堆内存布局与其它收集器存在很大差别，它将整个JAVA堆划分为多个大小相等的独立区域或分区(`Region`)。
+  > 8. G1收集器中，虚拟机使用`Remembered Set`来避免全堆扫描。
+  >
+  > **G1内存模型**
+  >
+  > ![preview](images/v2-9598f88e79b76dd5a0aed6b06039baa7_r.jpg)
+  >
+  > **G1标记阶段**
+  >
+  > ![image-20220223232242493](images/image-20220223232242493.png)
+  >
+  > - Initial Marking（初始标记， STW）
+  >
+  >   > 它标记了从GC Root开始**直接可达**的对象。
+  >   >
+  >   > 事实上，当达到IHOP阈值时，G1并不会立即发起并发标记周期，而是等待下一次年轻代收集，利用年轻代收集的STW时间段，完成初始标记，这种方式称为借道(Piggybacking)。
+  >
+  > - Root region scanning（根分区扫描）
+  >
+  >   > 在初始标记暂停结束后，年轻代收集也完成的对象复制到Survivor的工作，应用线程开始活跃起来。此时为了保证标记算法的正确性，所有新复制到Survivor分区的对象，都需要被扫描并标记成根，这个过程称为根分区扫描(Root Region Scanning)，同时扫描的[Suvivor分区](https://www.zhihu.com/search?q=Suvivor分区&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"137960179"})也被称为根分区(Root Region)。
+  >
+  > - Concurrent Marking（并发标记）
+  >
+  >   > 这个阶段从GC Root开始对heap中的对象标记，标记线程与[应用程序线程](https://www.zhihu.com/search?q=应用程序线程&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"137960179"})并行执行，并且收集各个`Region`的存活对象信息。 和应用线程并发执行，并发标记线程在并发标记阶段启动，由参数`-XX:ConcGCThreads`(默认GC线程数的1/4，即-XX:ParallelGCThreads/4)控制启动数量， 每个线程每次只扫描一个分区`Region`，从而标记出存活对象图。
+  >   >
+  >   > 所有的标记任务必须在堆满前就完成扫描，如果并发标记耗时很长，那么有可能在并发标记过程中，又经历了几次年轻代收集。 如果堆满前没有完成标记任务，则会触发担保机制，经历一次长时间的串行Full GC。
+  >
+  > - Remark（ 重新标记，STW）
+  >
+  >   > 标记那些在并发标记阶段发生变化的对象，将被回收。 这个阶段也是并行执行的，通过参数`-XX:ParallelGCThread`可设置GC暂停时可用的GC线程数。
+  >
+  > - Cleanup （清理，STW）
+  >
+  >   > 清除阶段主要执行以下操作：
+  >   >
+  >   > - `RSet`梳理，启发式算法会根据活跃度和`RSet`尺寸对分区定义不同等级，同时`RSet`数理也有助于发现无用的引用。参数`-XX:+PrintAdaptiveSizePolicy`可以开启打印启发式算法决策细节；
+  >   > - 整理堆分区，为混合收集周期识别回收收益高(基于释放空间和暂停目标)的老年代分区集合；
+  >   > - 识别所有空闲分区，即发现无存活对象的分区。该分区可在清除阶段直接回收，无需等待下次收集周期。
+  >
+  > **G1的垃圾回收包括了以下几种：**
+  >
+  > 1. Concurrent Marking Cycle （并发收集） 类似 `CMS`的并发收集过程。
+  >
+  >    > 并发标记周期是G1中非常重要的阶段，这个阶段将会为混合收集周期识别垃圾最多的老年代分区。
+  >    >
+  >    > 整个周期完成根标记、识别所有(可能)存活对象，并计算每个分区的活跃度，从而确定GC效率等级。
+  >    >
+  >    > 当达到IHOP阈值`-XX:InitiatingHeapOccupancyPercent`(老年代占整堆比，默认45%)时，便会触发并发标记周期。
+  >    >
+  >    > 整个并发标记周期将由初始标记(Initial Mark)、根分区扫描(Root Region Scanning)、并发标记(Concurrent Marking)、重新标记(Remark)、清除(Cleanup)几个阶段组成。
+  >    >
+  >    > 其中，初始标记(随年轻代收集一起活动)、重新标记、清除是STW的，**而并发标记如果来不及标记存活对象，则可能在并发标记过程中，G1又触发了几次年轻代收集（`YGC`）。**
+  >
+  > 2. 年轻代收集 Young Collection /混合收集周期 Mixed Collection Cycle
+  >
+  >    > 当应用运行开始时，堆内存可用空间还比较大，只会在年轻代满时，触发年轻代收集；
+  >    >
+  >    > 随着老年代内存增长，当到达IHOP阈值`-XX:InitiatingHeapOccupancyPercent`(老年代占整堆比，默认45%)时，G1开始着手准备收集老年代空间。
+  >    >
+  >    > 首先经历并发标记周期 `Concurrent Marking Cycle`，识别出高收益的老年代分区，前文已述。
+  >    >
+  >    > 但随后G1并不会马上开始一次混合收集，而是让应用线程先运行一段时间，等待触发一次年轻代收集。
+  >    >
+  >    > 在这次STW中，G1将保准整理混合收集周期。接着再次让应用线程运行，当接下来的几次年轻代收集时，将会有老年代分区加入到CSet中，
+  >    >
+  >    > 即触发混合收集，这些连续多次的混合收集称为混合收集周期(`Mixed Collection Cycle`)。
+  >
+  > 3. Young Collection （YGC，年轻代收集，`STW`）
+  >
+  >    > 当G1发起并发标记周期之后，并不会马上开始混合收集。 G1会先等待下一次年轻代收集，然后在该收集阶段中，确定下次混合收集的CSet(Choose CSet)。
+  >
+  > 3. Mixed Collection Cycle （混合收集，`STW`）
+  >
+  >    > 混合收集周期 Mixed Collection Cycle, `Mixed GC`
+  >    >
+  >    > 单次的混合收集与年轻代收集并无二致。
+  >    >
+  >    > 根据暂停目标，老年代的分区可能不能一次暂停收集中被处理完，G1会发起连续多次的混合收集，称为混合收集周期(Mixed Collection Cycle)。
+  >    >
+  >    > G1会计算每次加入到CSet中的分区数量、混合收集进行次数，并且在上次的年轻代收集、以及接下来的混合收集中，G1会确定下次加入CSet的分区集(Choose CSet)，并且确定是否结束混合收集周期。
+  >
+  > 4. Full GC（FGC， `STW`） **JDK10以前FGC是串行回收，JDK10+可以是并行回收。**
+  >
+  >    > 转移失败的担保机制 `Full GC`
+  >    >
+  >    > 转移失败(`Evacuation Failure`)是指当G1无法在堆空间中申请新的分区时，G1便会触发担保机制，执行一次`STW`式的、单线程（JDK10支持多线程）的Full GC。
+  >    >
+  >    > ![img](images/v2-e47af4cf80a5deddc89671dcca12ca98_b.png)
+  >    >
+  >    > Full GC会对整堆做标记清除和压缩，最后将只包含纯粹的存活对象。参数`-XX:G1ReservePercent`(默认10%)可以保留空间，来应对晋升模式下的异常情况，最大占用整堆50%，更大也无意义。
+  >    >
+  >    > G1在以下场景中会触发Full GC，同时会在日志中记录`to-space exhausted`以及`Evacuation Failure`：
+  >    >
+  >    > - 从年轻代分区拷贝存活对象时，无法找到可用的空闲分区
+  >    > - 从老年代分区转移存活对象时，无法找到可用的空闲分区
+  >    > - 分配巨型对象`Humongous Object` 时在老年代无法找到足够的连续分区
+  >    >
+  >    > ==由于G1的应用场合往往堆内存都比较大，所以Full GC的收集代价非常昂贵，应该避免Full GC的发生。==
+  >
+  > **G1中的概念解读**
+  >
+  > - 分区
+  >
+  >   > G1采用了分区(Region)的思路，将整个堆空间分成若干个大小相等的内存区域，每次分配对象空间将逐段地使用内存。因此，在堆的使用上，G1并不要求对象的存储一定是物理上连续的，只要逻辑上连续即可；每个分区也不会确定地为某个代服务，可以按需在年轻代和老年代之间切换。启动时可以通过参数-XX:G1HeapRegionSize=n可指定分区大小(1MB~32MB，且必须是2的幂)，默认将整堆划分为2048个分区。
+  >   >
+  >   > Eden、Survivor、Old Generation都可以是单独的分区。
+  >
+  > - 卡片
+  >
+  >   > 在每个分区内部又被分成了若干个大小为512 Byte卡片(Card)，标识堆内存最小可用粒度所有分区的卡片将**会记录在全局卡片表(Global Card Table)中**，分配的对象会占用物理上连续的若干个卡片，当查找对分区内对象的引用时便可通过记录卡片来查找该引用对象(见RSet)。每次对内存的回收，都是对指定分区的卡片进行处理。
+  >
+  > - 堆
+  >
+  >   > G1同样可以通过-Xms/-Xmx来指定堆空间大小。当发生年轻代收集或混合收集时，通过计算GC与应用的耗费时间比，自动调整堆空间大小。如果GC频率太高，则通过增加堆尺寸，来减少GC频率，相应地GC占用的时间也随之降低；目标参数-XX:GCTimeRatio即为GC与应用的耗费时间比，G1默认为9，而CMS默认为99，因为CMS的设计原则是耗费在GC上的时间尽可能的少。另外，当空间不足，如对象空间分配或转移失败时，G1会首先尝试增加堆空间，如果扩容失败，则发起担保的Full GC。Full GC后，堆尺寸计算结果也会调整堆空间。
+  >
+  > - 分代模型
+  >
+  >   > 分代垃圾收集可以将关注点集中在最近被分配的对象上，而无需整堆扫描，避免长命对象的拷贝，同时独立收集有助于降低响应时间。虽然分区使得内存分配不再要求紧凑的内存空间，但G1依然使用了分代的思想。与其他垃圾收集器类似，G1将内存在**逻辑上划分为年轻代和老年代**，其中**年轻代又划分为Eden空间和Survivor空间**。但年轻代空间并不是固定不变的，当现有年轻代分区占满时，JVM会分配新的空闲分区加入到年轻代空间。
+  >   >
+  >   > 整个年轻代内存会在初始空间-XX:G1NewSizePercent(默认整堆5%)与最大空间-XX:G1MaxNewSizePercent(默认60%)之间动态变化，且由参数目标暂停时间-XX:MaxGCPauseMillis(默认200ms)、需要扩缩容的大小以及分区的已记忆集合(RSet)计算得到。当然，G1依然可以设置固定的年轻代大小(参数-XX:NewRatio、-Xmn)，但同时暂停目标将失去意义。
+  >
+  > - `Local allocation buffer` (`LAB`) （本地分配缓冲）
+  >
+  >   > 值得注意的是，由于分区的思想，每个线程均可以"认领"某个分区`Region`用于线程本地的内存分配，而不需要顾及分区是否连续。
+  >   >
+  >   > 因此，每个应用线程和GC线程都会独立的使用分区，进而减少同步时间，提升GC效率，这个分区`Region`称为本地分配缓冲区(`LAB`)。
+  >   >
+  >   > - 应用线程本地缓冲区`TLAB`： 应用线程可以独占一个本地缓冲区(`TLAB`)来创建的对象，而大部分都会落入Eden区域(巨型对象或分配失败除外)，因此TLAB的分区属于[Eden空间](https://www.zhihu.com/search?q=Eden空间&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"137960179"})；
+  >   > - GC线程本地缓冲区`GCLAB`： 每次垃圾收集时，每个[GC线程](https://www.zhihu.com/search?q=GC线程&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"137960179"})同样可以独占一个本地缓冲区(`GCLAB`)用来转移对象，每次回收会将对象复制到Suvivor空间或[老年代](https://www.zhihu.com/search?q=老年代&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"137960179"})空间；
+  >   > - 晋升本地缓冲区`PLAB`： 对于从Eden/Survivor空间晋升(Promotion)到Survivor/老年代空间的对象，同样有GC独占的本地缓冲区进行操作，该部分称为晋升本地缓冲区(`PLAB`)。
+  >
+  > - SATB Snapshot-At-The-Beginning
+  >
+  >   > 由字面理解，是GC开始时活着的对象的一个快照。它是通过Root Tracing得到的，作用是维持并发GC的正确性。 那么它是怎么维持并发GC的正确性的呢？根据三色标记算法，我们知道对象存在三种状态： * 白：对象没有被标记到，标记阶段结束后，会被当做垃圾回收掉。 * 灰：对象被标记了，但是它的field还没有被标记或标记完。 * 黑：对象被标记了，且它的所有field也被标记完了。
+  >   >
+  >   > 由于并发阶段的存在，Mutator和Garbage Collector线程同时对对象进行修改，就会出现白对象漏标的情况，这种情况发生的前提是： Mutator赋予一个黑对象该白对象的引用。 Mutator删除了所有从灰对象到该白对象的直接或者间接引用。
+  >   >
+  >   > 对于第一个条件，在并发标记阶段，如果该白对象是new出来的，并没有被灰对象持有，那么它会不会被漏标呢？Region中有两个top-at-mark-start（TAMS）指针，分别为prevTAMS和nextTAMS。在TAMS以上的对象是新分配的，这是一种隐式的标记。对于在GC时已经存在的白对象，如果它是活着的，它必然会被另一个对象引用，即条件二中的灰对象。如果灰对象到白对象的直接引用或者间接引用被替换了，或者删除了，白对象就会被漏标，从而导致被回收掉，这是非常严重的错误，所以SATB破坏了第二个条件。也就是说，一个对象的引用被替换时，可以通过write barrier 将旧引用记录下来。
+  >
+  > - Humongous Object` （巨型对象）
+  >
+  >   > 一个大小达到甚至超过分区`Region` 50%以上的对象称为巨型对象(`Humongous Object`)。 巨型对象会独占一个、或多个连续分区，其中第一个分区被标记为开始巨型(`StartsHumongous`)，相邻连续分区被标记为连续巨型(`ContinuesHumongous`)。 `Humongous Object` 有以下特点：
+  >   >
+  >   > - `Humongous Object`直接分配到了 老年代，防止了反复拷贝移动。
+  >   >
+  >   > > 当线程为巨型分配空间时，不能简单在`TLAB`进行分配，因为巨型对象的移动成本很高，而且有可能一个分区不能容纳巨型对象。 因此，巨型对象会直接在老年代分配，所占用的连续空间称为巨型分区(`Humongous Region`)。
+  >   >
+  >   > - `Humongous Object` 在 `YGC`阶段， `Global Concurrent Marking` 阶段的 `Cleanup` 和 `FGC` 阶段 回收。
+  >   >
+  >   > > 由于无法享受`LAB`带来的优化，并且确定一片连续的内存空间需要扫描整堆`Heap`，因此确定巨型对象开始位置的成本非常高，如果可以，应用程序应避免生成巨型对象。
+  >   >
+  >   > - 在分配`Humongous Object` 之前先检查是否超过 initiating heap occupancy percent （由参数`-XX:InitiatingHeapOccupancyPercent`控制） 和 the marking threshold。 如果超过的话，就启动并发收集周期`Concurrent Marking Cycle` ，为的是提早回收，防止 `Evacuation Failure` 和 `Full GC`。
+  >
+  > - RSet
+  >
+  >   > 每个Region初始化时，会初始化一个remembered set（已记忆集合），这个翻译有点拗口，以下简称RSet，该集合用来记录并跟踪其它Region指向该Region中对象的引用，每个Region默认按照512Kb划分成多个Card，所以RSet需要记录的东西应该是 xx Region的 xx Card。
+  >   >
+  >   > ![image-20220223233108807](images/image-20220223233108807.png)
+  >   >
+  >   > Region1和Region3中有对象引用了Region2的对象，则在Region2的Rset中记录了这些引用。有了RSet就可以**避免对整个堆的扫描**。
+  >
+  > - CSet`（`Collection Set，收集集合）
+  >
+  >   > 收集集合(`CSet`)代表每次GC暂停时回收的一系列目标分区`Region`。
+  >   >
+  >   > 在任意一次收集暂停中，`CSet`所有分区都会被释放，内部存活的对象都会被转移到分配的空闲分区中。
+  >   >
+  >   > 因此无论是年轻代收集，还是混合收集，工作的机制都是一致的。
+  >   >
+  >   > 年轻代收集（`YGC`）的`CSet`只容纳年轻代分区，而混合收集（`Mixed GC`）会通过启发式算法，在老年代候选回收分区中，筛选出回收收益最高的分区添加到`CSet`中。
+  >   >
+  >   > 1. 候选老年代分区的`CSet`准入条件，可以通过活跃度阈值`-XX:G1MixedGCLiveThresholdPercent`(默认85%)进行设置，从而拦截那些回收开销巨大的对象；
+  >   >
+  >   > 2. 同时，每次混合收集可以包含候选老年代分区，可根据`CSet`对堆的总大小占比`-XX:G1OldCSetRegionThresholdPercent`(默认10%)设置数量上限。
+  >   >
+  >   > 由上述可知，G1的收集都是根据`CSet`进行操作的，年轻代收集（`YGC`）与混合收集（`Mixed GC`）没有明显的不同，最大的区别在于两种收集的触发条件。
+  >
+  > 
+
+
+
+#### JVM调优的时机和目标
+
+- 调优时机
+
+> - Heap内存（老年代）持续上涨达到设置的最大内存值；
+> - Full GC 次数频繁；
+> - GC 停顿时间过长（超过1秒）；
+> - 应用出现OutOfMemory 等内存异常；
+> - 应用中有使用本地缓存且占用大量内存空间；
+> - 系统吞吐量与响应性能不高或下降。
+
+- 调优目标
+
+  > 吞吐量、延迟、内存占用三者类似CAP，构成了一个不可能三角，只能选择其中两个进行调优，不可三者兼得。
+  >
+  > - 延迟：GC低停顿和GC低频率；
+  > - 低内存占用；
+  > - 高吞吐量;
+  >
+  > 选择了其中两个，必然会会以牺牲另一个为代价。下面展示了一些JVM调优的量化目标参考实例：
+  >
+  > - Heap 内存使用率 <= 70%;
+  > - Old generation内存使用率<= 70%;
+  > - avgpause <= 1秒;
+  > - Full gc 次数0 或 avg pause interval >= 24小时 ;
+  >
+  > 注意：不同应用的JVM调优量化目标是不一样的。
 
 #### 常量池有哪几种，在什么内存区
 
@@ -341,6 +695,8 @@ OOP-Klass Model（Ordinary Object Point-Klass Model）指的是普通对象指�
    String的字面量被导入JVM的运行时常量池时，并不会马上试图在字符串常量池加入对应String的引用，而是等到程序实际运行时，要用到这个字面量对应的String对象时，才会去字符串常量池试图获取或者加入String对象的引用。因此它是懒加载的。
 
 4. 基本类型包装类常量池（堆） Java的基本数据类型中，除了两个浮点数类型，其他的基本数据类型都在各自内部实现了常量池，但都在[-128~127]这个范围内。
+
+
 
 #### 字符串常量池会被GC吗？
 
@@ -449,7 +805,7 @@ https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html
   > 2. 当一个对象在方法中被定义后，对象只在方法内部使用，则认为没有发生逃逸。
   > 3. 当一个对象在方法中被定义后，它被外部方法所引用，则认为发生逃逸。例如作为调用参数传递到其他地方中。
   > 
-  > ```
+  > ```java
   >  public class EscapeTest {
   >      public static Object globalVariableObject;
   >      public Object instanceObject;
@@ -508,23 +864,36 @@ https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html
 
 EscapeAnalysis，逃逸分析，指的是虚拟机在`运行期`通过计算分析将原本在堆上分配的对象改成在栈中分配，这样的好处是栈上分配的对象随着线程的结束而自动销毁，不依赖于GC，可以降低垃圾收集器运行的频率。
 
+#### JVM中的四种引用
+
+引用的级别由高到低：强引用  >  软引用  >  弱引用  >  虚引用
+
+一个对象的生命周期可以简单的概括为：对象首先被创建，然后初始化，被使用，接着没有其他对象引用它(不可达)，这时候，它可以被垃圾收集器回收，最终被回收掉。其整个生命周期如下图所示，其中，阴影部分便是该对象的`强可达` 阶段。
+
+![img](images/auto-orient,1-20220215234807685.jpeg)
+
+| 引用类型                   | GC回收时机                                                   | 说明                                                         |
+| -------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 强引用 (Strong Reference)  | 不会被回收，JVM宁可抛出异常终止程序                          | A a = new A();就是一个强引用。<br />赋值为 null，就是可以被 JVM 回收的 |
+| 软引用 (Soft Reference)    | **内存空间足够时**，垃圾回收器不会回收它                     | 内存不足时回收                                               |
+| 弱引用 (Weak Reference)    | 垃圾回收线程在扫描整个它所管辖的内存区域的<br />过程中，一旦发现了只具有弱引用对象，不管当前内存空间足够与否，都会回收它的内存。 | 垃圾回收器是一个优先级很低<br />的线程，因此不一定很快的发现那些只具有弱引用的对象。<br />弱引用在很多地方都有用到，比如ThreadLocal、WeakHashMap |
+| 虚引用 (Phantom Reference) | 任何时候                                                     | 对对象的存在时间没有任何影响，也无法引用对象实力，唯一的作用就是在该对象被回收时收到一个系统通知<br />无法通过虚引用来获取对一个对象的真实引用，get方法返回null<br />虚引用必须与ReferenceQueue一起使用，当GC准备回收一个对象，如果发现它还有虚引用，就会在回收之前，把这个虚引用加入到与之关联的ReferenceQueue中<br />在NIO中，就运用了虚引用管理堆外内存。 |
+
 #### JVM的内存管理有哪些问题
 
 1. Java 对象存储密度低。一个只包含 boolean 属性的对象占用了16个字节内存：对象头占了8个，boolean 属性占了1个，对齐填充占了7个。而实际上只需要一个bit（1/8字节）就够了。
 2. Full GC 会极大地影响性能，尤其是为了处理更大数据而开了很大内存空间的JVM来说，GC 会达到秒级甚至分钟级。
 3. OOM 问题影响稳定性。OutOfMemoryError是分布式计算框架经常会遇到的问题，当JVM中所有对象大小超过分配给JVM的内存大小时，就会发生OutOfMemoryError错误，导致JVM崩溃，分布式框架的健壮性和性能都会受到影响。
 
-#### GC调优有哪些参数？
-
-| 参数名称               | 可选值 | 说明              |
-| ------------------ | --- | --------------- |
-| -XX:MaxPermSize=1G |     | JDK1.7之前设置永久代大小 |
-
 #### 线上系统GC问题如何快速定位与分析?
 
 #### 解释下三色标记算法算法思想?
 
 https://juejin.cn/post/6859931488352370702
+
+#### Unsafe使用直接内存
+
+http://learn.lianglianglee.com/%E6%96%87%E7%AB%A0/Java-%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98%20DirectMemory%20%E8%AF%A6%E8%A7%A3.md
 
 #### TLAB
 
@@ -799,9 +1168,32 @@ synchronized是悲观锁，在操作同步资源之前需要给同步资源先�
 
 #### CountDownLatch
 
+基于AQS的计数器，将当前线程阻塞。
+
+#### countDownLatch.await()与thread.join()区别
+
+调用join方法需要等待thread执行完毕才能继续向下执行
+CountDownLatch只需要检查计数器的值为零就可以继续向下执行，相比之下，CountDownLatch更加灵活一些，可以实现一些更加复杂的业务场景。
+
 #### ReadWriteLock
 
+如果有线程正在读，写线程需要等待读线程释放锁后才能获取写锁，即读的过程中不允许写，这是一种悲观的读锁。
+
+读写锁是计算机程序的并发控制的一种同步机制，也称“共享-互斥锁”、多读者-单写者锁。 多读者锁，，“push lock”) 用于解决读写问题。 读操作可并发重入，写操作是互斥的。 读写锁通常用互斥锁、条件变量、信号量实现。
+
 #### ReentrantLock和Condition
+
+`Condition`可以替代`wait`和`notify`；`Condition`对象必须从`Lock`对象获取。
+
+#### StampedLock
+
+https://www.cnblogs.com/tong-yuan/p/StampedLock.html
+
+不可重入。
+
+StampedLock具有三种模式：写模式、读模式、乐观读模式。
+
+ReentrantReadWriteLock中的读和写都是一种悲观锁的体现，StampedLock加入了一种新的模式——乐观读，它是指当乐观读时假定没有其它线程修改数据，读取完成后再检查下版本号有没有变化，没有变化就读取成功了，这种模式更适用于读多写少的场景。
 
 #### LockSupport
 
@@ -820,11 +1212,307 @@ synchronized是悲观锁，在操作同步资源之前需要给同步资源先�
 
 原理介绍：https://juejin.cn/post/6844903729380982797
 
+#### AQS-AbstractQueuedSycronyzer
+
+基于CAS和volatile实现。
+
+未能成功获取共享变量的**线程会被封装成结点放入一个队列中**，然后 自旋的检查自己的状态，看是否能再次去获取state资源，获取成功则退出当前自旋状态，获取失败则找一个安全的点（成功的找到一个状态<0前驱结点，然后将其状态设置为SIGNAL），调用**LockSupport.park()**方法进入waiting状态。然后等待被前驱结点调用release方法（实际上是调用 **LockSupport.unPark()**）或者被中断唤醒。
+
+#### ReentrantReadWriteLock
+
+
+
+#### 读写锁与共享锁
+
+独享锁和共享锁同样是一种概念。我们先介绍一下具体的概念，然后通过ReentrantLock和ReentrantReadWriteLock的源码来介绍独享锁和共享锁。
+
+独享锁也叫排他锁，是指该锁一次只能被一个线程锁持有。如果线程T对数据A加上排他锁后，则其他线程不能再对A加任何类型的锁。获得排他锁的线程既能读数据又能修改数据。JDK中的synchronized和JUC中Lock的实现类就是互斥锁。
+
+共享锁是指该锁可被多个线程所持有。如果线程T对数据A加上共享锁后，则其他线程只能对A再加共享锁，不能加排他锁。获得共享锁的线程只能读数据，不能修改数据。
+
 #### 什么是对象锁，如何使用
 
-### 进程
+### AOP
+
+#### 代理模式与AOP
+
+通常，我们会使用代理模式来实现 AOP，这就意味着代理模式可以优雅的解决**侵入性业务**问题。代理是设计模式的一种，代理类为委托类提供消息预处理，消息转发，事后消息处理等功能。Java中的代理分为三种角色： `代理类、委托类、接口`。
+
+Java中的代理按照代理类生成时机不同又分为`静态代理`和`动态代理`：
+
+- **静态代理**：静态代理的特点是, 为每一个业务增强都提供一个代理类, 由代理类来创建代理对象. 下面我们通过静态代理来实现对转账业务进行身份验证.
+- **动态代理**：静态代理会为每一个业务增强都提供一个代理类, 由代理类来创建代理对象, 而动态代理并不存在代理类, 代理对象直接由代理生成工具动态生成.
+
+#### JDK动态代理和Cglib代理的区别
+
+| 动态代理         | cglib                                                        | jdk                                                          |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 是否提供子类代理 | 是                                                           | 否                                                           |
+| 是否提供接口代理 | 是                                                           | 是                                                           |
+| 区别             | 必须依赖于CGLib的类库，<br />但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法 | 实现InvocationHandler，使用<br />Proxy.newProxyInstance产生代理对象，被代理的对象必须要实现接口 |
+
+Jdk动态代理：利用拦截器（必须实现InvocationHandler）加上反射机制生成一个代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理
+Cglib动态代理：利用ASM框架，对代理对象类生成的class文件加载进来，通过修改其字节码生成子类来处理
+
+#### Spring如何选择是用JDK还是cglib？
+
+1、当bean实现接口时，会用JDK代理模式
+2、当bean没有实现接口，用cglib实现
+3、可以强制使用cglib（在spring配置中加入<aop:aspectj-autoproxy proxyt-target-class=”true”/>）
+
+#### Cglib比JDK快吗？
+
+cglib底层是ASM字节码生成框架，但是字节码技术生成代理类，在JDL1.6之前比使用java反射的效率要高
+2、在jdk6之后逐步对JDK动态代理进行了优化，在调用次数比较少时效率高于cglib代理效率
+3、只有在大量调用的时候cglib的效率高，但是在1.8的时候JDK的效率已高于cglib
+4、Cglib不能对声明final的方法进行代理，因为cglib是动态生成代理对象，final关键字修饰的类不可变只能被引用不能被修改
 
 ### 多线程
+
+#### **用户态线程和内核态线程有什么区别**？
+
+线程简单理解，就是要执行一段程序。程序不会自发的执行，需要操作系统进行调度。**我们思考这样一个问题，如果有一个用户态的进程，它下面有多个线程。如果这个进程想要执行下面的某一个线程，应该如何做呢**？
+
+这时，比较常见的一种方式，就是将需要执行的程序，让一个内核线程去执行。毕竟，内核线程是真正的线程。因为它会分配到 CPU 的执行资源。
+
+如果一个进程所有的线程都要自己调度，相当于在进程的主线程中实现分时算法调度每一个线程，也就是所有线程都用操作系统分配给主线程的时间片段执行。这种做法，相当于操作系统调度进程的主线程；进程的主线程进行二级调度，调度自己内部的线程。
+
+这样操作劣势非常明显，比如无法利用多核优势，每个线程调度分配到的时间较少，而且这种线程在阻塞场景下会直接交出整个进程的执行权限。
+
+由此可见，**用户态线程创建成本低，问题明显，不可以利用多核。而内核态线程，创建成本高，可以利用多核，切换速度慢**。因此通常我们会在内核中预先创建一些线程，并反复利用这些线程。这样，用户态线程和内核态线程之间就构成了下面 4 种可能的关系：多对多、一对一、多对一、两层设计（多数用户态线程和内核线程是 n 对 m 的关系，少量用户线程可以指定成 1 对 1 的关系）。实际操作中，往往结合两者优势，将用户态线程附着在内核态线程中执行。
+
+- 用户态线程
+
+  > 用户态线程也称作用户级线程（User Level Thread）。操作系统内核并不知道它的存在，它完全是在用户空间中创建。
+  >
+  > 用户级线程有很多优势，比如。
+  >
+  > - **管理开销小**：创建、销毁不需要系统调用。
+  > - **切换成本低**：用户空间程序可以自己维护，不需要走操作系统调度。
+  >
+  > 但是这种线程也有很多的缺点。
+  >
+  > - **与内核协作成本高**：比如这种线程完全是用户空间程序在管理，当它进行 I/O 的时候，无法利用到内核的优势，需要频繁进行用户态到内核态的切换。
+  > - **线程间协作成本高**：设想两个线程需要通信，通信需要 I/O，I/O 需要系统调用，因此用户态线程需要支付额外的系统调用成本。
+  > - **无法利用多核优势**：比如操作系统调度的仍然是这个线程所属的进程，所以无论每次一个进程有多少用户态的线程，都只能并发执行一个线程，因此一个进程的多个线程无法利用多核的优势。
+  > - **操作系统无法针对线程调度进行优化**：当一个进程的一个用户态线程阻塞（Block）了，操作系统无法及时发现和处理阻塞问题，它不会更换执行其他线程，从而造成资源浪费。
+
+- 内核态线程
+
+  > 内核态线程也称作内核级线程（Kernel Level Thread）。这种线程执行在内核态，可以通过系统调用创造一个内核级线程。
+  >
+  > 内核级线程有很多优势。
+  >
+  > - **可以利用多核 CPU 优势**：内核拥有较高权限，因此可以在多个 CPU 核心上执行内核线程。
+  > - **操作系统级优化**：内核中的线程操作 I/O 不需要进行系统调用；一个内核线程阻塞了，可以立即让另一个执行。
+  >
+  > 当然内核线程也有一些缺点。
+  >
+  > - **创建成本高**：创建的时候需要系统调用，也就是切换到内核态。
+  > - **扩展性差**：由一个内核程序管理，不可能数量太多。
+  > - **切换成本较高**：切换的时候，也同样存在需要内核操作，需要切换内核态。
+
+  ![img](images/15836584112280.jpg)
+
+#### Java线程栈跟踪
+
+There are three types of stack trace; Java™ threads, attached native threads and unattached native threads.
+
+https://www.ibm.com/docs/fi/sdk-java-technology/7?topic=tstt-understanding-java-native-thread-details-1
+
+- Java Thread
+
+  > A Java thread runs on a native thread, which means that there are two stack traces for each Java thread. The first stack trace shows the Java methods and the second stack trace shows the native functions. This example is an internal Java thread:
+  >
+  > ```plaintext
+  > 3XMTHREADINFO "Attach API wait loop" J9VMThread:0x23783D00, j9thread_t:0x026958F8, 
+  > java/lang/Thread:0x027F0640, state:R, prio=10
+  > 3XMJAVALTHREAD (java/lang/Thread getId:0xB, isDaemon:true)
+  > 3XMTHREADINFO1 (native thread ID:0x15C, native priority:0xA, native policy:UNKNOWN)
+  > 3XMCPUTIME CPU usage total: 0.562500000 secs, user: 0.218750000 secs, system: 0.343750000 secs
+  > 3XMHEAPALLOC Heap bytes allocated since last GC cycle=0 (0x0)
+  > 3XMTHREADINFO3 Java callstack:
+  > 4XESTACKTRACE at com/ibm/tools/attach/javaSE/IPC.waitSemaphore(Native Method)
+  > 4XESTACKTRACE at com/ibm/tools/attach/javaSE/CommonDirectory.waitSemaphore(CommonDirectory.java:193)
+  > 4XESTACKTRACE at com/ibm/tools/attach/javaSE/AttachHandler$WaitLoop.waitForNotification(AttachHandler.java:337)
+  > 4XESTACKTRACE at com/ibm/tools/attach/javaSE/AttachHandler$WaitLoop.run(AttachHandler.java:415)
+  > 3XMTHREADINFO3 Native callstack:
+  > 4XENATIVESTACK ZwWaitForSingleObject+0x15 (0x7787F8B1 [ntdll+0x1f8b1])
+  > 4XENATIVESTACK WaitForSingleObjectEx+0x43 (0x75E11194 [kernel32+0x11194])
+  > 4XENATIVESTACK WaitForSingleObject+0x12 (0x75E11148 [kernel32+0x11148])
+  > 4XENATIVESTACK j9shsem_wait+0x94 (j9shsem.c:233, 0x7460C394 [J9PRT26+0xc394])
+  > 4XENATIVESTACK Java_com_ibm_tools_attach_javaSE_IPC_waitSemaphore+0x48 (attach.c:480, 0x6FA61E58 [jclse7b_26+0x1e58])
+  > 4XENATIVESTACK VMprJavaSendNative+0x504 (jnisend.asm:521, 0x709746D4 [j9vm26+0x246d4])
+  > 4XENATIVESTACK javaProtectedThreadProc+0x9d (vmthread.c:1868, 0x709A05BD [j9vm26+0x505bd])
+  > 4XENATIVESTACK j9sig_protect+0x44 (j9signal.c:150, 0x7460F0A4 [J9PRT26+0xf0a4])
+  > 4XENATIVESTACK javaThreadProc+0x39 (vmthread.c:298, 0x709A0F39 [j9vm26+0x50f39])
+  > 4XENATIVESTACK thread_wrapper+0xda (j9thread.c:1234, 0x7497464A [J9THR26+0x464a])
+  > 4XENATIVESTACK _endthread+0x48 (0x7454C55C [msvcr100+0x5c55c])
+  > 4XENATIVESTACK _endthread+0xe8 (0x7454C5FC [msvcr100+0x5c5fc])
+  > 4XENATIVESTACK BaseThreadInitThunk+0x12 (0x75E1339A [kernel32+0x1339a])
+  > 4XENATIVESTACK RtlInitializeExceptionChain+0x63 (0x77899EF2 [ntdll+0x39ef2])
+  > 4XENATIVESTACK RtlInitializeExceptionChain+0x36 (0x77899EC5 [ntdll+0x39ec5])
+  > ```
+  >
+  > The Java stack trace includes information about locks that were taken within that stack by calls to synchronized methods or the use of the synchronized keyword.
+  >
+  > After each stack frame in which one or more locks were taken, the Java stack trace might include extra lines starting with 5XESTACKTRACE. These lines show the locks that were taken in the method on the previous line in the trace, and a cumulative total of how many times the locks were taken within that stack at that point. This information is useful for determining the locks that are held by a thread, and when those locks will be released.
+  >
+  > Java locks are re-entrant; they can be entered more than once. Multiple occurrences of the synchronized keyword in a method might result in the same lock being entered more than once in that method. Because of this behavior, the entry counts might increase by more than one, between two method calls in the Java stack, and a lock might be entered at multiple positions in the stack. The lock is not released until the first entry, the one furthest down the stack, is released.
+  >
+  > Java locks are released when the Object.wait() method is called. Therefore a record of a thread entering a lock in its stack does not guarantee that the thread still holds the lock. The thread might be waiting to be notified about the lock, or it might be blocked while attempting to re-enter the lock after being notified. In particular, if another thread calls the Object.notifyAll() method, all threads that are waiting for that monitor must compete to re-enter it, and some threads will become blocked. You can determine whether a thread is blocked or waiting on a lock by looking at the 3XMTHREADBLOCK line for that thread. For more information see [Blocked thread information](https://www.ibm.com/docs/fi/SSYKE2_7.0.0/com.ibm.java.win.70.doc/diag/tools/javadump_tags_blocked_threads.html). A thread that calls the Object.wait() method releases the lock only for the object that it called the Object.wait() method on. All other locks that the thread entered are still held by that thread.
+  >
+  > The following lines show an example Java stack trace for a thread that calls java.io.PrintStream methods:
+  >
+  > ```plaintext
+  > 4XESTACKTRACE at java/io/PrintStream.write(PrintStream.java:504(Compiled Code))
+  > 5XESTACKTRACE    (entered lock: java/io/PrintStream@0xA1960698, entry count: 3)
+  > 4XESTACKTRACE at sun/nio/cs/StreamEncoder.writeBytes(StreamEncoder.java:233(Compiled Code))
+  > 4XESTACKTRACE at sun/nio/cs/StreamEncoder.implFlushBuffer(StreamEncoder.java:303(Compiled Code))
+  > 4XESTACKTRACE at sun/nio/cs/StreamEncoder.flushBuffer(StreamEncoder.java:116(Compiled Code))
+  > 5XESTACKTRACE    (entered lock: java/io/OutputStreamWriter@0xA19612D8, entry count: 1)
+  > 4XESTACKTRACE at java/io/OutputStreamWriter.flushBuffer(OutputStreamWriter.java:203(Compiled Code))
+  > 4XESTACKTRACE at java/io/PrintStream.write(PrintStream.java:551(Compiled Code))
+  > 5XESTACKTRACE    (entered lock: java/io/PrintStream@0xA1960698, entry count: 2)
+  > 4XESTACKTRACE at java/io/PrintStream.print(PrintStream.java:693(Compiled Code))
+  > 4XESTACKTRACE at java/io/PrintStream.println(PrintStream.java:830(Compiled Code))
+  > 5XESTACKTRACE    (entered lock: java/io/PrintStream@0xA1960698, entry count: 1) 
+  > ```
+
+- Attached native thread
+
+  > The attached native threads provide the same set of information as a Java and native thread pair, but do not have a Java stack trace. For example:
+  >
+  > ```plaintext
+  > "JIT Compilation Thread" TID:0x01E92300, j9thread_t:0x00295780, state:CW, prio=10
+  >             (native thread ID:0x3030, native priority:0xB, native policy:UNKNOWN)
+  >            No Java callstack associated with this thread
+  >            Native callstack:
+  >                KiFastSystemCallRet+0x0 (0x7C82860C [ntdll+0x2860c])
+  >                WaitForSingleObject+0x12 (0x77E61C8D [kernel32+0x21c8d])
+  >                monitor_wait_original+0x5a0 (j9thread.c:3593, 0x7FFA49F0 [J9THR26+0x49f0])
+  >                monitor_wait+0x5f (j9thread.c:3439, 0x7FFA443F [J9THR26+0x443f])
+  >                j9thread_monitor_wait+0x14 (j9thread.c:3309, 0x7FFA4354 [J9THR26+0x4354])
+  >                TR_J9Monitor::wait+0x13 (monitor.cpp:61, 0x009B5403 [j9jit26+0x585403])
+  >                protectedCompilationThreadProc+0x2a4 (compilationthread.cpp:2063, 0x0043A284 
+  > [j9jit26+0xa284])
+  >                j9sig_protect+0x42 (j9signal.c:144, 0x7FE117B2 [J9PRT26+0x117b2])
+  >                compilationThreadProc+0x123 (compilationthread.cpp:1996, 0x00439F93 [j9jit26+0x9f93])
+  >                thread_wrapper+0x133 (j9thread.c:975, 0x7FFA1FE3 [J9THR26+0x1fe3])
+  >                _threadstart+0x6c (thread.c:196, 0x7C34940F [msvcr71+0x940f])
+  >                GetModuleHandleA+0xdf (0x77E6482F [kernel32+0x2482f])
+  > ```
+
+- Unattached native thread
+
+  > The unattached native threads do not have meaningful names and provide only minimal information in addition to the stack trace, for example:
+  >
+  > ```plaintext
+  >   Anonymous native thread
+  >             (native thread ID:0x229C, native priority: 0x0, native policy:UNKNOWN)
+  >            Native callstack:
+  >                KiFastSystemCallRet+0x0 (0x7C82860C [ntdll+0x2860c])
+  >                WaitForSingleObject+0x12 (0x77E61C8D [kernel32+0x21c8d])
+  >                j9thread_sleep_interruptable+0x1a7 (j9thread.c:1475, 0x7FFA24C7 [J9THR26+0x24c7])
+  >                samplerThreadProc+0x261 (hookedbythejit.cpp:3227, 0x00449C21 [j9jit26+0x19c21])
+  >                thread_wrapper+0x133 (j9thread.c:975, 0x7FFA1FE3 [J9THR26+0x1fe3])
+  >                _threadstart+0x6c (thread.c:196, 0x7C34940F [msvcr71+0x940f])
+  >                GetModuleHandleA+0xdf (0x77E6482F [kernel32+0x2482f])
+  > ```
+  >
+  > Java dumps are triggered in two distinct ways that influence the structure of the THREADS section:
+  >
+  > - A general protection fault (GPF) occurs:
+  >
+  >   The Current thread subsection contains only the thread that generated the GPF. The other threads are shown in the Thread Details subsection.
+  >
+  > - A user requests a Java dump for an event using, for example, the kill -QUIT command or the com.ibm.jvm.Dump.JavaDump API:
+  >
+  >   There is no Current thread subsection and all threads are shown in the Thread Details subsection.
+
+#### Java线程模型
+
+在Java中，我们平时所说的并发编程、多线程、共享资源等概念都是与线程相关的，这里所说的线程实际上应该叫作“**用户线程**”，而对应到操作系统，还有另外一种线程叫作“**内核线程**”。
+
+用户线程位于内核之上，它的管理无需内核支持；而内核线程由操作系统来直接支持与管理。几乎所有的现代操作系统，包括 Windows、Linux、Mac OS X 和 Solaris，都支持内核线程。
+
+最终，用户线程和内核线程之间必然存在某种关系，本章我们一起来学习下建立这种关系常见的三种方法：多对一模型、一对一模型和多对多模型。
+
+- 多对一模型
+
+> ![thread model](images/16d9ea2a986001dd~tplv-t2oaga2asx-watermark.awebp)
+>
+> 多对一线程模型，又叫作用户级线程模型，即多个用户线程对应到同一个内核线程上，线程的创建、调度、同步的所有细节全部由进程的用户空间线程库来处理。
+>
+> **优点：**
+>
+> - 用户线程的很多操作对内核来说都是透明的，不需要用户态和内核态的频繁切换，使线程的创建、调度、同步等非常快；
+>
+> **缺点：**
+>
+> - 由于多个用户线程对应到同一个内核线程，如果其中一个用户线程阻塞，那么该其他用户线程也无法执行；
+> - 内核并不知道用户态有哪些线程，无法像内核线程一样实现较完整的调度、优先级等；
+>
+> 许多语言实现的协程库基本上都属于这种方式，比如python的gevent。
+
+- 一对一模型
+
+  > 
+  >
+  > ![thread model](images/16d9ea2abd3a8b4c~tplv-t2oaga2asx-watermark.awebp)
+  >
+  > 一对一模型，又叫作内核级线程模型，即一个用户线程对应一个内核线程，内核负责每个线程的调度，可以调度到其他处理器上面。
+  >
+  > **优点：**
+  >
+  > - 实现简单；
+  >
+  > **缺点：**
+  >
+  > - 对用户线程的大部分操作都会映射到内核线程上，引起用户态和内核态的频繁切换；
+  > - 内核为每个线程都映射调度实体，如果系统出现大量线程，会对系统性能有影响；
+  >
+  > Java使用的就是一对一线程模型，所以在Java中启一个线程要谨慎。
+
+- 多对多模型
+
+  > ![thread model](images/16d9ea2aef2e78b5~tplv-t2oaga2asx-watermark.awebp)
+  >
+  > 多对多模型，又叫作两级线程模型，它是博采众长之后的产物，充分吸收前两种线程模型的优点且尽量规避它们的缺点。
+  >
+  > 在此模型下，用户线程与内核线程是多对多（m : n，通常m>=n）的映射模型。
+  >
+  > 首先，区别于多对一模型，多对多模型中的一个进程可以与多个内核线程关联，于是进程内的多个用户线程可以绑定不同的内核线程，这点和一对一模型相似；
+  >
+  > 其次，又区别于一对一模型，它的进程里的所有用户线程并不与内核线程一一绑定，而是可以动态绑定内核线程， 当某个内核线程因为其绑定的用户线程的阻塞操作被内核调度让出CPU时，其关联的进程中其余用户线程可以重新与其他内核线程绑定运行。
+  >
+  > 所以，多对多模型既不是多对一模型那种完全靠自己调度的也不是一对一模型完全靠操作系统调度的，而是中间态（自身调度与系统调度协同工作），因为这种模型的高度复杂性，操作系统内核开发者一般不会使用，所以更多时候是作为第三方库的形式出现。
+  >
+  > **优点：**
+  >
+  > - 兼具多对一模型的轻量；
+  > - 由于对应了多个内核线程，则一个用户线程阻塞时，其他用户线程仍然可以执行；
+  > - 由于对应了多个内核线程，则可以实现较完整的调度、优先级等；
+  >
+  > **缺点：**
+  >
+  > - 实现复杂；
+  >
+  > Go语言中的goroutine调度器就是采用的这种实现方案，在Go语言中一个进程可以启动成千上万个goroutine，这也是其出道以来就自带“高并发”光环的重要原因。
+
+- 总结
+
+  > （1）线程分为用户线程和内核线程；
+  >
+  > （2）线程模型有多对一模型、一对一模型、多对多模型；
+  >
+  > （3）操作系统一般只实现到一对一模型；
+  >
+  > （4）Java使用的是一对一线程模型，所以它的一个线程对应于一个内核线程，调度完全交给操作系统来处理；
+  >
+  > （5）Go语言使用的是多对多线程模型，这也是其高并发的原因，它的线程模型与Java中的ForkJoinPool非常类似；
+  >
+  > （6）python的gevent使用的是多对一线程模型；
 
 #### 进程和线程之间有什么区别
 
@@ -860,16 +1548,32 @@ Thread also implements *Runnable*, so another way of starting a thread is to cre
  thread2.start();
 ```
 
-#### 介绍一下线程的状态，以及状态在什么时候会发生变化
+#### 介绍一下线程的状态，以及状态的变化
 
 The state of a *Thread* can be checked using the *Thread.getState()* method. Different states of a *Thread* are described in the *Thread.State* enum. They are:
 
-- ***NEW\*** — a new *Thread* instance that was not yet started via *Thread.start()*
-- ***RUNNABLE\*** — a running thread. It is called runnable because at any given time it could be either running or waiting for the next quantum of time from the thread scheduler. A *NEW* thread enters the *RUNNABLE* state when you call *Thread.start()* on it
-- ***BLOCKED\*** — a running thread becomes blocked if it needs to enter a synchronized section but cannot do that due to another thread holding the monitor of this section
-- ***WAITING\*** — a thread enters this state if it waits for another thread to perform a particular action. For instance, a thread enters this state upon calling the *Object.wait()* method on a monitor it holds, or the *Thread.join()* method on another thread
-- ***TIMED_WAITING\*** — same as the above, but a thread enters this state after calling timed versions of *Thread.sleep()*, *Object.wait()*, *Thread.join()* and some other methods
-- ***TERMINATED\*** — a thread has completed the execution of its *Runnable.run()* method and terminated
+![线程状态图](images/1460000023194699.jpeg)
+
+| 状态                          | 描述                                                         |
+| ----------------------------- | ------------------------------------------------------------ |
+| 初始状态(NEW)                 | 实现Runnable接口和继承Thread可以得到一个线程类，new一个实例出来，线程就进入了初始状态。 |
+| 就绪状态(RUNNABLE之READY)     | 就绪状态只是说你资格运行，调度程序(**Cpu**)没有挑选到你，你就永远是就绪状态。<br />调用线程的start()方法，此线程进入就绪状态。 当<br />前线程sleep()方法结束，其他线程join()结束，等待用户输入完毕，某个线程拿到对象锁，这些线程也将进入就绪状态。 <br />当前线程时间片用完了，调用当前线程的yield()方法，当前线程进入就绪状态。 <br />锁池里的线程拿到对象锁后，进入就绪状态。 |
+| 运行中状态(RUNNABLE之RUNNING) | 线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。<br />这也是线程进入运行状态的唯一的一种方式。 |
+| 阻塞状态(BLOCKED)             | 阻塞状态是线程阻塞在进入synchronized关键字修饰的方法或代码块(获取锁)时的状态。 |
+| 等待**(WAITING)**             | 处于这种状态的线程不会被分配CPU执行时间，它们要等待被显式地唤醒，否则会处于无限期等待的状态。 |
+| 超时等待**(TIMED_WAITING)**   | 处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。 |
+| 终止状态(TERMINATED)          | 当线程的run()方法完成时，或者主线程的main()方法完成时，我们就认为它终止了。<br />这个线程对象也许是活的，但是它已经不是一个单独执行的线程。<br />线程一旦终止了，就不能复生。<br />在一个终止的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常。 |
+
+#### 线程操作的方法比较
+
+| 方法                                                         | 说明                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Thread.sleep(long millis)                                    | **一定是当前线程调用此方法，当前线程进入TIMED_WAITING状态，`但不释放对象锁`，millis后线程自动苏醒进入就绪状态。**作用：给其它线程执行机会的最佳方式。 |
+| Thread.yield()                                               | 一定是当前线程调用此方法，当前线程放弃获取的CPU时间片，但不释放锁资源，由运行状态变为就绪状态，让OS再次选择线程。 <br />**作用**：让相同优先级的线程轮流执行，但并不保证一定会轮流执行。实际中无法保证yield()达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。Thread.yield()不会导致阻塞。该方法与sleep()类似，只是不能由用户指定暂停多长时间。 |
+| hread.join()<br />thread.join(long millis)                   | 当前线程里调用其它线程t的join方法，当前线程进入WAITING/TIMED_WAITING状态，当前线程不会释放已经持有的对象锁。<br />线程t执行完毕或者millis时间到，当前线程一般情况下进入RUNNABLE状态，也有可能进入BLOCKED状态（因为join是基于wait实现的） |
+| Object.wait()                                                | 当前线程调用对象的wait()方法，当前线程释放对象锁，进入等待队列。依靠notify()/notifyAll()唤醒或者wait(long timeout) timeout时间到自动唤醒。 |
+| Object.notify()                                              | Object.notify()唤醒在此对象监视器上等待的单个线程，选择是任意性的。notifyAll()唤醒在此对象监视器上等待的所有线程。 |
+| LockSupport.park()<br />LockSupport.parkNanos(long nanos)<br />LockSupport.parkUntil(long deadlines) | 当前线程进入WAITING/TIMED_WAITING状态。<br />对比wait方法,不需要获得锁就可以让线程进入WAITING/TIMED_WAITING状态，需要通过LockSupport.unpark(Thread thread)唤醒。 |
 
 #### Callable和Runable接口有什么区别，如何使用
 
@@ -1172,6 +1876,95 @@ https://sq.sf.163.com/blog/article/200006580885712896
 
 2、使用支持原子性操作的类，如 `java.util.concurrent.atomic.AtomicInteger`，它使用的是 CAS 算法，效率优于第 1 种；
 
+#### ThreadPoolExecutor参数说明
+
+在《阿里巴巴java开发手册》中指出了线程资源必须通过线程池提供，不允许在应用中自行显示的创建线程，这样一方面是线程的创建更加规范，可以合理控制开辟线程的数量；另一方面线程的细节管理交给线程池处理，优化了资源的开销。而线程池不允许使用Executors去创建，而要通过ThreadPoolExecutor方式，这一方面是由于jdk中Executor框架虽然提供了如newFixedThreadPool()、newSingleThreadExecutor()、newCachedThreadPool()等创建线程池的方法，但都有其局限性，不够灵活；另外由于前面几种方法内部也是通过ThreadPoolExecutor方式实现，使用ThreadPoolExecutor有助于大家明确线程池的运行规则，创建符合自己的业务场景需要的线程池，避免资源耗尽的风险。线程池ThreadPoolExecutor有以下参数：
+
+```
+1、corePoolSize：核心线程数
+* 核心线程会一直存活，及时没有任务需要执行
+* 当线程数小于核心线程数时，即使有线程空闲，线程池也会优先创建新线程处理
+* 设置allowCoreThreadTimeout=true（默认false）时，核心线程会超时关闭
+
+2、queueCapacity：任务队列容量（阻塞队列）
+* 当核心线程数达到最大时，新任务会放在队列中排队等待执行
+
+3、maxPoolSize：最大线程数
+* 当线程数>=corePoolSize，且任务队列已满时。线程池会创建新线程来处理任务
+* 当线程数=maxPoolSize，且任务队列已满时，线程池会拒绝处理任务而抛出异常
+
+4、 keepAliveTime：线程空闲时间
+* 当线程空闲时间达到keepAliveTime时，线程会退出，直到线程数量=corePoolSize
+* 如果allowCoreThreadTimeout=true，则会直到线程数量=0
+
+5、allowCoreThreadTimeout：允许核心线程超时
+6、rejectedExecutionHandler：任务拒绝处理器
+* 两种情况会拒绝处理任务：
+- 当线程数已经达到maxPoolSize，切队列已满，会拒绝新任务
+- 当线程池被调用shutdown()后，会等待线程池里的任务执行完毕，再shutdown。如果在调用shutdown()和线程池真正shutdown之间提交任务，会拒绝新任务
+* 线程池会调用rejectedExecutionHandler来处理这个任务。如果没有设置默认是AbortPolicy，会抛出异常
+* ThreadPoolExecutor类有几个内部实现类来处理这类情况：
+- AbortPolicy 丢弃任务，抛运行时异常
+- CallerRunsPolicy 执行任务
+- DiscardPolicy 忽视，什么都不会发生
+- DiscardOldestPolicy 从队列中踢出最先进入队列（最后一个执行）的任务
+* 实现RejectedExecutionHandler接口，可自定义处理器
+```
+
+### 错误和异常
+
+#### Java异常体系的层次
+
+所有的异常类是从 java.lang.Exception 类继承的子类。
+
+Exception 类是 Throwable 类的子类。除了Exception类外，Throwable还有一个子类Error 。
+
+Java 程序通常不捕获错误。错误一般发生在严重故障时，它们在Java程序处理的范畴之外。
+
+Error 用来指示运行时环境发生的错误。例如，JVM 内存溢出。一般地，程序不会从错误中恢复。
+
+异常类有两个主要的子类：IOException 类和 RuntimeException 类。
+
+![img](images/exception-hierarchy.png)
+
+### ByteCode
+
+#### bytecode存在的意义
+
+为了保证WORA（Write-once-run-every），JVM使用Java字节码这种介于Java和机器语言之间的中间语言。**字节码是部署Java代码的最小单位。**
+
+#### 什么是javaagent
+
+javaagent是一种能够在不影响正常编译的情况下，修改字节码。java作为一种强类型的语言，不通过编译就不能能够进行jar包的生成。而有了javaagent技术，就可以在字节码这个层面对类和方法进行修改。同时，也可以把javaagent理解成一种代码注入的方式。但是这种注入比起spring的aop更加的优美。
+
+#### javaagent可以实现哪些功能
+
+可以在加载java文件之前做拦截把字节码做修改
+
+可以在运行期将已经加载的类的字节码做变更，但是这种情况下会有很多的限制，后面会详细说还有其他的一些小众的功能
+
+获取所有已经被加载过的类
+
+获取所有已经被初始化过了的类（执行过了clinit方法，是上面的一个子集）
+
+获取某个对象的大小
+
+将某个jar加入到bootstrapclasspath里作为高优先级被bootstrapClassloader加载
+
+将某个jar加入到classpath里供AppClassload去加载
+
+设置某些native方法的前缀，主要在查找native方法的时候做规则匹配
+
+#### agentjar和普通jar的区别
+
+|                     | 运行时jar         | agent              |
+| ------------------- | ----------------- | ------------------ |
+| 入口方法名称        | Main              | premain            |
+| Maninfe.MF 主要参数 | Main-class        | Premain-Class      |
+| 启动参数            | java -jar xxx.jar | -javaagent:xxx.jar |
+| 执行顺序            | 后                | 先                 |
+| 是否独立启动        | 是                | 否                 |
+
 ## 开发框架
 
 ### Netty
@@ -1264,7 +2057,7 @@ NioEventLoopGroup(其实是 MultithreadEventExecutorGroup) 内部维护一个类
 
 使用f9 调试的时候 只会执行 打断点的地方 
 
-### JMH微基准测试框架 Java Microbenchmark Harness
+### JMH微基准测试框架
 
 #### 应用场景
 
@@ -1393,5 +2186,56 @@ Java的基准测试需要注意的几个点：
  }
 ```
 
-#### 
+## 问题排查
+
+### JVM
+
+#### Java应用宕机排查步骤
+
+| 命令                                                    | 说明                               |
+| ------------------------------------------------------- | ---------------------------------- |
+| jps -l                                                  | 查看PID                            |
+| jstack [option] <pid>                                   | 打印线程栈信息                     |
+| jstack -l pid                                           | 查看死锁相关的信息                 |
+| jstack -F <pid>                                         | 进程无响应时，强制打印栈信息       |
+| jmap -heap <pid>                                        | 查看堆使用量                       |
+| jmap -histo[:live] <pid>                                | 展示堆中对象统计信息               |
+| jmap -finalizerinfo <pid>                               | 打印等待终结的对象信息             |
+| jmap -dump:<dump-options>                               | 生产转储快照(会导致暂停，线上慎用) |
+| top -Hp <pid>                                           | Java线程CPU利用率                  |
+| ps -Tp PID                                              | 输出线程                           |
+| ps -ef \| grep syslog\|grep -v "grep"\|awk '{print $2}' | 根据线程名获取PID                  |
+| pstree -p <pid>                                         | 树形展示 CPID                      |
+| jstat -gcutil <pid>                                     | GC次数                             |
+
+#### OutOfMemoryError: Unable to create new native thread
+
+JVM向操作系统申请创建新的 [native](https://so.csdn.net/so/search?q=native&spm=1001.2101.3001.7020) thread(原生线程)时, 就有可能会碰到 *java.lang.OutOfMemoryError: Unable to create new native thread* 错误. 如果底层操作系统创建新的 native thread 失败, JVM就会抛出相应的OutOfMemoryError. 原生线程的数量受到具体环境的限制, 通过一些测试用例可以找出这些限制, 请参考下文的示例. 但总体来说, 导致 *java.lang.OutOfMemoryError: Unable to create new native thread* 错误的场景大多经历以下这些阶段:
+
+1. Java程序向JVM请求创建一个新的Java线程;
+
+2. JVM本地代码(native code)代理该请求, 尝试创建一个操作系统级别的 native thread(原生线程);
+
+3. 操作系统尝试创建一个新的native thread, 需要同时分配一些内存给该线程;
+
+4. 如果操作系统的虚拟内存已耗尽, 或者是受到32位进程的地址空间限制(约2-4GB), OS就会拒绝本地内存分配;
+
+5. JVM抛出 *java.lang.OutOfMemoryError: Unable to create new native thread* 错误。
+
+6. 有时可以修改系统限制来避开 *Unable to create new native thread* 问题。
+   假如JVM受到用户空间(user space)文件数量的限制, 像下面这样,就应该想办法增大这个值:
+
+   ```
+   [root@dev ~]# ulimit -a
+   core file size          (blocks, -c) 0
+   ...... 省略部分内容 ......
+   max user processes              (-u) 1800
+   12345
+   ```
+
+   更多的情况, 触发创建 native 线程时的OutOfMemoryError, 表明编程存在BUG. 比如, 程序创建了成千上万的线程, 很可能就是某些地方出大问题了 —— 没有几个程序可以 Hold 住上万个线程的。
+
+
+
+
 
