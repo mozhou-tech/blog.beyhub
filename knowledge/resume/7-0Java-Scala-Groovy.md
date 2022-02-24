@@ -200,7 +200,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >   {
    >       public static int a = 1;
    >       public int b;
-   >                   
+   >                     
    >       public Model(int b) {
    >           this.b = b;
    >       }
@@ -226,7 +226,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >   </dependency>
    >   # 使用方法
    >   # log.info("{}", VM.current().details());
-   >                   
+   >                     
    >   # log.info("{}",ClassLayout.parseClass(String.class).toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >        OFFSET  SIZE      TYPE DESCRIPTION               VALUE
@@ -240,7 +240,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >            22     2           (loss due to the next object alignment)
    >       Instance size: 24 bytes
    >       Space losses: 0 bytes internal + 2 bytes external = 2 bytes total
-   >                   
+   >                     
    >   # log.info("{}",ClassLayout.parseInstance("www.flydean.com").toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >      OFFSET  SIZE      TYPE DESCRIPTION                               VALUE
@@ -408,6 +408,21 @@ Xmn指定年轻代大小，Xmx=Xmn+老年代（不包含PermSize或MetaSpace）
 | ----------------------------- | ------------------------------------------------------------ |
 | 频繁发生FCG，导致应用经常卡顿 | Jstat -gcutil <pid>查看FGC次数<br />1. 新生代SurvivorTo区域太小，对象被分配到老年代，导致老年代对象不断增加（1.8中默认开启AdaptiveSizePolicy，可能会导致该问题）<br />2. 大对象过多，可以尝试对象池 |
 
+#### GC Roots与可达性分析
+
+- 哪些对象可以作为GC Roots
+
+> - 虚拟机栈（栈帧中的本地变量表）中引用的对象
+> - 本地方法栈中 JNI（即一般说的 Native 方法）引用的对象
+> - 方法区中类静态属性引用的对象
+> - 方法区中常量引用的对象
+>
+> 总结：栈（虚拟机栈、Native栈）、方法区（常量池、静态对象）
+
+- 什么是可达性分析
+
+  > 现代虚拟机基本都是采用可达性分析算法来判断对象是否存活，可达性算法的原理是以一系列叫做  **GC Root** 的对象为起点出发，引出它们指向的下一个节点，再以下个节点为起点，引出此节点指向的下一个结点。这样通过 GC Root 串成的一条线就叫**引用链 Reference Chain**），直到所有的结点都遍历完毕,如果相关对象不在任意一个以 **GC Root** 为起点的引用链中，则这些对象会被判断为垃圾对象,会被 GC 回收。
+
 #### GC垃圾收集器
 
 查看当前支持的垃圾回收器：java -XX:+UnlockDiagnosticVMOptions -XX:+PrintFlagsFinal -version
@@ -428,8 +443,8 @@ Xmn指定年轻代大小，Xmx=Xmn+老年代（不包含PermSize或MetaSpace）
 | 垃圾收集器                            | 作用分代 | 算法            | 优点                                                         | 缺点                                                         |
 | ------------------------------------- | -------- | --------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | -XX:+UseParNewGC                      | Young    |                 |                                                              |                                                              |
-| -XX:+UseSerialGC                      | Young    | 标记复制        |                                                              | 单线程，无并发                                               |
-| -XX:+UseSerialOldGC                   | Old      | 标记整理        |                                                              | 单线程，无并发                                               |
+| -XX:+UseSerialGC                      | Young    | MarkCopy        |                                                              | 单线程，无并发                                               |
+| -XX:+UseSerialOldGC                   | Old      | MarkSweep       |                                                              | 单线程，无并发                                               |
 | +UseParallelGC<br />+UseParallelOldGC | Old      |                 |                                                              |                                                              |
 | +UseConcMarkSweepGC                   | Old      |                 | 多线程并发标记，停顿短                                       | 没有compact，产生内存碎片<br />CMF问题：剩余空间足够，但没有足够的<br />连续空间存储对象，会降级为SerialGC<br />（G1出来CMS没人维护，所以没有Parallel版本） |
 | -XX:+UseG1GC                          |          | 三色标记 + SATB | 多线程并发标记，高吞吐，低延迟；<br />取代CMS具备内存整理功能；可指定期望STW时间；适合大堆； | 最小存储单元为512Byte，浪费内存                              |
