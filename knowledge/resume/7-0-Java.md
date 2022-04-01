@@ -208,7 +208,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >   {
    >       public static int a = 1;
    >       public int b;
-   >                       
+   >                         
    >       public Model(int b) {
    >           this.b = b;
    >       }
@@ -234,7 +234,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >   </dependency>
    >   # 使用方法
    >   # log.info("{}", VM.current().details());
-   >                       
+   >                         
    >   # log.info("{}",ClassLayout.parseClass(String.class).toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >        OFFSET  SIZE      TYPE DESCRIPTION               VALUE
@@ -248,7 +248,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >            22     2           (loss due to the next object alignment)
    >       Instance size: 24 bytes
    >       Space losses: 0 bytes internal + 2 bytes external = 2 bytes total
-   >                       
+   >                         
    >   # log.info("{}",ClassLayout.parseInstance("www.flydean.com").toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >      OFFSET  SIZE      TYPE DESCRIPTION                               VALUE
@@ -722,6 +722,10 @@ Xmn指定年轻代大小，Xmx=Xmn+老年代（不包含PermSize或MetaSpace）
   >   > 2. 同时，每次混合收集可以包含候选老年代分区，可根据`CSet`对堆的总大小占比`-XX:G1OldCSetRegionThresholdPercent`(默认10%)设置数量上限。
   >   >
   >   > 由上述可知，G1的收集都是根据`CSet`进行操作的，年轻代收集（`YGC`）与混合收集（`Mixed GC`）没有明显的不同，最大的区别在于两种收集的触发条件。
+  >   
+  > - G1和CMS对比
+  >
+  >   > ![Java中9种常见的CMS GC问题分析与解决- 美团技术团队](images/3a6dacdd87bfbec847d33d09dbe6226d199915.png)
   >
   > 
 
