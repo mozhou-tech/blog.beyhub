@@ -208,7 +208,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >   {
    >       public static int a = 1;
    >       public int b;
-   >                         
+   >                           
    >       public Model(int b) {
    >           this.b = b;
    >       }
@@ -234,7 +234,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >   </dependency>
    >   # 使用方法
    >   # log.info("{}", VM.current().details());
-   >                         
+   >                           
    >   # log.info("{}",ClassLayout.parseClass(String.class).toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >        OFFSET  SIZE      TYPE DESCRIPTION               VALUE
@@ -248,7 +248,7 @@ Java is not 100% Object-oriented because it makes use of eight primitive data ty
    >            22     2           (loss due to the next object alignment)
    >       Instance size: 24 bytes
    >       Space losses: 0 bytes internal + 2 bytes external = 2 bytes total
-   >                         
+   >                           
    >   # log.info("{}",ClassLayout.parseInstance("www.flydean.com").toPrintable());
    >     [main] INFO com.flydean.JolUsage - java.lang.String object internals:
    >      OFFSET  SIZE      TYPE DESCRIPTION                               VALUE

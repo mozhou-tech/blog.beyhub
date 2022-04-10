@@ -1,3 +1,25 @@
+## Go编译器
+
+### 交叉编译
+
+#### 编译方式
+
+```
+# mac上编译linux和windows二进制
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build 
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build 
+
+# linux上编译mac和windows二进制
+CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build 
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build
+
+# windows上编译mac和linux二进制
+SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go
+SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go
+```
+
+## 基本语法
+
 ### 基本理解
 
 #### [Go 是传值还是传引用？](https://mp.weixin.qq.com/s?__biz=MzUxMDI4MDc1NA==&mid=2247489302&idx=1&sn=c787d1fa4546e12c7e55e880da73c91f&scene=21#wechat_redirect)
@@ -44,7 +66,7 @@ Go 官方发现：**负载因子太大了，会有很多溢出的桶。太小了
 
 这意味着在 Go 语言中，**当 B（bucket）平均每个存储的元素大于或等于 6.5 时，就会触发扩容行为**，这是作为我们用户对这个数值最近的接触。
 
-### 垃圾回收器
+## 垃圾回收器
 
 #### 介绍GO中垃圾回收机制
 
