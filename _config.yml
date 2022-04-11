@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 谁是猫-whoiscat.com
+title: 采菊东篱
 subtitle: ""
 description: ""
 keywords:
-author: 大厂面试官
+author: 采菊东篱
 language: zh-CN
-timezone: ""
+timezone: "GMT+8"
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://whoiscat.com
+url: https://beyhub.com
 permalink: p/:hash/
 permalink_defaults:
 pretty_urls:
@@ -96,7 +96,7 @@ ignore:
 
 permalink_pinyin:
   enable: true
-  separator: '-' # default: '-'
+  separator: "-" # default: '-'
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
@@ -118,41 +118,41 @@ livereload: true
 neat_enable: true
 neat_html:
   enable: true
-  exclude:  
+  exclude:
 neat_css:
   enable: true
   exclude:
-    - '*.min.css'
+    - "*.min.css"
 neat_js:
   enable: true
   mangle: true
   output:
   compress:
   exclude:
-    - '*.min.js' 
+    - "*.min.js"
 
 markdown:
-  preset: 'default'
+  preset: "default"
   render:
     html: true
     xhtmlOut: false
-    langPrefix: 'language-'
+    langPrefix: "language-"
     breaks: true
     linkify: true
     typographer: true
-    quotes: '“”‘’'
+    quotes: "“”‘’"
   enable_rules:
   disable_rules:
   plugins:
   anchors:
     level: 3
-    collisionSuffix: ''
+    collisionSuffix: ""
     permalink: false
-    permalinkClass: 'header-anchor'
-    permalinkSide: 'left'
-    permalinkSymbol: '¶'
+    permalinkClass: "header-anchor"
+    permalinkSide: "left"
+    permalinkSymbol: "¶"
     case: 0
-    separator: '-'
+    separator: "-"
 
 # 示例: 隐藏分类和标签的搜索
 jsonContent:
@@ -172,7 +172,7 @@ jsonContent:
     excerpt: false
     categories: false
     tags: true
-    author: false        
+    author: false
 
 toc:
   maxDepth: 3
@@ -181,6 +181,5 @@ toc:
   decodeEntities: false
   anchor:
     position: after
-    symbol: '#'
-    style: header-anchor    
-  
+    symbol: "#"
+    style: header-anchor
