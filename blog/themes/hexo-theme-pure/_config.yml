@@ -124,16 +124,6 @@ comment:
     repo: blog.beyhub #必须. GitHub repository.
     ClientID: ee8f999e0f9bc543af45 #必须. GitHub Application Client ID.
     ClientSecret: 59f70646d601b0e9fa57a17b45d83bfcf391a146 #必须. GitHub Application Client Secret.
-  valine: # Valine. https://valine.js.org
-    appid: # your leancloud application appid
-    appkey: # your leancloud application appkey
-    notify: false # mail notifier , https://github.com/xCss/Valine/wiki
-    verify: false # Verification code
-    placeholder: Just go go # comment box placeholder
-    avatar: mm # gravatar style
-    meta: nick,mail,link # custom comment header
-    pageSize: 10 # pagination size
-    visitor: false # Article reading statistic https://valine.js.org/visitor.html
 douban:
   user: # 豆瓣用户名
   start: 0 # 从哪一条记录开始
@@ -175,7 +165,7 @@ profile:
   gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
   author: 刘远程Lester
   author_title: 采菊东篱下，悠然见南山。
-  author_description: 永远年轻，永远热泪盈眶；永远只相信一切事实及其推论。
+  author_description: 永远只相信一切事实及其推论。
   location: NanJing, China
   follow: https://github.com/tenstone
   # Social Links
@@ -183,6 +173,7 @@ profile:
     links:
       github: https://github.com/tenstone
       weibo: http://weibo.com/lyc90
+      twitter: https://twitter.com/lesterlaucn
       # facebook: /
       # dribbble: /
       rss: atom.xml
