@@ -6,6 +6,7 @@ categories:
   - "Java"
 tags:
   - "原理"
+toc: true
 ---
 
 Map 集合和 Collection 集合不同，Map 集合是基于键（key）/值（value）的映射，Collection中的集合，元素是孤立存在的，向集合中存储元素采用一个个元素的方式存储；Map中的集合，元素是成对存在的，每个元素由键与值两部分组成，通过键可以找对所对应的值。
@@ -17,15 +18,15 @@ Collection中的集合称为单列集合，Map中的集合称为双列集合。�
 
 ## 比较
 
-||HashMap|TreeMap|HashTable|
-|---|---|---|---|
-|实现|基于哈希散列表实现|SortMap接口，基于红黑树|继承自Dictionary|
-|存储|随机存储|默认按键的升序排序|随机存储|
-|遍历|Iterator遍历是随机的|Iterator遍历是排序的|Enumeration和Iterator|
-|性能损耗|几乎无|插入、删除|几乎无|
-|键值对|只允许键、值均为null|键、值都不能为null|不允许null|
-|线程安全|否|否|是|
-|效率|高|低|高|
+|          | HashMap              | TreeMap                 | HashTable             |
+| -------- | -------------------- | ----------------------- | --------------------- |
+| 实现     | 基于哈希散列表实现   | SortMap接口，基于红黑树 | 继承自Dictionary      |
+| 存储     | 随机存储             | 默认按键的升序排序      | 随机存储              |
+| 遍历     | Iterator遍历是随机的 | Iterator遍历是排序的    | Enumeration和Iterator |
+| 性能损耗 | 几乎无               | 插入、删除              | 几乎无                |
+| 键值对   | 只允许键、值均为null | 键、值都不能为null      | 不允许null            |
+| 线程安全 | 否                   | 否                      | 是                    |
+| 效率     | 高                   | 低                      | 高                    |
 
 一般情况下我们选用HashMap，因为HashMap的键值对在取出时是随机的，其依据键的hashCode和键的equals方法存取数据，具有很快的访问速度，所以在Map中插入、删除及索引元素时其是效率最高的实现。而TreeMap的键值对在取出时是排过序的，所以效率会低点。
 
