@@ -2,15 +2,15 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>采菊东篱</title>
   
+  <subtitle>东篱采菊，终见南山</subtitle>
+  <link href="https://blog.beyhub.com/atom.xml" rel="self"/>
   
-  <link href="https://beyhub.com/atom.xml" rel="self"/>
-  
-  <link href="https://beyhub.com/"/>
+  <link href="https://blog.beyhub.com/"/>
   <updated>2021-09-08T06:04:12.979Z</updated>
-  <id>https://beyhub.com/</id>
+  <id>https://blog.beyhub.com/</id>
   
   <author>
-    <name>刘远程 LesterYates</name>
+    <name>刘远程 Lester</name>
     
   </author>
   
@@ -18,8 +18,8 @@
   
   <entry>
     <title>JVM-Architecture.md</title>
-    <link href="https://beyhub.com/p/083596e42d0e/"/>
-    <id>https://beyhub.com/p/083596e42d0e/</id>
+    <link href="https://blog.beyhub.com/p/083596e42d0e/"/>
+    <id>https://blog.beyhub.com/p/083596e42d0e/</id>
     <published>2021-09-07T09:25:59.000Z</published>
     <updated>2021-09-08T06:04:12.979Z</updated>
     
@@ -33,19 +33,19 @@
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="Java" scheme="https://beyhub.com/tags/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/tags/Java/"/>
     
-    <category term="JVM" scheme="https://beyhub.com/tags/JVM/"/>
+    <category term="JVM" scheme="https://blog.beyhub.com/tags/JVM/"/>
     
   </entry>
   
   <entry>
     <title>后端/JavaMemoryModel.md</title>
-    <link href="https://beyhub.com/p/476907c7a509/"/>
-    <id>https://beyhub.com/p/476907c7a509/</id>
+    <link href="https://blog.beyhub.com/p/476907c7a509/"/>
+    <id>https://blog.beyhub.com/p/476907c7a509/</id>
     <published>2021-09-07T09:14:55.000Z</published>
     <updated>2021-09-07T09:24:41.235Z</updated>
     
@@ -59,19 +59,19 @@
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="Java" scheme="https://beyhub.com/tags/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/tags/Java/"/>
     
-    <category term="JMM" scheme="https://beyhub.com/tags/JMM/"/>
+    <category term="JMM" scheme="https://blog.beyhub.com/tags/JMM/"/>
     
   </entry>
   
   <entry>
     <title>从ReentrantLock的实现看AQS的原理</title>
-    <link href="https://beyhub.com/p/74ca2f9792d3/"/>
-    <id>https://beyhub.com/p/74ca2f9792d3/</id>
+    <link href="https://blog.beyhub.com/p/74ca2f9792d3/"/>
+    <id>https://blog.beyhub.com/p/74ca2f9792d3/</id>
     <published>2021-08-24T11:16:18.755Z</published>
     <updated>2021-08-25T01:05:30.131Z</updated>
     
@@ -82,21 +82,21 @@
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="Java" scheme="https://beyhub.com/tags/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/tags/Java/"/>
     
-    <category term="锁" scheme="https://beyhub.com/tags/%E9%94%81/"/>
+    <category term="锁" scheme="https://blog.beyhub.com/tags/%E9%94%81/"/>
     
-    <category term="高并发" scheme="https://beyhub.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    <category term="高并发" scheme="https://blog.beyhub.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Java SDK中的SPI机制</title>
-    <link href="https://beyhub.com/p/f429d0e59d95/"/>
-    <id>https://beyhub.com/p/f429d0e59d95/</id>
+    <link href="https://blog.beyhub.com/p/f429d0e59d95/"/>
+    <id>https://blog.beyhub.com/p/f429d0e59d95/</id>
     <published>2021-08-23T11:38:08.523Z</published>
     <updated>2021-08-24T11:13:29.412Z</updated>
     
@@ -107,17 +107,17 @@
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="java" scheme="https://beyhub.com/tags/java/"/>
+    <category term="java" scheme="https://blog.beyhub.com/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>关系型数据库的单列索引与联合索引</title>
-    <link href="https://beyhub.com/p/4d4a323f1983/"/>
-    <id>https://beyhub.com/p/4d4a323f1983/</id>
+    <link href="https://blog.beyhub.com/p/4d4a323f1983/"/>
+    <id>https://blog.beyhub.com/p/4d4a323f1983/</id>
     <published>2021-08-21T19:51:02.000Z</published>
     <updated>2021-08-23T02:31:53.330Z</updated>
     
@@ -128,19 +128,19 @@
     
     
     
-    <category term="数据库" scheme="https://beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://blog.beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="MySQL" scheme="https://beyhub.com/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://blog.beyhub.com/tags/MySQL/"/>
     
-    <category term="面试题" scheme="https://beyhub.com/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <category term="面试题" scheme="https://blog.beyhub.com/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title>HashMap、Hashtable等Map接口的实现和原理</title>
-    <link href="https://beyhub.com/p/2b5aebafa2f6/"/>
-    <id>https://beyhub.com/p/2b5aebafa2f6/</id>
+    <link href="https://blog.beyhub.com/p/2b5aebafa2f6/"/>
+    <id>https://blog.beyhub.com/p/2b5aebafa2f6/</id>
     <published>2020-04-11T02:51:09.000Z</published>
     <updated>2021-08-21T11:48:53.962Z</updated>
     
@@ -153,17 +153,17 @@
     
     
     
-    <category term="Java" scheme="https://beyhub.com/categories/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/categories/Java/"/>
     
     
-    <category term="原理" scheme="https://beyhub.com/tags/%E5%8E%9F%E7%90%86/"/>
+    <category term="原理" scheme="https://blog.beyhub.com/tags/%E5%8E%9F%E7%90%86/"/>
     
   </entry>
   
   <entry>
     <title>MySQL索引底层的数据结构与算法</title>
-    <link href="https://beyhub.com/p/ea1ec3c52bb7/"/>
-    <id>https://beyhub.com/p/ea1ec3c52bb7/</id>
+    <link href="https://blog.beyhub.com/p/ea1ec3c52bb7/"/>
+    <id>https://blog.beyhub.com/p/ea1ec3c52bb7/</id>
     <published>2020-04-10T23:25:19.000Z</published>
     <updated>2021-08-21T04:12:22.449Z</updated>
     
@@ -182,17 +182,17 @@
     
     
     
-    <category term="Java" scheme="https://beyhub.com/categories/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/categories/Java/"/>
     
     
-    <category term="MySQL" scheme="https://beyhub.com/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://blog.beyhub.com/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>Markmap</title>
-    <link href="https://beyhub.com/p/603ae4015c97/"/>
-    <id>https://beyhub.com/p/603ae4015c97/</id>
+    <link href="https://blog.beyhub.com/p/603ae4015c97/"/>
+    <id>https://blog.beyhub.com/p/603ae4015c97/</id>
     <published>2020-04-10T22:06:41.000Z</published>
     <updated>2021-08-21T10:48:30.855Z</updated>
     
@@ -206,17 +206,17 @@
     
     
     
-    <category term="杂文" scheme="https://beyhub.com/categories/%E6%9D%82%E6%96%87/"/>
+    <category term="杂文" scheme="https://blog.beyhub.com/categories/%E6%9D%82%E6%96%87/"/>
     
     
-    <category term="MySQL" scheme="https://beyhub.com/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://blog.beyhub.com/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>Mybatis 动态SQL</title>
-    <link href="https://beyhub.com/p/c080a06a7d4a/"/>
-    <id>https://beyhub.com/p/c080a06a7d4a/</id>
+    <link href="https://blog.beyhub.com/p/c080a06a7d4a/"/>
+    <id>https://blog.beyhub.com/p/c080a06a7d4a/</id>
     <published>2020-04-10T22:06:41.000Z</published>
     <updated>2021-08-21T04:12:22.449Z</updated>
     
@@ -229,17 +229,17 @@
     
     
     
-    <category term="Java" scheme="https://beyhub.com/categories/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/categories/Java/"/>
     
     
-    <category term="MySQL" scheme="https://beyhub.com/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://blog.beyhub.com/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>BPM工作流引擎Activiti</title>
-    <link href="https://beyhub.com/p/7e089f4a881f/"/>
-    <id>https://beyhub.com/p/7e089f4a881f/</id>
+    <link href="https://blog.beyhub.com/p/7e089f4a881f/"/>
+    <id>https://blog.beyhub.com/p/7e089f4a881f/</id>
     <published>2020-04-10T19:11:52.000Z</published>
     <updated>2021-08-21T10:57:27.283Z</updated>
     
@@ -250,17 +250,17 @@
     
     
     
-    <category term="Java" scheme="https://beyhub.com/categories/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/categories/Java/"/>
     
     
-    <category term="BPMN" scheme="https://beyhub.com/tags/BPMN/"/>
+    <category term="BPMN" scheme="https://blog.beyhub.com/tags/BPMN/"/>
     
   </entry>
   
   <entry>
     <title>Java CAS并发原语</title>
-    <link href="https://beyhub.com/p/2ae578083ace/"/>
-    <id>https://beyhub.com/p/2ae578083ace/</id>
+    <link href="https://blog.beyhub.com/p/2ae578083ace/"/>
+    <id>https://blog.beyhub.com/p/2ae578083ace/</id>
     <published>2020-04-10T03:44:35.000Z</published>
     <updated>2021-08-21T14:07:10.545Z</updated>
     
@@ -275,19 +275,19 @@
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="Java" scheme="https://beyhub.com/tags/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/tags/Java/"/>
     
-    <category term="锁" scheme="https://beyhub.com/tags/%E9%94%81/"/>
+    <category term="锁" scheme="https://blog.beyhub.com/tags/%E9%94%81/"/>
     
   </entry>
   
   <entry>
     <title>JVM 类的加载机制</title>
-    <link href="https://beyhub.com/p/799d80e72695/"/>
-    <id>https://beyhub.com/p/799d80e72695/</id>
+    <link href="https://blog.beyhub.com/p/799d80e72695/"/>
+    <id>https://blog.beyhub.com/p/799d80e72695/</id>
     <published>2020-04-10T03:36:59.000Z</published>
     <updated>2021-08-21T11:43:12.986Z</updated>
     
@@ -299,17 +299,17 @@
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="JVM" scheme="https://beyhub.com/tags/JVM/"/>
+    <category term="JVM" scheme="https://blog.beyhub.com/tags/JVM/"/>
     
   </entry>
   
   <entry>
     <title>Synchronized修饰静态方法和非静态方法总结</title>
-    <link href="https://beyhub.com/p/110159ef9ed4/"/>
-    <id>https://beyhub.com/p/110159ef9ed4/</id>
+    <link href="https://blog.beyhub.com/p/110159ef9ed4/"/>
+    <id>https://blog.beyhub.com/p/110159ef9ed4/</id>
     <published>2020-04-09T23:34:49.000Z</published>
     <updated>2021-08-21T11:44:58.448Z</updated>
     
@@ -324,17 +324,17 @@
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="锁" scheme="https://beyhub.com/tags/%E9%94%81/"/>
+    <category term="锁" scheme="https://blog.beyhub.com/tags/%E9%94%81/"/>
     
   </entry>
   
   <entry>
     <title>Java中ArrayList和LinkedList的区别</title>
-    <link href="https://beyhub.com/p/f09fcd3aa487/"/>
-    <id>https://beyhub.com/p/f09fcd3aa487/</id>
+    <link href="https://blog.beyhub.com/p/f09fcd3aa487/"/>
+    <id>https://blog.beyhub.com/p/f09fcd3aa487/</id>
     <published>2020-04-09T22:41:50.000Z</published>
     <updated>2021-08-21T04:12:22.449Z</updated>
     
@@ -345,17 +345,17 @@
     
     
     
-    <category term="Java" scheme="https://beyhub.com/categories/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/categories/Java/"/>
     
     
-    <category term="原理" scheme="https://beyhub.com/tags/%E5%8E%9F%E7%90%86/"/>
+    <category term="原理" scheme="https://blog.beyhub.com/tags/%E5%8E%9F%E7%90%86/"/>
     
   </entry>
   
   <entry>
     <title>MySQL中事务隔离的级别</title>
-    <link href="https://beyhub.com/p/98d075607ba2/"/>
-    <id>https://beyhub.com/p/98d075607ba2/</id>
+    <link href="https://blog.beyhub.com/p/98d075607ba2/"/>
+    <id>https://blog.beyhub.com/p/98d075607ba2/</id>
     <published>2020-04-09T22:36:34.000Z</published>
     <updated>2021-08-20T15:54:33.289Z</updated>
     
@@ -366,17 +366,17 @@
     
     
     
-    <category term="数据库" scheme="https://beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://blog.beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="MySQL" scheme="https://beyhub.com/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://blog.beyhub.com/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>基于Redis实现分布式锁</title>
-    <link href="https://beyhub.com/p/55a9c58bce22/"/>
-    <id>https://beyhub.com/p/55a9c58bce22/</id>
+    <link href="https://blog.beyhub.com/p/55a9c58bce22/"/>
+    <id>https://blog.beyhub.com/p/55a9c58bce22/</id>
     <published>2020-04-09T22:31:52.000Z</published>
     <updated>2021-08-21T11:45:53.698Z</updated>
     
@@ -387,19 +387,19 @@
     
     
     
-    <category term="数据库" scheme="https://beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://blog.beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="分布式" scheme="https://beyhub.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    <category term="分布式" scheme="https://blog.beyhub.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
-    <category term="高并发" scheme="https://beyhub.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    <category term="高并发" scheme="https://blog.beyhub.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Redis基础知识</title>
-    <link href="https://beyhub.com/p/fdf8dd944fdb/"/>
-    <id>https://beyhub.com/p/fdf8dd944fdb/</id>
+    <link href="https://blog.beyhub.com/p/fdf8dd944fdb/"/>
+    <id>https://blog.beyhub.com/p/fdf8dd944fdb/</id>
     <published>2020-04-09T19:51:02.000Z</published>
     <updated>2021-08-20T15:54:25.046Z</updated>
     
@@ -416,17 +416,17 @@ Redis 与其他 key - value 缓存产品有以下三个特点：&lt;/p&gt;
     
     
     
-    <category term="数据库" scheme="https://beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://blog.beyhub.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="Redis" scheme="https://beyhub.com/tags/Redis/"/>
+    <category term="Redis" scheme="https://blog.beyhub.com/tags/Redis/"/>
     
   </entry>
   
   <entry>
     <title>Java Web技能树</title>
-    <link href="https://beyhub.com/p/ae0a134d75cd/"/>
-    <id>https://beyhub.com/p/ae0a134d75cd/</id>
+    <link href="https://blog.beyhub.com/p/ae0a134d75cd/"/>
+    <id>https://blog.beyhub.com/p/ae0a134d75cd/</id>
     <published>2020-04-09T09:46:16.000Z</published>
     <updated>2021-08-21T11:43:07.340Z</updated>
     
@@ -444,17 +444,17 @@ Redis 与其他 key - value 缓存产品有以下三个特点：&lt;/p&gt;
     
     
     
-    <category term="后端" scheme="https://beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
-    <category term="Java" scheme="https://beyhub.com/tags/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>SpringBoot-Bean基本原理</title>
-    <link href="https://beyhub.com/p/13588255e6b9/"/>
-    <id>https://beyhub.com/p/13588255e6b9/</id>
+    <link href="https://blog.beyhub.com/p/13588255e6b9/"/>
+    <id>https://blog.beyhub.com/p/13588255e6b9/</id>
     <published>2020-04-09T08:59:34.000Z</published>
     <updated>2021-08-21T04:12:22.449Z</updated>
     
@@ -469,19 +469,19 @@ Redis 与其他 key - value 缓存产品有以下三个特点：&lt;/p&gt;
     
     
     
-    <category term="源码" scheme="https://beyhub.com/categories/%E6%BA%90%E7%A0%81/"/>
+    <category term="源码" scheme="https://blog.beyhub.com/categories/%E6%BA%90%E7%A0%81/"/>
     
     
-    <category term="Java" scheme="https://beyhub.com/tags/Java/"/>
+    <category term="Java" scheme="https://blog.beyhub.com/tags/Java/"/>
     
-    <category term="Spring" scheme="https://beyhub.com/tags/Spring/"/>
+    <category term="Spring" scheme="https://blog.beyhub.com/tags/Spring/"/>
     
   </entry>
   
   <entry>
     <title>一文看懂Zookeeper</title>
-    <link href="https://beyhub.com/p/e1ef1be0d29e/"/>
-    <id>https://beyhub.com/p/e1ef1be0d29e/</id>
+    <link href="https://blog.beyhub.com/p/e1ef1be0d29e/"/>
+    <id>https://blog.beyhub.com/p/e1ef1be0d29e/</id>
     <published>2020-03-24T20:12:30.000Z</published>
     <updated>2021-08-21T11:45:53.249Z</updated>
     
@@ -493,10 +493,10 @@ Redis 与其他 key - value 缓存产品有以下三个特点：&lt;/p&gt;
     
     
     
-    <category term="分布式" scheme="https://beyhub.com/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    <category term="分布式" scheme="https://blog.beyhub.com/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
     
-    <category term="zookeeper" scheme="https://beyhub.com/tags/zookeeper/"/>
+    <category term="zookeeper" scheme="https://blog.beyhub.com/tags/zookeeper/"/>
     
   </entry>
   
