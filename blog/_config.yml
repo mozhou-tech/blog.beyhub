@@ -132,7 +132,7 @@ neat_js:
     - "*.min.js"
 
 markdown:
-  preset: "default"
+  preset: default
   render:
     html: true
     xhtmlOut: false
@@ -145,7 +145,7 @@ markdown:
   disable_rules:
   plugins:
   anchors:
-    level: 3
+    level: 2
     collisionSuffix: ""
     permalink: false
     permalinkClass: "header-anchor"
