@@ -31,7 +31,7 @@ site:
     url: /images/common/avatar.jpg
   title: 采菊东篱 # 页面title
   favicon: /favicon.png
-  board: <p>刘远程，Gopher，大数据工程师，架构师。爱好智能硬件，工业4.0。</p> # 站点公告
+  board: <p>采菊东篱下，悠然见南山</p> # 站点公告
   copyright: true # 底部版权信息
 
 # config
@@ -121,7 +121,7 @@ comment:
   gitalk: # gitalk. https://gitalk.github.io/
     owner: tenstone #必须. GitHub repository 所有者，可以是个人或者组织。
     admin: tenstone #必须. GitHub repository 的所有者和合作者 (对这个 repository 有写权限的用户)。
-    repo: beyhub.com #必须. GitHub repository.
+    repo: blog.beyhub #必须. GitHub repository.
     ClientID: ee8f999e0f9bc543af45 #必须. GitHub Application Client ID.
     ClientSecret: 59f70646d601b0e9fa57a17b45d83bfcf391a146 #必须. GitHub Application Client Secret.
   valine: # Valine. https://valine.js.org
@@ -173,16 +173,16 @@ profile:
   enabled: true # Whether to show profile bar
   avatar: /images/avatar.jpg
   gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
-  author: 刘远程 Lester
-  author_title: 东篱采菊，南山终现
-  author_description: 永远年轻，永远热泪盈眶，永远相信一切基于事实的推论
+  author: 刘远程Lester
+  author_title: 采菊东篱下，悠然见南山。
+  author_description: 永远年轻，永远热泪盈眶；永远只相信一切事实及其推论。
   location: NanJing, China
   follow: https://github.com/tenstone
   # Social Links
   social:
     links:
       github: https://github.com/tenstone
-      weibo: http://weibo.com/tenstone
+      weibo: http://weibo.com/lyc90
       # facebook: /
       # dribbble: /
       rss: atom.xml
@@ -198,22 +198,14 @@ profile:
   # My Personal Links
   links:
     Github: https://github.com/tenstone
-    Blog: http://blog.tenstone.com
-    微博: http://weibo.com/tenstone
-    花瓣: http://huaban.com/tenstone
-    Behance: https://www.behance.net/tenstone
+    Blog: https://blog.beyhub.com
   # My Personal Labels
   labels:
-    - 前端
-    - 前端开发
-    - 前端重构
-    - Web前端
-    - 网页重构
-  # My Personal Works
-  works:
-    name:
-      link: http://www.example.com
-      date: 2016
+    - 架构师
+    - 全栈开发
+    - Gopher
+    - 大数据
+    - 智能硬件
   # My Personal Projects
   projects:
     tenstone/gulp-startpro: https://github.com/tenstone/gulp-startpro
