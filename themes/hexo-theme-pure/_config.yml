@@ -106,18 +106,18 @@ github:
 # Gitment
 # Introduction: https://imsun.net/posts/gitment-introduction/
 comment:
-  type: gitalk # 启用哪种评论系统
+  type: gitment # 启用哪种评论系统
   disqus: # enter disqus shortname here
   youyan:
     uid: 1783844 # enter youyan uid
   livere:
     uid: # enter youyan uid
   gitment:
-    githubID:
-    repo:
-    ClientID:
-    ClientSecret:
-    lazy: false
+    githubID: tenstone
+    repo: blog.beyhub
+    ClientID: ee8f999e0f9bc543af45
+    ClientSecret: 59f70646d601b0e9fa57a17b45d83bfcf391a146
+    lazy: true
   gitalk: # gitalk. https://gitalk.github.io/
     owner: tenstone #必须. GitHub repository 所有者，可以是个人或者组织。
     admin: tenstone #必须. GitHub repository 的所有者和合作者 (对这个 repository 有写权限的用户)。

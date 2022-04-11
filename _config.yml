@@ -108,9 +108,9 @@ theme: hexo-theme-pure
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: <repository url> # https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
-  branch: [branch]
-  message: [message]
+  repo: https://github.com/tenstone/blog.beyhub.git # https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: main
+  message: [update]
 
 livereload: true
 
