@@ -173,9 +173,9 @@ profile:
   enabled: true # Whether to show profile bar
   avatar: /images/avatar.jpg
   gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
-  author: 采菊东篱
-  author_title: Full Stack Developer, Gopher, Maker, Father, Son
-  author_description:
+  author: 刘远程 Lester
+  author_title: 东篱采菊，南山终现
+  author_description: 永远年轻，永远热泪盈眶，永远相信一切基于事实的推论
   location: NanJing, China
   follow: https://github.com/tenstone
   # Social Links

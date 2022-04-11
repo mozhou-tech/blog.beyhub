@@ -4,16 +4,16 @@
 
 # Site
 title: 采菊东篱
-subtitle: ""
+subtitle: "东篱采菊，终见南山"
 description: ""
 keywords:
-author: 采菊东篱
+author: 刘远程 Lester
 language: zh-CN
 timezone: "GMT+8"
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://beyhub.com
+url: https://blog.beyhub.com
 permalink: p/:hash/
 permalink_defaults:
 pretty_urls:
