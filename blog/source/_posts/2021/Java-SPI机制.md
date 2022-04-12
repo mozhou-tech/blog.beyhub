@@ -5,6 +5,7 @@ tags:
 categories:
   - 后端
 toc: true
+date: 2021-04-12 23:12:43
 ---
 
 本文通过探析JDK提供的，在开源项目中比较常用的Java SPI机制，希望给大家在实际开发实践、学习开源项目提供参考。SPI全称Service Provider Interface，是Java提供的一套用来被第三方实现或者扩展的API，它可以用来启用框架扩展和替换组件。

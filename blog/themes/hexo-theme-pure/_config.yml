@@ -100,14 +100,14 @@ share:
 
 # Github
 github:
-  username: tenstone # github username
+  username: lesterlaucn # github username
 
 # Comment
 # Gitment
 # Introduction: https://imsun.net/posts/gitment-introduction/
 comment:
-  type: gitment # 启用哪种评论系统
-  disqus: # enter disqus shortname here
+  type: disqus # 启用哪种评论系统
+  disqus: 采菊东篱 # enter disqus shortname here
   youyan:
     uid: 1783844 # enter youyan uid
   livere:
@@ -167,11 +167,11 @@ profile:
   author_title: 采菊东篱下，悠然见南山。
   author_description: 永远只相信一切事实及其推论。
   location: NanJing, China
-  follow: https://github.com/tenstone
+  follow: https://github.com/lesterlaucn
   # Social Links
   social:
     links:
-      github: https://github.com/tenstone
+      github: https://github.com/lesterlaucn
       weibo: http://weibo.com/lyc90
       twitter: https://twitter.com/lesterlaucn
       # facebook: /
@@ -188,7 +188,7 @@ profile:
     HTML+CSS: ★★★★☆
   # My Personal Links
   links:
-    Github: https://github.com/tenstone
+    Github: https://github.com/lesterlaucn
     Blog: https://blog.beyhub.com
   # My Personal Labels
   labels:
@@ -199,5 +199,5 @@ profile:
     - 智能硬件
   # My Personal Projects
   projects:
-    tenstone/gulp-startpro: https://github.com/tenstone/gulp-startpro
-    tenstone/hexo-theme-pure: https://github.com/tenstone/hexo-theme-pure
+    lesterlaucn/gulp-startpro: https://github.com/lesterlaucn/gulp-startpro
+    lesterlaucn/hexo-theme-pure: https://github.com/lesterlaucn/hexo-theme-pure
