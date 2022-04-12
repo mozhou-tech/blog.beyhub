@@ -163,7 +163,7 @@ profile:
   enabled: true # Whether to show profile bar
   avatar: /images/avatar.jpg
   gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
-  author: 刘远程Lester
+  author: Lester Lau
   author_title: 采菊东篱下，悠然见南山。
   author_description: 永远只相信一切事实及其推论。
   location: NanJing, China

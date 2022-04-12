@@ -17,7 +17,7 @@ date: 2022-04-12 15:44:46
 
 本文假设你已经拥有一个Kubernetes集群，且本地已完成helm和kubectl的相关配置。如果没有，可以搜索我的其它文章。
 
-## 准备步骤
+## 安装配置
 
 ### 安装Traefik
 
@@ -26,7 +26,6 @@ date: 2022-04-12 15:44:46
 这是我的配置文件，可按需补充你自己的配置。
 
 ```yaml
----
 additionalArguments:
   - --entrypoints.mysql.address=:3306/tcp  
 ingressRoute:
@@ -34,7 +33,7 @@ ingressRoute:
     enabled: true
 ```
 
-`--entrypoints.mysql.address=:3306/tcp`这行是定义entryPoints的关键，我在学习的过程中就忽略了这个配置，因为在官方文档中并没有提及。此处的配置和官网`CLI`选项卡下的配置一致，请看下图：
+上述代码片段中，`--entrypoints.mysql.address=:3306/tcp`这行是定义entryPoints的关键，我在学习的过程中就忽略了这个配置，因为在官方文档中并没有提及。此处的配置和官网`CLI`选项卡下的配置一致，请看下图：
 
 ![image-20220412160508385](images/image-20220412160508385.png)
 

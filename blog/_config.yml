@@ -36,7 +36,7 @@ skip_render:
 
 # Writing
 new_post_name: :title.md # File name of new posts
-default_layout: post
+default_layout: draft
 titlecase: false # Transform title into titlecase
 external_link:
   enable: true # Open external links in new tab
@@ -44,9 +44,13 @@ external_link:
   exclude: ""
 filename_case: 0
 render_drafts: true
-post_asset_folder: false
+root: /
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
 # end
-relative_link: true
+relative_link: false
 future: true
 highlight:
   enable: true
@@ -133,19 +137,17 @@ neat_js:
     - "*.min.js"
 
 # https://github.com/hexojs/hexo-renderer-markdown-it
+# https://blog.bugimg.com/works/hexo-renderer-markdown-it_and_plugins_config.html#%E6%8E%A8%E8%8D%90%E9%A2%84%E8%AE%BE
 markdown:
   preset: default
   render:
     html: true
     xhtmlOut: false
-    langPrefix: "language-"
+    langPrefix: "language-javascript"
     breaks: true
     linkify: true
     typographer: true
     quotes: "“”‘’"
-  enable_rules:
-  disable_rules:
-  plugins:
   anchors:
     level: 2
     collisionSuffix: ""
@@ -155,6 +157,12 @@ markdown:
     permalinkSymbol: "¶"
     case: 0
     separator: "-"
+  plugins:
+    - markdown-it-abbr
+    - markdown-it-footnote
+    - markdown-it-ins
+    - markdown-it-sub
+    - markdown-it-sup
 
 # 示例: 隐藏分类和标签的搜索
 jsonContent:

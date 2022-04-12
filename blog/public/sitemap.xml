@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.beyhub.com/links/index.html</loc>
+    
+    <lastmod>2022-04-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.beyhub.com/about/index.html</loc>
+    
+    <lastmod>2022-04-12</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.beyhub.com/post/kubernetes%E5%AE%9E%E7%8E%B0traefik%E4%BB%A3%E7%90%86mysql%E6%B5%81%E9%87%8F/</loc>
     
     <lastmod>2022-04-12</lastmod>
@@ -142,20 +156,6 @@
   </url>
   
   <url>
-    <loc>https://blog.beyhub.com/about/index.html</loc>
-    
-    <lastmod>2021-08-21</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.beyhub.com/links/index.html</loc>
-    
-    <lastmod>2021-08-21</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.beyhub.com/tags/index.html</loc>
     
     <lastmod>2021-08-21</lastmod>
@@ -170,14 +170,14 @@
   </url>
   
   <url>
-    <loc>https://blog.beyhub.com/post/mybatis-%E5%8A%A8%E6%80%81sql/</loc>
+    <loc>https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/</loc>
     
     <lastmod>2021-08-21</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/</loc>
+    <loc>https://blog.beyhub.com/post/mybatis-%E5%8A%A8%E6%80%81sql/</loc>
     
     <lastmod>2021-08-21</lastmod>
     
@@ -235,6 +235,13 @@
   </url>
   
   <url>
+    <loc>https://blog.beyhub.com/tags/BPMN/</loc>
+    <lastmod>2022-04-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.beyhub.com/tags/Java/</loc>
     <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
@@ -243,13 +250,6 @@
   
   <url>
     <loc>https://blog.beyhub.com/tags/%E9%94%81/</loc>
-    <lastmod>2022-04-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.beyhub.com/tags/BPMN/</loc>
     <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -298,14 +298,14 @@
   </url>
   
   <url>
-    <loc>https://blog.beyhub.com/tags/zookeeper/</loc>
+    <loc>https://blog.beyhub.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.beyhub.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/</loc>
+    <loc>https://blog.beyhub.com/tags/zookeeper/</loc>
     <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -370,13 +370,6 @@
   </url>
   
   <url>
-    <loc>https://blog.beyhub.com/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/</loc>
-    <lastmod>2022-04-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
@@ -384,7 +377,7 @@
   </url>
   
   <url>
-    <loc>https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/</loc>
+    <loc>https://blog.beyhub.com/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/</loc>
     <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -392,6 +385,13 @@
   
   <url>
     <loc>https://blog.beyhub.com/categories/Java/</loc>
+    <lastmod>2022-04-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
