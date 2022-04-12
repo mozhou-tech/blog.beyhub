@@ -43,9 +43,14 @@ external_link:
   field: site # Apply to the whole site
   exclude: ""
 filename_case: 0
-render_drafts: false
-post_asset_folder: false
-relative_link: false
+render_drafts: true
+# npm install hexo-renderer-marked
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
+# end
+relative_link: true
 future: true
 highlight:
   enable: true
@@ -177,7 +182,7 @@ jsonContent:
 toc:
   maxDepth: 3
   class: toc
-  slugify: transliteration
+  slugify: false
   decodeEntities: false
   anchor:
     position: after

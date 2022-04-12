@@ -43,8 +43,6 @@ Scheduler、Trigger和Job是Quartz的三大核心组件。
 
 一个 Quartz 集群中的每个节点是一个独立的 Quartz 应用，它又管理着其他的节点。意思是你必须对每个节点分别启动或停止。不像许多应用服务器的集群，独立的 Quartz 节点并不与另一其的节点或是管理节点通信。Quartz 应用是通过数据库表来感知到另一应用的。
 
-![](/images/posts/2020/quartz-distributed.webp)
-
 ## 实战
 
 首先我们先创建一个新的类，叫做QuartzTest，并添加对应的main方法。具体代码如下：
@@ -83,7 +81,7 @@ public static void main(String[] args) throws SchedulerException {
 }
 ```
 在上面的代码中引入了三个静态方法，需手动引入，还有另一种方法，可以不引入静态方法，具体如果编写在下一节中进行演示。可以看到代码中设置了一个JobDetail，这个需要我们自定义一个类，创建MyJobDetail类，实现quartz中的Job类，重写execute方法，代码如下所示：
-   
+
 ```Java
 public class MyJobDetail implements Job {
 
