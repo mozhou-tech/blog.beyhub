@@ -44,11 +44,7 @@ external_link:
   exclude: ""
 filename_case: 0
 render_drafts: true
-# npm install hexo-renderer-marked
 post_asset_folder: false
-marked:
-  prependRoot: false
-  postAsset: false
 # end
 relative_link: true
 future: true
@@ -136,6 +132,7 @@ neat_js:
   exclude:
     - "*.min.js"
 
+# https://github.com/hexojs/hexo-renderer-markdown-it
 markdown:
   preset: default
   render:
