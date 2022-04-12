@@ -45,10 +45,10 @@ external_link:
 filename_case: 0
 render_drafts: true
 # npm install hexo-renderer-marked
-post_asset_folder: true
+post_asset_folder: false
 marked:
-  prependRoot: true
-  postAsset: true
+  prependRoot: false
+  postAsset: false
 # end
 relative_link: true
 future: true
