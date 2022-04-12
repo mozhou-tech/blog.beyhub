@@ -107,7 +107,7 @@ github:
 # Introduction: https://imsun.net/posts/gitment-introduction/
 comment:
   type: disqus # 启用哪种评论系统
-  disqus: 采菊东篱 # enter disqus shortname here
+  disqus: cai-ju-dong-li # enter disqus shortname here
   youyan:
     uid: 1783844 # enter youyan uid
   livere:
