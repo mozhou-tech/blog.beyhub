@@ -31,7 +31,7 @@ site:
     url: /images/common/avatar.jpg
   title: 采菊东篱 # 页面title
   favicon: /favicon.png
-  board: <p>采菊东篱下，悠然见南山</p> # 站点公告
+  board: <p>永远只相信事实及其推论</p> # 站点公告
   copyright: true # 底部版权信息
 
 # config
@@ -115,15 +115,15 @@ comment:
   gitment:
     githubID: tenstone
     repo: blog.beyhub
-    ClientID: ee8f999e0f9bc543af45
-    ClientSecret: 59f70646d601b0e9fa57a17b45d83bfcf391a146
+    ClientID:
+    ClientSecret:
     lazy: true
   gitalk: # gitalk. https://gitalk.github.io/
     owner: tenstone #必须. GitHub repository 所有者，可以是个人或者组织。
     admin: tenstone #必须. GitHub repository 的所有者和合作者 (对这个 repository 有写权限的用户)。
     repo: blog.beyhub #必须. GitHub repository.
-    ClientID: ee8f999e0f9bc543af45 #必须. GitHub Application Client ID.
-    ClientSecret: 59f70646d601b0e9fa57a17b45d83bfcf391a146 #必须. GitHub Application Client Secret.
+    ClientID: #必须. GitHub Application Client ID.
+    ClientSecret: #必须. GitHub Application Client Secret.
 douban:
   user: # 豆瓣用户名
   start: 0 # 从哪一条记录开始
@@ -164,8 +164,8 @@ profile:
   avatar: /images/avatar.jpg
   gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
   author: Lester Lau
-  author_title: 采菊东篱下，悠然见南山。
-  author_description: 永远只相信一切事实及其推论。
+  author_title: 采菊东篱下，悠然见南山
+  author_description:
   location: NanJing, China
   follow: https://github.com/lesterlaucn
   # Social Links

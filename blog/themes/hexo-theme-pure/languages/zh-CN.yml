@@ -1,13 +1,13 @@
 menu:
   Home: 首页
   Archives: 归档
-  Categories: 分类
+  Categories: 文章分类
   Tags: 标签
   Repository: 项目
   Books: 书单
   Movies: 电影
-  Links: 友链
-  About: 关于
+  Links: 友情链接
+  About: 关于我
 nav:
   all: All
   older: 下一篇
@@ -31,9 +31,9 @@ page:
   links: 友情链接
   links-desc: 欢迎交换链接，可在当前页面留言
   about: 关于
-pagination: 
+pagination:
   next: 下一页
-  prev: 上一页 
+  prev: 上一页
   page: 第 %d 页
   pageof: Page %d of %s
 widget:
@@ -44,7 +44,7 @@ widget:
   categories: 分类
   tagcloud: 标签云
   recent_posts: 最新文章
-profile: 
+profile:
   follow: 关注
   skill: 技能
   label: 个人标签
