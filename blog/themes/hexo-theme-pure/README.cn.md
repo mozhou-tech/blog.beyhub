@@ -221,7 +221,7 @@ douban:
   count: 100 # 获取豆瓣书单数据条数
 ```
 
-### 友情链接
+### 常用网址
 
 复制`theme/pure/_source/` 目录下`links`文件夹到`blog path/source/` 目录下
 
@@ -229,7 +229,7 @@ douban:
 
 然后在文件内创建一个名为 links.yml 的文件,在其中添加相关数据即可。
 
-单个友情链接的格式为：
+单个常用网址的格式为：
 
 ```
 Name:
@@ -238,15 +238,15 @@ Name:
     desc: "这是一个描述"
 ```
 
-添加多个友情链接，我们只需要根据上面的格式重复填写即可。
+添加多个常用网址，我们只需要根据上面的格式重复填写即可。
 
-. 将 Name 改为友情链接的名字，例如 Cofess。
+. 将 Name 改为常用网址的名字，例如 Cofess。
 
-. http://example.com 为友情链接的地址。
+. http://example.com 为常用网址的地址。
 
-. http://example.com/avatar.png 为友情链接的头像。
+. http://example.com/avatar.png 为常用网址的头像。
 
-. 这是一个描述 为友情链接描述。
+. 这是一个描述 为常用网址描述。
 
 ### 文章索引目录
 

@@ -1,5 +1,5 @@
 ---
-title: 友情链接
+title: 常用链接
 layout: links
 comments: true
 sidebar: none

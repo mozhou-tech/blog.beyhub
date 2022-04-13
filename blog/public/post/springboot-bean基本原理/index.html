@@ -1,4 +1,435 @@
-<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><meta name="renderer" content="webkit"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no,email=no,adress=no"><meta name="theme-color" content="#000000"><meta http-equiv="window-target" content="_top"><title>SpringBoot-Bean基本原理 | 采菊东篱</title><meta name="description" content="被称作 bean 的对象是构成应用程序的支柱也是由 Spring IoC 容器管理的。bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。这些 bean 是由用容器提供的配置元数据创建的，例如，已经在先前章节看到的，在 XML 的表单中的 定义。   Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype 的 bean ，Spring 在"><meta property="og:type" content="article"><meta property="og:title" content="SpringBoot-Bean基本原理"><meta property="og:url" content="https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html"><meta property="og:site_name" content="采菊东篱"><meta property="og:description" content="被称作 bean 的对象是构成应用程序的支柱也是由 Spring IoC 容器管理的。bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。这些 bean 是由用容器提供的配置元数据创建的，例如，已经在先前章节看到的，在 XML 的表单中的 定义。   Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype 的 bean ，Spring 在"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.beyhub.com/images/posts/2020/bean-lifecycle.png"><meta property="article:published_time" content="2020-04-09T08:59:34.000Z"><meta property="article:modified_time" content="2021-08-21T04:12:22.449Z"><meta property="article:author" content="刘远程 (Lester Lau)"><meta property="article:tag" content="Java"><meta property="article:tag" content="Spring"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://blog.beyhub.com/images/posts/2020/bean-lifecycle.png"><link rel="canonical" href="https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html"><link rel="alternate" href="/atom.xml" title="采菊东篱" type="application/atom+xml"><link rel="icon" href="/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet"><meta name="generator" content="Hexo 5.4.0"></head><body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="slimContent"><div class="navbar-header"><div class="profile-block text-center"><a id="avatar" href="/about/"><img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200"></a><h2 id="name" class="hidden-xs hidden-sm">Lester Lau</h2><h3 id="title" class="hidden-xs hidden-sm hidden-md" style="margin-top:13px;margin-bottom:6px">采菊东篱下，悠然见南山</h3><small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> NanJing, China</small></div><div class="search" id="search-form-wrap"><form class="search-form sidebar-form"><div class="input-group"><input type="text" class="search-form-input form-control" placeholder="搜索"> <span class="input-group-btn"><button type="submit" class="search-form-submit btn btn-flat" onclick="return!1"><i class="icon icon-search"></i></button></span></div></form><div class="ins-search"><div class="ins-search-mask"></div><div class="ins-search-container"><div class="ins-input-wrapper"><input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech> <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="ins-section-wrapper"><div class="ins-section-container"></div></div></div></div></div><button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button></div><nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation"><ul class="nav navbar-nav main-nav menu-highlight"><li class="menu-item menu-item-home"><a href="/."><i class="icon icon-home-fill"></i> <span class="menu-title">首页</span></a></li><li class="menu-item menu-item-archives"><a href="/archives"><i class="icon icon-archives-fill"></i> <span class="menu-title">归档</span></a></li><li class="menu-item menu-item-categories"><a href="/categories"><i class="icon icon-folder"></i> <span class="menu-title">文章分类</span></a></li><li class="menu-item menu-item-tags"><a href="/tags"><i class="icon icon-tags"></i> <span class="menu-title">标签</span></a></li><li class="menu-item menu-item-links"><a href="/links"><i class="icon icon-friendship"></i> <span class="menu-title">友情链接</span></a></li><li class="menu-item menu-item-about"><a href="/about"><i class="icon icon-cup-fill"></i> <span class="menu-title">关于我</span></a></li></ul><ul class="social-links"><li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li><li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li><li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li><li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li></ul></nav></div></header><aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar"><div class="slimContent"><div class="widget"><h3 class="widget-title">公告</h3><div class="widget-body"><div id="board"><div class="content"><p>永远只相信事实及其推论</p></div></div></div></div><div class="widget"><h3 class="widget-title">标签云</h3><div class="widget-body tagcloud"><a href="/tags/BPMN/" style="font-size:13px">BPMN</a> <a href="/tags/BinarySearch/" style="font-size:13px">BinarySearch</a> <a href="/tags/JVM/" style="font-size:13px">JVM</a> <a href="/tags/Java/" style="font-size:13.67px">Java</a> <a href="/tags/K3s/" style="font-size:13px">K3s</a> <a href="/tags/Kubernetes/" style="font-size:13px">Kubernetes</a> <a href="/tags/MySQL/" style="font-size:14px">MySQL</a> <a href="/tags/Proxy/" style="font-size:13px">Proxy</a> <a href="/tags/Spring/" style="font-size:13px">Spring</a> <a href="/tags/Traefik/" style="font-size:13px">Traefik</a> <a href="/tags/java/" style="font-size:13px">java</a> <a href="/tags/untagged/" style="font-size:13.33px">untagged</a> <a href="/tags/zookeeper/" style="font-size:13px">zookeeper</a> <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" style="font-size:13px">二分法</a> <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/" style="font-size:13px">云原生</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size:13px">分布式</a> <a href="/tags/%E5%8E%9F%E7%90%86/" style="font-size:13.33px">原理</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size:13px">定时任务</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size:13px">数据库</a> <a href="/tags/%E9%94%81/" style="font-size:13.67px">锁</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size:13px">高并发</a></div></div><div class="widget"><h3 class="widget-title">分类</h3><div class="widget-body"><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/">工作效率</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81/">源码</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul></div></div><div class="widget"><h3 class="widget-title">最新文章</h3><div class="widget-body"><ul class="recent-post-list list-unstyled no-thumbnail"><li><div class="item-inner"><p class="item-title"><a href="/post/kubernetes%E5%AE%9E%E7%8E%B0traefik%E4%BB%A3%E7%90%86mysql%E6%B5%81%E9%87%8F/" class="title">Kubernetes实现Traefik代理MySQL流量</a></p><p class="item-date"><time datetime="2022-04-12T07:44:46.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE/" class="title">二分法查找</a></p><p class="item-date"><time datetime="2022-04-12T02:45:18.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAk3s%E7%8E%AF%E5%A2%83/" class="title">快速搭建K3S环境</a></p><p class="item-date"><time datetime="2022-04-12T02:42:45.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E5%B0%8F%E7%B1%B3ax6000%E8%81%AA%E6%98%8E%E4%B8%8A%E7%BD%91/" class="title">小米AX6000聪明上网</a></p><p class="item-date"><time datetime="2022-04-12T02:42:37.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E5%9F%BA%E4%BA%8Ek3s%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAflink-session-cluster/" class="title">基于K3S快速搭建Flink Session Cluster</a></p><p class="item-date"><time datetime="2022-04-12T02:42:30.000Z" itemprop="datePublished">2022-04-12</time></p></div></li></ul></div></div></div></aside><main class="main" role="main"><div class="content"><article id="post-2021/SpringBoot-Bean基本原理" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting"><div class="article-header"><h1 class="article-title" itemprop="name">SpringBoot-Bean基本原理</h1><div class="article-meta"><span class="article-date"><i class="icon icon-calendar-check"></i> <a href="/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" class="article-date"><time datetime="2020-04-09T08:59:34.000Z" itemprop="datePublished">2020-04-09</time> </a></span><span class="article-category"><i class="icon icon-folder"></i> <a class="article-category-link" href="/categories/%E6%BA%90%E7%A0%81/">源码</a> </span><span class="article-tag"><i class="icon icon-tags"></i> <a class="article-tag-link-link" href="/tags/Java/" rel="tag">Java</a>, <a class="article-tag-link-link" href="/tags/Spring/" rel="tag">Spring</a> </span><span class="post-comment"><i class="icon icon-comment"></i> <a href="/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/#comments" class="article-comment-link">评论 </a></span><span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.4k(字)</span> <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 8(分)</span></div></div><div class="article-entry marked-body" itemprop="articleBody"><p>被称作 bean 的对象是构成应用程序的支柱也是由 Spring IoC 容器管理的。bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。这些 bean 是由用容器提供的配置元数据创建的，例如，已经在先前章节看到的，在 XML 的表单中的 定义。</p><p><img src="/images/posts/2020/bean-lifecycle.png"></p><blockquote><p>Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype 的 bean ，Spring 在创建好交给使用者之后则不会再管理后续的生命周期。</p></blockquote><span id="more"></span><h2 id="IoC与DI详解"><a href="#IoC与DI详解" class="headerlink" title="IoC与DI详解"></a>IoC与DI详解</h2><h3 id="IoC的实现方式-及-与DI的关系？"><a href="#IoC的实现方式-及-与DI的关系？" class="headerlink" title="IoC的实现方式 及 与DI的关系？"></a>IoC的实现方式 及 与DI的关系？</h3><p><strong>依赖查找(Dependency Lookup)：</strong>容器中的受控对象通过容器的API来查找自己所依赖的资源和协作对象。<br>这种方式虽然降低了对象间的依赖，但是同时也使用到了容器的API，造成了我们无法在容器外使用和测试对象。<br>依赖查找是一种更加传统的IoC实现方式。</p><p><strong>依赖注入(Dependency Injection)：</strong>这就是DI，字面上理解，依赖注入就是将服务注入到使用它的地方。对象只提供普通的方法让容器去决定依赖关系，<br>容器全权负责组件的装配，它会把符合依赖关系的对象通过属性（JavaBean中的setter）或者是构造子传递给需要的对象。</p><p>相对于IoC而言，依赖注入(DI)更加准确地描述了IoC的设计理念。所谓依赖注入，即组件之间的依赖关系由容器在应用系统运行期来决定，<br>也就是由容器动态地将某种依赖关系的目标对象实例注入到应用系统中的各个关联的组件之中。</p><h3 id="Spring中的IoC与DI"><a href="#Spring中的IoC与DI" class="headerlink" title="Spring中的IoC与DI"></a>Spring中的IoC与DI</h3><p>IoC是Spring的核心，贯穿始终。对于Spring框架来说，就是由Spring来负责控制对象的生命周期和对象间的关系。<br>Spring中DI有两种实现方式—Setter方式(传值方式)和构造器方式(引用方式)。</p><h3 id="IoC的实现原理：反射与工厂模式"><a href="#IoC的实现原理：反射与工厂模式" class="headerlink" title="IoC的实现原理：反射与工厂模式"></a>IoC的实现原理：反射与工厂模式</h3><h4 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h4><p>反射是Java语言的一个特性，它允许程序在运行时（注意不是编译的时候）来进行自我检查并且对内部的成员进行操作。例如它允许一个Java类获取它所有的成员变量和方法并且显示出来。</p><p>反射主要是指程序可以访问，检测和修改它本身状态或行为的一种能力，并能根据自身行为的状态和结果，调整或修改应用所描述行为的状态和相关的语义。在Java中，只要给定类的名字，那么就可以通过反射机制来获得类的所有信息。</p><p><strong>反射的作用</strong></p><ol><li>在运行时判断任意一个对象所属的类；</li><li>在运行时获取类的对象；</li><li>在运行时访问java对象的属性，方法，构造方法等；</li><li>在运行时修改类的对象、方法和属性</li></ol><p>静态编译：在编译时确定类型，绑定对象，即通过。<br><br>动态编译：运行时确定类型，绑定对象。动态编译最大限度发挥了Java的灵活性，体现了多态的应用，有以降低类之间的藕合性。<br></p><p><strong>反射机制优缺点</strong></p><p>优点：可以实现动态创建对象和编译，体现出很大的灵活性（特别是在J2EE的开发中它的灵活性就表现的十分明显）。通过反射机制我们可以获得类的各种内容，进行反编译。对于JAVA这种先编译再运行的语言来说，反射机制可以使代码更加灵活，更加容易实现面向对象。</p><p>比如，一个大型的软件，不可能一次就把把它设计得很完美，把这个程序编译后，发布了，当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如这样的话，这个软件肯定是没有多少人用的。采用静态的话，需要把整个程序重新编译一次才可以实现功能的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时动态地创建和编译，就可以实现该功能。</p><p>缺点：对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且让它满足我们的要求。这类操作总是慢于直接执行相同的操作。</p><h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p>IOC容器的工作：创建和管理Bean，它是一个工厂，负责对外提供Bean实例。</p><h2 id="Bean"><a href="#Bean" class="headerlink" title="@Bean"></a>@Bean</h2><p>Spring的@Bean注解用于告诉方法，产生一个Bean对象，然后这个Bean对象交给Spring管理。产生这个Bean对象的方法Spring只会调用一次，随后这个Spring将会将这个Bean对象放在自己的IOC容器中。(默认bean的名称就是其方法名。但是也可以指定名称)</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BeanTest <span class="title">getBean</span><span class="params">()</span></span>&#123;</span><br><span class="line">        BeanTest bean = <span class="keyword">new</span>  BeanTest();</span><br><span class="line">        System.out.println(<span class="string">&quot;调用方法：&quot;</span>+bean);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ClassPathXmlApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;application-context.xml&quot;</span>);</span><br><span class="line">        Object bean1 = context.getBean(<span class="string">&quot;getBean&quot;</span>);</span><br><span class="line">        System.out.println(bean1);</span><br><span class="line">        Object bean2 = context.getBean(<span class="string">&quot;getBean&quot;</span>);</span><br><span class="line">        System.out.println(bean2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">调用方法：Spring.BeanTest@5a4041cc</span><br><span class="line">Spring.BeanTest@5a4041cc</span><br><span class="line">Spring.BeanTest@5a4041cc</span><br></pre></td></tr></table></figure><h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="Spring中的Bean是线程安全的吗（不是）？"><a href="#Spring中的Bean是线程安全的吗（不是）？" class="headerlink" title="Spring中的Bean是线程安全的吗（不是）？"></a>Spring中的Bean是线程安全的吗（不是）？</h3><p>Spring中的Bean默认是单例模式的，框架并没有对bean进行多线程的封装处理。实际上大部分时间Bean是无状态的（比如Dao） 所以说在某种程度上来说Bean其实是安全的。但是如果Bean是有状态的 那就需要开发人员自己来进行线程安全的保证，最简单的办法就是改变bean的作用域把singleton改为protopyte这样每次请求Bean就相当于是new Bean()这样就可以保证线程的安全了。　(有状态就是有数据存储功能&#x2F;无状态就是不会保存数据）</p><p>线程安全这个问题，要从单例与原型Bean分别进行说明。</p><p><strong>原型Bean：</strong><br>对于原型Bean,每次创建一个新对象，也就是线程之间并不存在Bean共享，自然是不会有线程安全的问题。</p><p><strong>单例Bean：</strong><br>对于单例Bean,所有线程都共享一个单例实例Bean,因此是存在资源的竞争。<br>如果单例Bean,是一个无状态Bean，也就是线程中的操作不会对Bean的成员执行查询以外的操作，那么这个单例Bean是线程安全的。比如Spring mvc 的 Controller、Service、Dao等，这些Bean大多是无状态的，只关注于方法本身。</p><h3 id="Spring-的-bean-作用域（scope）类型"><a href="#Spring-的-bean-作用域（scope）类型" class="headerlink" title="Spring 的 bean 作用域（scope）类型 ?"></a>Spring 的 bean 作用域（scope）类型 ?</h3><ol><li>singleton:单例，默认作用域。</li><li>prototype:原型，每次创建一个新对象。</li><li>request:请求，每次Http请求创建一个新对象，适用于WebApplicationContext环境下。</li><li>session:会话，同一个会话共享一个实例，不同会话使用不用的实例。</li><li>global-session:全局会话，所有会话共享一个实例。</li></ol><h3 id="Service和-Controller是否线程安全？"><a href="#Service和-Controller是否线程安全？" class="headerlink" title="@Service和@Controller是否线程安全？"></a>@Service和@Controller是否线程安全？</h3><p>默认配置下不是的。为啥呢？因为默认情况下@Controller没有加上@Scope，没有加@Scope就是默认值singleton，单例的。意思就是系统只会初始化一次Controller容器，所以每次请求的都是同一个Controller容器，当然是非线程安全的。</p><ol><li>在@Controller&#x2F;@Service等容器中，默认情况下，scope值是单例-singleton的，也是线程不安全的</li><li>尽量不要在@Controller&#x2F;@Service等容器中定义静态变量，不论是单例(singleton)还是多实例(prototype)他都是线程不安全的</li><li>默认注入的Bean对象，在不设置scope的时候他也是线程不安全的</li><li>一定要定义变量的话，用ThreadLocal来封装，这个是线程安全的</li></ol><blockquote><p>多线程场景下，多个线程对这个单例Bean的成员变量并不存在资源的竞争，因为ThreadLocal为每个线程保存线程私有的数据。这是一种以空间换时间的方式。</p></blockquote><h3 id="Bean和-Component之间的联系和区别"><a href="#Bean和-Component之间的联系和区别" class="headerlink" title="@Bean和@Component之间的联系和区别"></a>@Bean和@Component之间的联系和区别</h3><p><strong>@Component</strong><br>注解表明一个类会作为组件类，并告知Spring要为这个类创建bean，（@Controller,@Service,@Repository实际上都包含了@Component注解）</p><p><strong>@Bean</strong><br>用在方法上，一般有返回值，@Bean注解告诉Spring这个方法将会返回一个对象，这个对象要注册为Spring应用上下文中的bean。通常方法体中包含了最终产生bean实例的逻辑；第三方的类，如果要注册到spring中，一般用bean的方式。</p><h3 id="ApplicationContext-与-BeanFactory-区别"><a href="#ApplicationContext-与-BeanFactory-区别" class="headerlink" title="ApplicationContext 与 BeanFactory 区别"></a>ApplicationContext 与 BeanFactory 区别</h3><p>Bean工厂（BeanFactory）是Spring框架的最核心接口，它提供了高级Ioc的配置机制。应用上下文（ApplicationContext）是BeanFactory的实现，以Bean工厂为基础，它提供了更多面向应用的功能。</p><p>在用途上，BeanFactory是Spring框架的基础设施，面向Spring本身，我们一般不直接使用；ApplicationContext面向使用Spring框架的开发者，所以，在几乎所有的应用场合我们都使用应用上下文而非Bean工厂。</p><h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><ol><li>Spring 中的bean 是线程安全的吗： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/myseries/p/11729800.html">https://www.cnblogs.com/myseries/p/11729800.html</a></li><li>Bean 文档： <a target="_blank" rel="noopener" href="https://wiki.jikexueyuan.com/project/spring/bean-definition.html">https://wiki.jikexueyuan.com/project/spring/bean-definition.html</a></li></ol><link rel="stylesheet" href="/css/markmap.css" type="text/css"></div><div class="article-footer"><blockquote class="mt-2x"><ul class="post-copyright list-unstyled"><li class="post-copyright-link hidden-xs"><strong>本文链接：</strong> <a href="https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" title="SpringBoot-Bean基本原理" target="_blank" rel="external">https://blog.beyhub.com/post/springboot-bean基本原理/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！</li></ul></blockquote><hr></div></article><section id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></section></div><nav class="bar bar-footer clearfix" data-stick-bottom><div class="bar-inner"><ul class="pager pull-left"><li class="prev"><a href="/post/%E5%9F%BA%E4%BA%8Equartz%E7%9A%84%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/" title="基于quartz的任务调度"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a></li><li class="next"><a href="/post/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82zookeeper/" title="一文看懂Zookeeper"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a></li></ul><div class="bar-right"></div></div></nav></main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter"><ul class="social-links"><li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li><li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li><li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li><li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li></ul><div class="copyright">&copy; 2022 刘远程 (Lester Lau)<div class="publishby">Theme by <a href="https://github.com/cofess" target="_blank">me </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.</div></div></footer><script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script><script>window.jQuery||document.write('<script src="js/jquery.min.js"><\/script>')</script><script src="/js/plugin.min.js"></script><script src="/js/application.js"></script><script>window.INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(未命名)"},ROOT_URL:"/",CONTENT_URL:"/content.json"}</script><script src="/js/insight.js"></script><script defer>var disqus_config=function(){this.page.url="https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/",this.page.identifier="2021/SpringBoot-Bean基本原理"};!function(){var t=document,e=t.createElement("script");e.src="//cai-ju-dong-li.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script><script>$(document).ready(function () {
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="window-target" content="_top">
+  <title>SpringBoot-Bean基本原理 | 采菊东篱</title>
+  <meta name="description"
+    content="被称作 bean 的对象是构成应用程序的支柱也是由 Spring IoC 容器管理的。bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。这些 bean 是由用容器提供的配置元数据创建的，例如，已经在先前章节看到的，在 XML 的表单中的 定义。   Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype 的 bean ，Spring 在">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SpringBoot-Bean基本原理">
+  <meta property="og:url"
+    content="https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html">
+  <meta property="og:site_name" content="采菊东篱">
+  <meta property="og:description"
+    content="被称作 bean 的对象是构成应用程序的支柱也是由 Spring IoC 容器管理的。bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。这些 bean 是由用容器提供的配置元数据创建的，例如，已经在先前章节看到的，在 XML 的表单中的 定义。   Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype 的 bean ，Spring 在">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:image" content="https://blog.beyhub.com/images/posts/2020/bean-lifecycle.png">
+  <meta property="article:published_time" content="2020-04-09T08:59:34.000Z">
+  <meta property="article:modified_time" content="2021-08-21T04:12:22.449Z">
+  <meta property="article:author" content="刘远程 (Lester Lau)">
+  <meta property="article:tag" content="Java">
+  <meta property="article:tag" content="Spring">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="https://blog.beyhub.com/images/posts/2020/bean-lifecycle.png">
+  <link rel="canonical"
+    href="https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html">
+  <link rel="alternate" href="/atom.xml" title="采菊东篱" type="application/atom+xml">
+  <link rel="icon" href="/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  <meta name="generator" content="Hexo 5.4.0">
+</head>
+
+<body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center"><a id="avatar" href="/about/"><img class="img-circle img-rotate"
+              src="/images/avatar.jpg" width="200" height="200"></a>
+          <h2 id="name" class="hidden-xs hidden-sm">Lester Lau</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md" style="margin-top:13px;margin-bottom:6px">采菊东篱下，悠然见南山
+          </h3><small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> NanJing,
+            China</small>
+        </div>
+        <div class="search" id="search-form-wrap">
+          <form class="search-form sidebar-form">
+            <div class="input-group"><input type="text" class="search-form-input form-control" placeholder="搜索"> <span
+                class="input-group-btn"><button type="submit" class="search-form-submit btn btn-flat"
+                  onclick="return!1"><i class="icon icon-search"></i></button></span></div>
+          </form>
+          <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+              <div class="ins-input-wrapper"><input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                  x-webkit-speech> <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                  aria-label="Close"><span aria-hidden="true">×</span></button></div>
+              <div class="ins-section-wrapper">
+                <div class="ins-section-container"></div>
+              </div>
+            </div>
+          </div>
+        </div><button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar"
+          aria-controls="main-navbar" aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span
+            class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope
+        itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav menu-highlight">
+          <li class="menu-item menu-item-home"><a href="/."><i class="icon icon-home-fill"></i> <span
+                class="menu-title">首页</span></a></li>
+          <li class="menu-item menu-item-archives"><a href="/archives"><i class="icon icon-archives-fill"></i> <span
+                class="menu-title">归档</span></a></li>
+          <li class="menu-item menu-item-categories"><a href="/categories"><i class="icon icon-folder"></i> <span
+                class="menu-title">文章分类</span></a></li>
+          <li class="menu-item menu-item-tags"><a href="/tags"><i class="icon icon-tags"></i> <span
+                class="menu-title">标签</span></a></li>
+          <li class="menu-item menu-item-links"><a href="/links"><i class="icon icon-friendship"></i> <span
+                class="menu-title">常用网址</span></a></li>
+          <li class="menu-item menu-item-about"><a href="/about"><i class="icon icon-cup-fill"></i> <span
+                class="menu-title">关于我</span></a></li>
+        </ul>
+        <ul class="social-links">
+          <li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip"
+              data-placement="top"><i class="icon icon-github"></i></a></li>
+          <li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip"
+              data-placement="top"><i class="icon icon-weibo"></i></a></li>
+          <li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip"
+              data-placement="top"><i class="icon icon-twitter"></i></a></li>
+          <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i
+                class="icon icon-rss"></i></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <div class="widget">
+        <h3 class="widget-title">公告</h3>
+        <div class="widget-body">
+          <div id="board">
+            <div class="content">
+              <p>永远只相信事实及其推论</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget-body tagcloud"><a href="/tags/BPMN/" style="font-size:13px">BPMN</a> <a
+            href="/tags/BinarySearch/" style="font-size:13px">BinarySearch</a> <a href="/tags/JVM/"
+            style="font-size:13px">JVM</a> <a href="/tags/Java/" style="font-size:13.67px">Java</a> <a href="/tags/K3s/"
+            style="font-size:13px">K3s</a> <a href="/tags/Kubernetes/" style="font-size:13px">Kubernetes</a> <a
+            href="/tags/MySQL/" style="font-size:14px">MySQL</a> <a href="/tags/Proxy/" style="font-size:13px">Proxy</a>
+          <a href="/tags/Spring/" style="font-size:13px">Spring</a> <a href="/tags/Traefik/"
+            style="font-size:13px">Traefik</a> <a href="/tags/java/" style="font-size:13px">java</a> <a
+            href="/tags/untagged/" style="font-size:13.33px">untagged</a> <a href="/tags/zookeeper/"
+            style="font-size:13px">zookeeper</a> <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/"
+            style="font-size:13px">二分法</a> <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/" style="font-size:13px">云原生</a>
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size:13px">分布式</a> <a
+            href="/tags/%E5%8E%9F%E7%90%86/" style="font-size:13.33px">原理</a> <a
+            href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size:13px">定时任务</a> <a
+            href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size:13px">数据库</a> <a href="/tags/%E9%94%81/"
+            style="font-size:13.67px">锁</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size:13px">高并发</a>
+        </div>
+      </div>
+      <div class="widget">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget-body">
+          <ul class="category-list">
+            <li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span
+                class="category-list-count">5</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a><span
+                class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/">工作效率</a><span
+                class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E6%BA%90%E7%A0%81/">源码</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="widget">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget-body">
+          <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a
+                    href="/post/kubernetes%E5%AE%9E%E7%8E%B0traefik%E4%BB%A3%E7%90%86mysql%E6%B5%81%E9%87%8F/"
+                    class="title">Kubernetes实现Traefik代理MySQL流量</a></p>
+                <p class="item-date"><time datetime="2022-04-12T07:44:46.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a href="/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE/"
+                    class="title">二分法查找</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:45:18.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a href="/post/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAk3s%E7%8E%AF%E5%A2%83/"
+                    class="title">快速搭建K3S环境</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:42:45.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a href="/post/%E5%B0%8F%E7%B1%B3ax6000%E8%81%AA%E6%98%8E%E4%B8%8A%E7%BD%91/"
+                    class="title">小米AX6000聪明上网</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:42:37.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a
+                    href="/post/%E5%9F%BA%E4%BA%8Ek3s%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAflink-session-cluster/"
+                    class="title">基于K3S快速搭建Flink Session Cluster</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:42:30.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <main class="main" role="main">
+    <div class="content">
+      <article id="post-2021/SpringBoot-Bean基本原理" class="article article-type-post" itemscope
+        itemtype="http://schema.org/BlogPosting">
+        <div class="article-header">
+          <h1 class="article-title" itemprop="name">SpringBoot-Bean基本原理</h1>
+          <div class="article-meta"><span class="article-date"><i class="icon icon-calendar-check"></i> <a
+                href="/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" class="article-date"><time
+                  datetime="2020-04-09T08:59:34.000Z" itemprop="datePublished">2020-04-09</time> </a></span><span
+              class="article-category"><i class="icon icon-folder"></i> <a class="article-category-link"
+                href="/categories/%E6%BA%90%E7%A0%81/">源码</a> </span><span class="article-tag"><i
+                class="icon icon-tags"></i> <a class="article-tag-link-link" href="/tags/Java/" rel="tag">Java</a>, <a
+                class="article-tag-link-link" href="/tags/Spring/" rel="tag">Spring</a> </span><span
+              class="post-comment"><i class="icon icon-comment"></i> <a
+                href="/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/#comments"
+                class="article-comment-link">评论 </a></span><span class="post-wordcount hidden-xs"
+              itemprop="wordCount">字数统计: 2.4k(字)</span> <span class="post-readcount hidden-xs"
+              itemprop="timeRequired">阅读时长: 8(分)</span></div>
+        </div>
+        <div class="article-entry marked-body" itemprop="articleBody">
+          <p>被称作 bean 的对象是构成应用程序的支柱也是由 Spring IoC 容器管理的。bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。这些 bean
+            是由用容器提供的配置元数据创建的，例如，已经在先前章节看到的，在 XML 的表单中的 定义。</p>
+          <p><img src="/images/posts/2020/bean-lifecycle.png"></p>
+          <blockquote>
+            <p>Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype 的 bean ，Spring 在创建好交给使用者之后则不会再管理后续的生命周期。</p>
+          </blockquote><span id="more"></span>
+          <h2 id="IoC与DI详解"><a href="#IoC与DI详解" class="headerlink" title="IoC与DI详解"></a>IoC与DI详解</h2>
+          <h3 id="IoC的实现方式-及-与DI的关系？"><a href="#IoC的实现方式-及-与DI的关系？" class="headerlink"
+              title="IoC的实现方式 及 与DI的关系？"></a>IoC的实现方式 及 与DI的关系？</h3>
+          <p><strong>依赖查找(Dependency
+              Lookup)：</strong>容器中的受控对象通过容器的API来查找自己所依赖的资源和协作对象。<br>这种方式虽然降低了对象间的依赖，但是同时也使用到了容器的API，造成了我们无法在容器外使用和测试对象。<br>依赖查找是一种更加传统的IoC实现方式。
+          </p>
+          <p><strong>依赖注入(Dependency
+              Injection)：</strong>这就是DI，字面上理解，依赖注入就是将服务注入到使用它的地方。对象只提供普通的方法让容器去决定依赖关系，<br>容器全权负责组件的装配，它会把符合依赖关系的对象通过属性（JavaBean中的setter）或者是构造子传递给需要的对象。
+          </p>
+          <p>
+            相对于IoC而言，依赖注入(DI)更加准确地描述了IoC的设计理念。所谓依赖注入，即组件之间的依赖关系由容器在应用系统运行期来决定，<br>也就是由容器动态地将某种依赖关系的目标对象实例注入到应用系统中的各个关联的组件之中。
+          </p>
+          <h3 id="Spring中的IoC与DI"><a href="#Spring中的IoC与DI" class="headerlink" title="Spring中的IoC与DI"></a>Spring中的IoC与DI
+          </h3>
+          <p>
+            IoC是Spring的核心，贯穿始终。对于Spring框架来说，就是由Spring来负责控制对象的生命周期和对象间的关系。<br>Spring中DI有两种实现方式—Setter方式(传值方式)和构造器方式(引用方式)。
+          </p>
+          <h3 id="IoC的实现原理：反射与工厂模式"><a href="#IoC的实现原理：反射与工厂模式" class="headerlink"
+              title="IoC的实现原理：反射与工厂模式"></a>IoC的实现原理：反射与工厂模式</h3>
+          <h4 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h4>
+          <p>反射是Java语言的一个特性，它允许程序在运行时（注意不是编译的时候）来进行自我检查并且对内部的成员进行操作。例如它允许一个Java类获取它所有的成员变量和方法并且显示出来。</p>
+          <p>反射主要是指程序可以访问，检测和修改它本身状态或行为的一种能力，并能根据自身行为的状态和结果，调整或修改应用所描述行为的状态和相关的语义。在Java中，只要给定类的名字，那么就可以通过反射机制来获得类的所有信息。
+          </p>
+          <p><strong>反射的作用</strong></p>
+          <ol>
+            <li>在运行时判断任意一个对象所属的类；</li>
+            <li>在运行时获取类的对象；</li>
+            <li>在运行时访问java对象的属性，方法，构造方法等；</li>
+            <li>在运行时修改类的对象、方法和属性</li>
+          </ol>
+          <p>静态编译：在编译时确定类型，绑定对象，即通过。<br><br>动态编译：运行时确定类型，绑定对象。动态编译最大限度发挥了Java的灵活性，体现了多态的应用，有以降低类之间的藕合性。<br></p>
+          <p><strong>反射机制优缺点</strong></p>
+          <p>
+            优点：可以实现动态创建对象和编译，体现出很大的灵活性（特别是在J2EE的开发中它的灵活性就表现的十分明显）。通过反射机制我们可以获得类的各种内容，进行反编译。对于JAVA这种先编译再运行的语言来说，反射机制可以使代码更加灵活，更加容易实现面向对象。
+          </p>
+          <p>
+            比如，一个大型的软件，不可能一次就把把它设计得很完美，把这个程序编译后，发布了，当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如这样的话，这个软件肯定是没有多少人用的。采用静态的话，需要把整个程序重新编译一次才可以实现功能的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时动态地创建和编译，就可以实现该功能。
+          </p>
+          <p>缺点：对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且让它满足我们的要求。这类操作总是慢于直接执行相同的操作。</p>
+          <h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4>
+          <p>IOC容器的工作：创建和管理Bean，它是一个工厂，负责对外提供Bean实例。</p>
+          <h2 id="Bean"><a href="#Bean" class="headerlink" title="@Bean"></a>@Bean</h2>
+          <p>
+            Spring的@Bean注解用于告诉方法，产生一个Bean对象，然后这个Bean对象交给Spring管理。产生这个Bean对象的方法Spring只会调用一次，随后这个Spring将会将这个Bean对象放在自己的IOC容器中。(默认bean的名称就是其方法名。但是也可以指定名称)
+          </p>
+          <figure class="highlight java">
+            <table>
+              <tr>
+                <td class="gutter">
+                  <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre>
+                </td>
+                <td class="code">
+                  <pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BeanTest <span class="title">getBean</span><span class="params">()</span></span>&#123;</span><br><span class="line">        BeanTest bean = <span class="keyword">new</span>  BeanTest();</span><br><span class="line">        System.out.println(<span class="string">&quot;调用方法：&quot;</span>+bean);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ClassPathXmlApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;application-context.xml&quot;</span>);</span><br><span class="line">        Object bean1 = context.getBean(<span class="string">&quot;getBean&quot;</span>);</span><br><span class="line">        System.out.println(bean1);</span><br><span class="line">        Object bean2 = context.getBean(<span class="string">&quot;getBean&quot;</span>);</span><br><span class="line">        System.out.println(bean2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+                </td>
+              </tr>
+            </table>
+          </figure>
+          <figure class="highlight plaintext">
+            <table>
+              <tr>
+                <td class="gutter">
+                  <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre>
+                </td>
+                <td class="code">
+                  <pre><span class="line">调用方法：Spring.BeanTest@5a4041cc</span><br><span class="line">Spring.BeanTest@5a4041cc</span><br><span class="line">Spring.BeanTest@5a4041cc</span><br></pre>
+                </td>
+              </tr>
+            </table>
+          </figure>
+          <h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2>
+          <h3 id="Spring中的Bean是线程安全的吗（不是）？"><a href="#Spring中的Bean是线程安全的吗（不是）？" class="headerlink"
+              title="Spring中的Bean是线程安全的吗（不是）？"></a>Spring中的Bean是线程安全的吗（不是）？</h3>
+          <p>Spring中的Bean默认是单例模式的，框架并没有对bean进行多线程的封装处理。实际上大部分时间Bean是无状态的（比如Dao） 所以说在某种程度上来说Bean其实是安全的。但是如果Bean是有状态的
+            那就需要开发人员自己来进行线程安全的保证，最简单的办法就是改变bean的作用域把singleton改为protopyte这样每次请求Bean就相当于是new
+            Bean()这样就可以保证线程的安全了。　(有状态就是有数据存储功能&#x2F;无状态就是不会保存数据）</p>
+          <p>线程安全这个问题，要从单例与原型Bean分别进行说明。</p>
+          <p><strong>原型Bean：</strong><br>对于原型Bean,每次创建一个新对象，也就是线程之间并不存在Bean共享，自然是不会有线程安全的问题。</p>
+          <p>
+            <strong>单例Bean：</strong><br>对于单例Bean,所有线程都共享一个单例实例Bean,因此是存在资源的竞争。<br>如果单例Bean,是一个无状态Bean，也就是线程中的操作不会对Bean的成员执行查询以外的操作，那么这个单例Bean是线程安全的。比如Spring
+            mvc 的 Controller、Service、Dao等，这些Bean大多是无状态的，只关注于方法本身。</p>
+          <h3 id="Spring-的-bean-作用域（scope）类型"><a href="#Spring-的-bean-作用域（scope）类型" class="headerlink"
+              title="Spring 的 bean 作用域（scope）类型 ?"></a>Spring 的 bean 作用域（scope）类型 ?</h3>
+          <ol>
+            <li>singleton:单例，默认作用域。</li>
+            <li>prototype:原型，每次创建一个新对象。</li>
+            <li>request:请求，每次Http请求创建一个新对象，适用于WebApplicationContext环境下。</li>
+            <li>session:会话，同一个会话共享一个实例，不同会话使用不用的实例。</li>
+            <li>global-session:全局会话，所有会话共享一个实例。</li>
+          </ol>
+          <h3 id="Service和-Controller是否线程安全？"><a href="#Service和-Controller是否线程安全？" class="headerlink"
+              title="@Service和@Controller是否线程安全？"></a>@Service和@Controller是否线程安全？</h3>
+          <p>
+            默认配置下不是的。为啥呢？因为默认情况下@Controller没有加上@Scope，没有加@Scope就是默认值singleton，单例的。意思就是系统只会初始化一次Controller容器，所以每次请求的都是同一个Controller容器，当然是非线程安全的。
+          </p>
+          <ol>
+            <li>在@Controller&#x2F;@Service等容器中，默认情况下，scope值是单例-singleton的，也是线程不安全的</li>
+            <li>尽量不要在@Controller&#x2F;@Service等容器中定义静态变量，不论是单例(singleton)还是多实例(prototype)他都是线程不安全的</li>
+            <li>默认注入的Bean对象，在不设置scope的时候他也是线程不安全的</li>
+            <li>一定要定义变量的话，用ThreadLocal来封装，这个是线程安全的</li>
+          </ol>
+          <blockquote>
+            <p>多线程场景下，多个线程对这个单例Bean的成员变量并不存在资源的竞争，因为ThreadLocal为每个线程保存线程私有的数据。这是一种以空间换时间的方式。</p>
+          </blockquote>
+          <h3 id="Bean和-Component之间的联系和区别"><a href="#Bean和-Component之间的联系和区别" class="headerlink"
+              title="@Bean和@Component之间的联系和区别"></a>@Bean和@Component之间的联系和区别</h3>
+          <p>
+            <strong>@Component</strong><br>注解表明一个类会作为组件类，并告知Spring要为这个类创建bean，（@Controller,@Service,@Repository实际上都包含了@Component注解）
+          </p>
+          <p>
+            <strong>@Bean</strong><br>用在方法上，一般有返回值，@Bean注解告诉Spring这个方法将会返回一个对象，这个对象要注册为Spring应用上下文中的bean。通常方法体中包含了最终产生bean实例的逻辑；第三方的类，如果要注册到spring中，一般用bean的方式。
+          </p>
+          <h3 id="ApplicationContext-与-BeanFactory-区别"><a href="#ApplicationContext-与-BeanFactory-区别" class="headerlink"
+              title="ApplicationContext 与 BeanFactory 区别"></a>ApplicationContext 与 BeanFactory 区别</h3>
+          <p>
+            Bean工厂（BeanFactory）是Spring框架的最核心接口，它提供了高级Ioc的配置机制。应用上下文（ApplicationContext）是BeanFactory的实现，以Bean工厂为基础，它提供了更多面向应用的功能。
+          </p>
+          <p>
+            在用途上，BeanFactory是Spring框架的基础设施，面向Spring本身，我们一般不直接使用；ApplicationContext面向使用Spring框架的开发者，所以，在几乎所有的应用场合我们都使用应用上下文而非Bean工厂。
+          </p>
+          <h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2>
+          <ol>
+            <li>Spring 中的bean 是线程安全的吗： <a target="_blank" rel="noopener"
+                href="https://www.cnblogs.com/myseries/p/11729800.html">https://www.cnblogs.com/myseries/p/11729800.html</a>
+            </li>
+            <li>Bean 文档： <a target="_blank" rel="noopener"
+                href="https://wiki.jikexueyuan.com/project/spring/bean-definition.html">https://wiki.jikexueyuan.com/project/spring/bean-definition.html</a>
+            </li>
+          </ol>
+          <link rel="stylesheet" href="/css/markmap.css" type="text/css">
+        </div>
+        <div class="article-footer">
+          <blockquote class="mt-2x">
+            <ul class="post-copyright list-unstyled">
+              <li class="post-copyright-link hidden-xs"><strong>本文链接：</strong> <a
+                  href="https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"
+                  title="SpringBoot-Bean基本原理" target="_blank"
+                  rel="external">https://blog.beyhub.com/post/springboot-bean基本原理/</a></li>
+              <li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a
+                  href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0
+                  CN协议</a> 许可协议。转载请注明出处！</li>
+            </ul>
+          </blockquote>
+          <hr>
+        </div>
+      </article>
+      <section id="comments">
+        <div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener"
+              href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+      </section>
+    </div>
+    <nav class="bar bar-footer clearfix" data-stick-bottom>
+      <div class="bar-inner">
+        <ul class="pager pull-left">
+          <li class="prev"><a href="/post/%E5%9F%BA%E4%BA%8Equartz%E7%9A%84%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/"
+              title="基于quartz的任务调度"><i class="icon icon-angle-left"
+                aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a></li>
+          <li class="next"><a href="/post/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82zookeeper/"
+              title="一文看懂Zookeeper"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right"
+                aria-hidden="true"></i></a></li>
+        </ul>
+        <div class="bar-right"></div>
+      </div>
+    </nav>
+  </main>
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    <ul class="social-links">
+      <li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip"
+          data-placement="top"><i class="icon icon-github"></i></a></li>
+      <li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i
+            class="icon icon-weibo"></i></a></li>
+      <li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip"
+          data-placement="top"><i class="icon icon-twitter"></i></a></li>
+      <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i
+            class="icon icon-rss"></i></a></li>
+    </ul>
+    <div class="copyright">&copy; 2022 刘远程 (Lester Lau)<div class="publishby">Theme by <a
+          href="https://github.com/cofess" target="_blank">me </a>base on <a
+          href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.</div>
+    </div>
+  </footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+  <script src="/js/plugin.min.js"></script>
+  <script src="/js/application.js"></script>
+  <script>window.INSIGHT_CONFIG = { TRANSLATION: { POSTS: "文章", PAGES: "页面", CATEGORIES: "分类", TAGS: "标签", UNTITLED: "(未命名)" }, ROOT_URL: "/", CONTENT_URL: "/content.json" }</script>
+  <script src="/js/insight.js"></script>
+  <script
+    defer>var disqus_config = function () { this.page.url = "https://blog.beyhub.com/post/springboot-bean%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/", this.page.identifier = "2021/SpringBoot-Bean基本原理" }; !function () { var t = document, e = t.createElement("script"); e.src = "//cai-ju-dong-li.disqus.com/embed.js", e.setAttribute("data-timestamp", +new Date), (t.head || t.body).appendChild(e) }()</script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>$(document).ready(function () {
       let imgs = $('article img');
       imgs.attr('src', '/' + imgs.attr('src'))
     }
@@ -26,4 +457,10 @@
         hash: false,
         loop: false,
       });
-    });</script><script src="https://cdn.jsdelivr.net/npm/d3@5"></script><script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.4/dist/browser/view.min.js"></script><script>const mindmaps=document.querySelectorAll(".markmap-svg");for(const a of mindmaps)markmap.markmap(a,JSON.parse(a.innerHTML))</script></body></html>
+    });</script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.4/dist/browser/view.min.js"></script>
+  <script>const mindmaps = document.querySelectorAll(".markmap-svg"); for (const a of mindmaps) markmap.markmap(a, JSON.parse(a.innerHTML))</script>
+</body>
+
+</html>

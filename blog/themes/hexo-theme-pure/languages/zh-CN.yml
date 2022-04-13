@@ -6,7 +6,7 @@ menu:
   Repository: 项目
   Books: 书单
   Movies: 电影
-  Links: 常用网站
+  Links: 常用网址
   About: 关于我
 nav:
   all: All
@@ -28,7 +28,7 @@ page:
   books-desc: 个人收藏的书单推荐给大家
   movies: 电影
   movies-desc: 个人喜欢的电影推荐给大家
-  links: 友情链接
+  links: 常用网址
   links-desc: 欢迎交换链接，可在当前页面留言
   about: 关于
 pagination:
@@ -72,7 +72,7 @@ total:
   article: 共 %d 篇文章
   tag: 共 %d 个标签
   category: 共 %d 个分类
-  link: 共 %d 个友情链接
+  link: 共 %d 个常用网址
   repository: 共 %d 个项目
 donate:
   qrcode_alt: 扫码支持

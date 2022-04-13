@@ -1,11 +1,9 @@
 # links
 创造狮:
   link: http://chuangzaoshi.com/
-  avatar: http://www.chuangzaoshi.com/assets/images/logo/300.png
   desc: 为创意工作者而设计
 腾讯设计导航:
   link: http://idesign.qq.com/
-  avatar: https://idesign.qq.com/static/images/logo.png
   desc: 网罗全网高逼格的设计站点
 Sci-Hub:
   link: https://sci-hub.se/
@@ -23,8 +21,8 @@ OI WIKI:
   link: https://oi-wiki.org/
   desc: 编程竞赛知识整合站点
 硬盘在唱歌:
-  link: https://disksing.com/
-  desc: PingCAP
+  link: https://disksing.com/post/
+  desc: PingCAP黄梦龙
 W3CSchools:
   link: https://www.w3schools.com/
   desc: Learn to Code

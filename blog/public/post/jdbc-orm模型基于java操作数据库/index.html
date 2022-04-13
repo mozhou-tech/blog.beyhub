@@ -1,4 +1,385 @@
-<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><meta name="renderer" content="webkit"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no,email=no,adress=no"><meta name="theme-color" content="#000000"><meta http-equiv="window-target" content="_top"><title>JDBC ORM模型基于JAVA操作数据库 | 采菊东篱</title><meta name="description" content="在我们日常的开发过程中，肯定不可避免的会使用到数据库以及 SQL 语句。比如，刚开始学习 Java 的时候可能会遇到 JDBC，它是连接 Java 和数据库的桥梁，我们可以使用 JDBC 来建立与数据库之间的连接并且执行相应的 SQL 语句。虽然 JDBC 的执行效率很高，但是其开发效率比较低。正是如此，市面上出现了一大批 ORM（对象关系映射）框架，例如 Hibernate，iBATIS 以及本"><meta property="og:type" content="article"><meta property="og:title" content="JDBC ORM模型基于JAVA操作数据库"><meta property="og:url" content="https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/index.html"><meta property="og:site_name" content="采菊东篱"><meta property="og:description" content="在我们日常的开发过程中，肯定不可避免的会使用到数据库以及 SQL 语句。比如，刚开始学习 Java 的时候可能会遇到 JDBC，它是连接 Java 和数据库的桥梁，我们可以使用 JDBC 来建立与数据库之间的连接并且执行相应的 SQL 语句。虽然 JDBC 的执行效率很高，但是其开发效率比较低。正是如此，市面上出现了一大批 ORM（对象关系映射）框架，例如 Hibernate，iBATIS 以及本"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2020-04-11T00:45:08.000Z"><meta property="article:modified_time" content="2021-08-21T11:43:09.846Z"><meta property="article:author" content="刘远程 (Lester Lau)"><meta property="article:tag" content="数据库"><meta property="article:tag" content="MySQL"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/index.html"><link rel="alternate" href="/atom.xml" title="采菊东篱" type="application/atom+xml"><link rel="icon" href="/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet"><meta name="generator" content="Hexo 5.4.0"></head><body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="slimContent"><div class="navbar-header"><div class="profile-block text-center"><a id="avatar" href="/about/"><img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200"></a><h2 id="name" class="hidden-xs hidden-sm">Lester Lau</h2><h3 id="title" class="hidden-xs hidden-sm hidden-md" style="margin-top:13px;margin-bottom:6px">采菊东篱下，悠然见南山</h3><small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> NanJing, China</small></div><div class="search" id="search-form-wrap"><form class="search-form sidebar-form"><div class="input-group"><input type="text" class="search-form-input form-control" placeholder="搜索"> <span class="input-group-btn"><button type="submit" class="search-form-submit btn btn-flat" onclick="return!1"><i class="icon icon-search"></i></button></span></div></form><div class="ins-search"><div class="ins-search-mask"></div><div class="ins-search-container"><div class="ins-input-wrapper"><input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech> <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="ins-section-wrapper"><div class="ins-section-container"></div></div></div></div></div><button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button></div><nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation"><ul class="nav navbar-nav main-nav menu-highlight"><li class="menu-item menu-item-home"><a href="/."><i class="icon icon-home-fill"></i> <span class="menu-title">首页</span></a></li><li class="menu-item menu-item-archives"><a href="/archives"><i class="icon icon-archives-fill"></i> <span class="menu-title">归档</span></a></li><li class="menu-item menu-item-categories"><a href="/categories"><i class="icon icon-folder"></i> <span class="menu-title">文章分类</span></a></li><li class="menu-item menu-item-tags"><a href="/tags"><i class="icon icon-tags"></i> <span class="menu-title">标签</span></a></li><li class="menu-item menu-item-links"><a href="/links"><i class="icon icon-friendship"></i> <span class="menu-title">友情链接</span></a></li><li class="menu-item menu-item-about"><a href="/about"><i class="icon icon-cup-fill"></i> <span class="menu-title">关于我</span></a></li></ul><ul class="social-links"><li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li><li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li><li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li><li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li></ul></nav></div></header><aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar"><div class="slimContent"><div class="widget"><h3 class="widget-title">公告</h3><div class="widget-body"><div id="board"><div class="content"><p>永远只相信事实及其推论</p></div></div></div></div><div class="widget"><h3 class="widget-title">标签云</h3><div class="widget-body tagcloud"><a href="/tags/BPMN/" style="font-size:13px">BPMN</a> <a href="/tags/BinarySearch/" style="font-size:13px">BinarySearch</a> <a href="/tags/JVM/" style="font-size:13px">JVM</a> <a href="/tags/Java/" style="font-size:13.67px">Java</a> <a href="/tags/K3s/" style="font-size:13px">K3s</a> <a href="/tags/Kubernetes/" style="font-size:13px">Kubernetes</a> <a href="/tags/MySQL/" style="font-size:14px">MySQL</a> <a href="/tags/Proxy/" style="font-size:13px">Proxy</a> <a href="/tags/Spring/" style="font-size:13px">Spring</a> <a href="/tags/Traefik/" style="font-size:13px">Traefik</a> <a href="/tags/java/" style="font-size:13px">java</a> <a href="/tags/untagged/" style="font-size:13.33px">untagged</a> <a href="/tags/zookeeper/" style="font-size:13px">zookeeper</a> <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" style="font-size:13px">二分法</a> <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/" style="font-size:13px">云原生</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size:13px">分布式</a> <a href="/tags/%E5%8E%9F%E7%90%86/" style="font-size:13.33px">原理</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size:13px">定时任务</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size:13px">数据库</a> <a href="/tags/%E9%94%81/" style="font-size:13.67px">锁</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size:13px">高并发</a></div></div><div class="widget"><h3 class="widget-title">分类</h3><div class="widget-body"><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/">工作效率</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81/">源码</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul></div></div><div class="widget"><h3 class="widget-title">最新文章</h3><div class="widget-body"><ul class="recent-post-list list-unstyled no-thumbnail"><li><div class="item-inner"><p class="item-title"><a href="/post/kubernetes%E5%AE%9E%E7%8E%B0traefik%E4%BB%A3%E7%90%86mysql%E6%B5%81%E9%87%8F/" class="title">Kubernetes实现Traefik代理MySQL流量</a></p><p class="item-date"><time datetime="2022-04-12T07:44:46.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE/" class="title">二分法查找</a></p><p class="item-date"><time datetime="2022-04-12T02:45:18.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAk3s%E7%8E%AF%E5%A2%83/" class="title">快速搭建K3S环境</a></p><p class="item-date"><time datetime="2022-04-12T02:42:45.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E5%B0%8F%E7%B1%B3ax6000%E8%81%AA%E6%98%8E%E4%B8%8A%E7%BD%91/" class="title">小米AX6000聪明上网</a></p><p class="item-date"><time datetime="2022-04-12T02:42:37.000Z" itemprop="datePublished">2022-04-12</time></p></div></li><li><div class="item-inner"><p class="item-title"><a href="/post/%E5%9F%BA%E4%BA%8Ek3s%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAflink-session-cluster/" class="title">基于K3S快速搭建Flink Session Cluster</a></p><p class="item-date"><time datetime="2022-04-12T02:42:30.000Z" itemprop="datePublished">2022-04-12</time></p></div></li></ul></div></div></div></aside><main class="main" role="main"><div class="content"><article id="post-2021/JDBC-ORM模型基于JAVA操作数据库" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting"><div class="article-header"><h1 class="article-title" itemprop="name">JDBC ORM模型基于JAVA操作数据库</h1><div class="article-meta"><span class="article-date"><i class="icon icon-calendar-check"></i> <a href="/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date"><time datetime="2020-04-11T00:45:08.000Z" itemprop="datePublished">2020-04-11</time> </a></span><span class="article-category"><i class="icon icon-folder"></i> <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a> </span><span class="article-tag"><i class="icon icon-tags"></i> <a class="article-tag-link-link" href="/tags/MySQL/" rel="tag">MySQL</a>, <a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a> </span><span class="post-comment"><i class="icon icon-comment"></i> <a href="/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/#comments" class="article-comment-link">评论 </a></span><span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.8k(字)</span> <span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span></div></div><div class="article-entry marked-body" itemprop="articleBody"><p>在我们日常的开发过程中，肯定不可避免的会使用到数据库以及 SQL 语句。比如，刚开始学习 Java 的时候可能会遇到 JDBC，它是连接 Java 和数据库的桥梁，我们可以使用 JDBC 来建立与数据库之间的连接并且执行相应的 SQL 语句。虽然 JDBC 的执行效率很高，但是其开发效率比较低。正是如此，市面上出现了一大批 ORM（对象关系映射）框架，例如 Hibernate，iBATIS 以及本文将要介绍的 MyBatis。</p><span id="more"></span><h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2><p>JDBC (Java Database Connectivity) API，即Java数据库编程接口，是一组标准的Java语言中的接口和类，使用这些接口和类，Java客户端程序可以访问各种不同类型的数据库。比如建立数据库连接、执行SQL语句进行数据的存取操作。</p><p><strong>实现步骤</strong></p><ol><li>使用JDBC编程需要连接数据库，注册驱动和数据库信息</li><li>操作Connection，打开 Statement 对象</li><li>通过Statement执行SQL， 返回结果到ResultSet对象</li><li>使用ResultSet读取数据，然后通过代码转化为具体的POJO对象</li><li>关闭数据库的相关资源</li></ol><p><strong>优点</strong></p><ol><li>直接底层操作，提供了很简单、便捷的访问数据库的方法，跨平台性比较强。</li><li>灵活性比较强。可以写很复杂的SQL语句。</li></ol><p><strong>缺点</strong> </p><ol><li>工作量相对较大。我们需要先连接，然后处理JDBC底层事务，处理数据类型。</li><li>我们还需要操作Connection对象、Statement对象和ResultSet对象去拿到数据，并准确的关闭它们。</li></ol><h2 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h2><p>由于JDBC存在的缺陷，所以我们在实际工作中很少使用JDBC进行操作数据库的编程。于是我们就提出了对象关系映射（Object Relational Mapping）简称 ORM，或者O&#x2F;RM，或者 O&#x2F;R mapping。</p><p>ORM模型就是数据库的表和简单Java对象（Plain Ordinary Java Object，简称POJO）的映射关系模型。 它主要解决数据库数据和POJO对象的相互映射。我们通过这层映射就可以简单的把数据库表的数据转化为POJO。以便程序员更加容易的理解和应用Java程序.而且程序员一般只需要了解Java应用而无需对数据库进行深入的了解。此外，ORM模型提供了统一的规则使得数据库的数据通过配置便可轻易的映射到POJO上。常用的ORM框架 </p><h3 id="Java-ORM"><a href="#Java-ORM" class="headerlink" title="Java ORM"></a>Java ORM</h3><h4 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h4><p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p><p><strong>优点</strong></p><ol><li>易于上手和掌握。</li><li>sql写在xml里，便于统一管理和优化。</li><li>解除sql与程序代码的耦合。</li><li>提供映射标签，支持对象与数据库的orm字段关系映射提供对象关系映射标签，支持对象关系组建维护提供xml标签，支持编写动态sql。</li></ol><p><strong>缺点</strong></p><ol><li>sql工作量很大，尤其是字段多、关联表多时，更是如此。</li><li>sql依赖于数据库，导致数据库移植性差。</li><li>由于xml里标签id必须唯一，导致DAO中方法不支持方法重载。</li><li>字段映射标签和对象关系映射标签仅仅是对映射关系的描述，具体实现仍然依赖于sql。（比如配置了一对多Collection标签，如果sql里没有join子表或查询子表的话，查询后返回的对象是不具备对象关系的，即Collection的对象为null）</li><li>DAO层过于简单，对象组装的工作量较大。</li><li>不支持级联更新、级联删除。</li><li>编写动态sql时,不方便调试，尤其逻辑复杂时。</li><li>提供的写动态sql的xml标签功能简单（连struts都比不上），编写动态sql仍然受限，且可读性低。</li><li>若不查询主键字段，容易造成查询出的对象有“覆盖”现象。参数的数据类型支持不完善。（如参数为Date类型时，容易报没有get、set方法，需在参数上加@param）</li><li>多参数时，使用不方便，功能不够强大。（目前支持的方法有map、对象、注解@param以及默认采用012索引位的方式）</li><li>缓存使用不当，容易产生脏数据。</li></ol><h4 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h4><p>Hibernate是一种Java语言下的对象关系映射(ORM)解决方案。它是使用GNU宽通用公共许可证发行的自由、开源的软件。它为面向对象的领域模型到传统的关系型数据库的映射，提供了一个使用方便的持久化框架。</p><p><strong>优点</strong></p><ol><li>消除了代码的映射规则，它全部被分离到XML或者注解里面去配置。</li><li>无需再管理数据库连接，它也配置到XML里面。</li><li>一个会话中，不要操作多个对象，只要操作Sesison即可。</li><li>关闭资源只需要关闭一个Session即可。</li></ol><p><strong>缺点</strong></p><ol><li>全表映射带来的不便，比如更新时需要发送所有的字段。</li><li>无法根据不同的条件组装不同的SQL。　</li><li>对多表关联和复杂的SQL查询支持较差。</li><li>需要自己写SQL，返回后，需要自己将数据组装到POJO中。</li><li>不能有效支持存储过程。虽然有HQL，但是性能较差，大型互联网往往需要优化SQL，而Hibernate做不到。</li></ol><h3 id="框架选择"><a href="#框架选择" class="headerlink" title="框架选择"></a>框架选择</h3><p>Hibernate作为Java ORM框架，它确实编程简易，需要我们提供映射的规则，完全可以通过IDE生成。同时无需编写SQL确实开发效率优于MyBatis。而且，它也提供了缓存、日志、级联、等强大的功能，但是Hibernate的缺陷也是十分的明显的。就是在多表关联复杂的SQL时，数据系统权限限制时，根据条件变化的SQL时。存储过程等使用场景。Hibernate十分不便。而性能又难以通过SQL来优化。所以Hibernate一般只适用于场景不太复杂的、性能要求不太苛刻的时候使用。   </p><p>MyBatis 是一个灵活的、可以动态生成映射关系的框架，它几乎可以替代JDBC。拥有动态列、动态表名，存储过程都支持。同时提供了简易的缓存（如(默认)一级缓存，还有二级缓存）、日志、级联。但是它的缺陷是需要你提供映射规则和SQL，所以它的开发工作量一般要比Hibernate略大一些。</p><p>但总体来说，MyBatis具有高度灵活、可优化、易维护等特点, 所以目前还是myBatis比较合适我们。</p><link rel="stylesheet" href="/css/markmap.css" type="text/css"></div><div class="article-footer"><blockquote class="mt-2x"><ul class="post-copyright list-unstyled"><li class="post-copyright-link hidden-xs"><strong>本文链接：</strong> <a href="https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" title="JDBC ORM模型基于JAVA操作数据库" target="_blank" rel="external">https://blog.beyhub.com/post/jdbc-orm模型基于java操作数据库/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！</li></ul></blockquote><hr></div></article><section id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></section></div><nav class="bar bar-footer clearfix" data-stick-bottom><div class="bar-inner"><ul class="pager pull-left"><li class="prev"><a href="/post/hashmap%E3%80%81hashtable%E7%AD%89map%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%8E%9F%E7%90%86/" title="HashMap、Hashtable等Map接口的实现和原理"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a></li><li class="next"><a href="/post/mysql%E7%B4%A2%E5%BC%95%E5%BA%95%E5%B1%82%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="MySQL索引底层的数据结构与算法"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a></li></ul><div class="bar-right"></div></div></nav></main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter"><ul class="social-links"><li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li><li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li><li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li><li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li></ul><div class="copyright">&copy; 2022 刘远程 (Lester Lau)<div class="publishby">Theme by <a href="https://github.com/cofess" target="_blank">me </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.</div></div></footer><script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script><script>window.jQuery||document.write('<script src="js/jquery.min.js"><\/script>')</script><script src="/js/plugin.min.js"></script><script src="/js/application.js"></script><script>window.INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(未命名)"},ROOT_URL:"/",CONTENT_URL:"/content.json"}</script><script src="/js/insight.js"></script><script defer>var disqus_config=function(){this.page.url="https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/",this.page.identifier="2021/JDBC-ORM模型基于JAVA操作数据库"};!function(){var t=document,e=t.createElement("script");e.src="//cai-ju-dong-li.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script><script>$(document).ready(function () {
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="window-target" content="_top">
+  <title>JDBC ORM模型基于JAVA操作数据库 | 采菊东篱</title>
+  <meta name="description"
+    content="在我们日常的开发过程中，肯定不可避免的会使用到数据库以及 SQL 语句。比如，刚开始学习 Java 的时候可能会遇到 JDBC，它是连接 Java 和数据库的桥梁，我们可以使用 JDBC 来建立与数据库之间的连接并且执行相应的 SQL 语句。虽然 JDBC 的执行效率很高，但是其开发效率比较低。正是如此，市面上出现了一大批 ORM（对象关系映射）框架，例如 Hibernate，iBATIS 以及本">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="JDBC ORM模型基于JAVA操作数据库">
+  <meta property="og:url"
+    content="https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+  <meta property="og:site_name" content="采菊东篱">
+  <meta property="og:description"
+    content="在我们日常的开发过程中，肯定不可避免的会使用到数据库以及 SQL 语句。比如，刚开始学习 Java 的时候可能会遇到 JDBC，它是连接 Java 和数据库的桥梁，我们可以使用 JDBC 来建立与数据库之间的连接并且执行相应的 SQL 语句。虽然 JDBC 的执行效率很高，但是其开发效率比较低。正是如此，市面上出现了一大批 ORM（对象关系映射）框架，例如 Hibernate，iBATIS 以及本">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2020-04-11T00:45:08.000Z">
+  <meta property="article:modified_time" content="2021-08-21T11:43:09.846Z">
+  <meta property="article:author" content="刘远程 (Lester Lau)">
+  <meta property="article:tag" content="数据库">
+  <meta property="article:tag" content="MySQL">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical"
+    href="https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+  <link rel="alternate" href="/atom.xml" title="采菊东篱" type="application/atom+xml">
+  <link rel="icon" href="/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  <meta name="generator" content="Hexo 5.4.0">
+</head>
+
+<body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center"><a id="avatar" href="/about/"><img class="img-circle img-rotate"
+              src="/images/avatar.jpg" width="200" height="200"></a>
+          <h2 id="name" class="hidden-xs hidden-sm">Lester Lau</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md" style="margin-top:13px;margin-bottom:6px">采菊东篱下，悠然见南山
+          </h3><small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> NanJing,
+            China</small>
+        </div>
+        <div class="search" id="search-form-wrap">
+          <form class="search-form sidebar-form">
+            <div class="input-group"><input type="text" class="search-form-input form-control" placeholder="搜索"> <span
+                class="input-group-btn"><button type="submit" class="search-form-submit btn btn-flat"
+                  onclick="return!1"><i class="icon icon-search"></i></button></span></div>
+          </form>
+          <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+              <div class="ins-input-wrapper"><input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                  x-webkit-speech> <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                  aria-label="Close"><span aria-hidden="true">×</span></button></div>
+              <div class="ins-section-wrapper">
+                <div class="ins-section-container"></div>
+              </div>
+            </div>
+          </div>
+        </div><button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar"
+          aria-controls="main-navbar" aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span
+            class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope
+        itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav menu-highlight">
+          <li class="menu-item menu-item-home"><a href="/."><i class="icon icon-home-fill"></i> <span
+                class="menu-title">首页</span></a></li>
+          <li class="menu-item menu-item-archives"><a href="/archives"><i class="icon icon-archives-fill"></i> <span
+                class="menu-title">归档</span></a></li>
+          <li class="menu-item menu-item-categories"><a href="/categories"><i class="icon icon-folder"></i> <span
+                class="menu-title">文章分类</span></a></li>
+          <li class="menu-item menu-item-tags"><a href="/tags"><i class="icon icon-tags"></i> <span
+                class="menu-title">标签</span></a></li>
+          <li class="menu-item menu-item-links"><a href="/links"><i class="icon icon-friendship"></i> <span
+                class="menu-title">常用网址</span></a></li>
+          <li class="menu-item menu-item-about"><a href="/about"><i class="icon icon-cup-fill"></i> <span
+                class="menu-title">关于我</span></a></li>
+        </ul>
+        <ul class="social-links">
+          <li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip"
+              data-placement="top"><i class="icon icon-github"></i></a></li>
+          <li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip"
+              data-placement="top"><i class="icon icon-weibo"></i></a></li>
+          <li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip"
+              data-placement="top"><i class="icon icon-twitter"></i></a></li>
+          <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i
+                class="icon icon-rss"></i></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <div class="widget">
+        <h3 class="widget-title">公告</h3>
+        <div class="widget-body">
+          <div id="board">
+            <div class="content">
+              <p>永远只相信事实及其推论</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget-body tagcloud"><a href="/tags/BPMN/" style="font-size:13px">BPMN</a> <a
+            href="/tags/BinarySearch/" style="font-size:13px">BinarySearch</a> <a href="/tags/JVM/"
+            style="font-size:13px">JVM</a> <a href="/tags/Java/" style="font-size:13.67px">Java</a> <a href="/tags/K3s/"
+            style="font-size:13px">K3s</a> <a href="/tags/Kubernetes/" style="font-size:13px">Kubernetes</a> <a
+            href="/tags/MySQL/" style="font-size:14px">MySQL</a> <a href="/tags/Proxy/" style="font-size:13px">Proxy</a>
+          <a href="/tags/Spring/" style="font-size:13px">Spring</a> <a href="/tags/Traefik/"
+            style="font-size:13px">Traefik</a> <a href="/tags/java/" style="font-size:13px">java</a> <a
+            href="/tags/untagged/" style="font-size:13.33px">untagged</a> <a href="/tags/zookeeper/"
+            style="font-size:13px">zookeeper</a> <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/"
+            style="font-size:13px">二分法</a> <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/" style="font-size:13px">云原生</a>
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size:13px">分布式</a> <a
+            href="/tags/%E5%8E%9F%E7%90%86/" style="font-size:13.33px">原理</a> <a
+            href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size:13px">定时任务</a> <a
+            href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size:13px">数据库</a> <a href="/tags/%E9%94%81/"
+            style="font-size:13.67px">锁</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size:13px">高并发</a>
+        </div>
+      </div>
+      <div class="widget">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget-body">
+          <ul class="category-list">
+            <li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span
+                class="category-list-count">5</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%90%8E%E7%AB%AF/">后端</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a><span
+                class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/">工作效率</a><span
+                class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E6%BA%90%E7%A0%81/">源码</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a class="category-list-link"
+                href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="widget">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget-body">
+          <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a
+                    href="/post/kubernetes%E5%AE%9E%E7%8E%B0traefik%E4%BB%A3%E7%90%86mysql%E6%B5%81%E9%87%8F/"
+                    class="title">Kubernetes实现Traefik代理MySQL流量</a></p>
+                <p class="item-date"><time datetime="2022-04-12T07:44:46.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a href="/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE/"
+                    class="title">二分法查找</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:45:18.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a href="/post/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAk3s%E7%8E%AF%E5%A2%83/"
+                    class="title">快速搭建K3S环境</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:42:45.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a href="/post/%E5%B0%8F%E7%B1%B3ax6000%E8%81%AA%E6%98%8E%E4%B8%8A%E7%BD%91/"
+                    class="title">小米AX6000聪明上网</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:42:37.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+            <li>
+              <div class="item-inner">
+                <p class="item-title"><a
+                    href="/post/%E5%9F%BA%E4%BA%8Ek3s%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAflink-session-cluster/"
+                    class="title">基于K3S快速搭建Flink Session Cluster</a></p>
+                <p class="item-date"><time datetime="2022-04-12T02:42:30.000Z"
+                    itemprop="datePublished">2022-04-12</time></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <main class="main" role="main">
+    <div class="content">
+      <article id="post-2021/JDBC-ORM模型基于JAVA操作数据库" class="article article-type-post" itemscope
+        itemtype="http://schema.org/BlogPosting">
+        <div class="article-header">
+          <h1 class="article-title" itemprop="name">JDBC ORM模型基于JAVA操作数据库</h1>
+          <div class="article-meta"><span class="article-date"><i class="icon icon-calendar-check"></i> <a
+                href="/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/"
+                class="article-date"><time datetime="2020-04-11T00:45:08.000Z"
+                  itemprop="datePublished">2020-04-11</time> </a></span><span class="article-category"><i
+                class="icon icon-folder"></i> <a class="article-category-link"
+                href="/categories/%E5%90%8E%E7%AB%AF/">后端</a> </span><span class="article-tag"><i
+                class="icon icon-tags"></i> <a class="article-tag-link-link" href="/tags/MySQL/" rel="tag">MySQL</a>, <a
+                class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a> </span><span
+              class="post-comment"><i class="icon icon-comment"></i> <a
+                href="/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/#comments"
+                class="article-comment-link">评论 </a></span><span class="post-wordcount hidden-xs"
+              itemprop="wordCount">字数统计: 1.8k(字)</span> <span class="post-readcount hidden-xs"
+              itemprop="timeRequired">阅读时长: 6(分)</span></div>
+        </div>
+        <div class="article-entry marked-body" itemprop="articleBody">
+          <p>在我们日常的开发过程中，肯定不可避免的会使用到数据库以及 SQL 语句。比如，刚开始学习 Java 的时候可能会遇到 JDBC，它是连接 Java 和数据库的桥梁，我们可以使用 JDBC
+            来建立与数据库之间的连接并且执行相应的 SQL 语句。虽然 JDBC 的执行效率很高，但是其开发效率比较低。正是如此，市面上出现了一大批 ORM（对象关系映射）框架，例如 Hibernate，iBATIS
+            以及本文将要介绍的 MyBatis。</p><span id="more"></span>
+          <h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2>
+          <p>JDBC (Java Database Connectivity)
+            API，即Java数据库编程接口，是一组标准的Java语言中的接口和类，使用这些接口和类，Java客户端程序可以访问各种不同类型的数据库。比如建立数据库连接、执行SQL语句进行数据的存取操作。</p>
+          <p><strong>实现步骤</strong></p>
+          <ol>
+            <li>使用JDBC编程需要连接数据库，注册驱动和数据库信息</li>
+            <li>操作Connection，打开 Statement 对象</li>
+            <li>通过Statement执行SQL， 返回结果到ResultSet对象</li>
+            <li>使用ResultSet读取数据，然后通过代码转化为具体的POJO对象</li>
+            <li>关闭数据库的相关资源</li>
+          </ol>
+          <p><strong>优点</strong></p>
+          <ol>
+            <li>直接底层操作，提供了很简单、便捷的访问数据库的方法，跨平台性比较强。</li>
+            <li>灵活性比较强。可以写很复杂的SQL语句。</li>
+          </ol>
+          <p><strong>缺点</strong> </p>
+          <ol>
+            <li>工作量相对较大。我们需要先连接，然后处理JDBC底层事务，处理数据类型。</li>
+            <li>我们还需要操作Connection对象、Statement对象和ResultSet对象去拿到数据，并准确的关闭它们。</li>
+          </ol>
+          <h2 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h2>
+          <p>由于JDBC存在的缺陷，所以我们在实际工作中很少使用JDBC进行操作数据库的编程。于是我们就提出了对象关系映射（Object Relational Mapping）简称 ORM，或者O&#x2F;RM，或者
+            O&#x2F;R mapping。</p>
+          <p>ORM模型就是数据库的表和简单Java对象（Plain Ordinary Java Object，简称POJO）的映射关系模型。
+            它主要解决数据库数据和POJO对象的相互映射。我们通过这层映射就可以简单的把数据库表的数据转化为POJO。以便程序员更加容易的理解和应用Java程序.而且程序员一般只需要了解Java应用而无需对数据库进行深入的了解。此外，ORM模型提供了统一的规则使得数据库的数据通过配置便可轻易的映射到POJO上。常用的ORM框架 
+          </p>
+          <h3 id="Java-ORM"><a href="#Java-ORM" class="headerlink" title="Java ORM"></a>Java ORM</h3>
+          <h4 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h4>
+          <p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML
+            或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
+          <p><strong>优点</strong></p>
+          <ol>
+            <li>易于上手和掌握。</li>
+            <li>sql写在xml里，便于统一管理和优化。</li>
+            <li>解除sql与程序代码的耦合。</li>
+            <li>提供映射标签，支持对象与数据库的orm字段关系映射提供对象关系映射标签，支持对象关系组建维护提供xml标签，支持编写动态sql。</li>
+          </ol>
+          <p><strong>缺点</strong></p>
+          <ol>
+            <li>sql工作量很大，尤其是字段多、关联表多时，更是如此。</li>
+            <li>sql依赖于数据库，导致数据库移植性差。</li>
+            <li>由于xml里标签id必须唯一，导致DAO中方法不支持方法重载。</li>
+            <li>
+              字段映射标签和对象关系映射标签仅仅是对映射关系的描述，具体实现仍然依赖于sql。（比如配置了一对多Collection标签，如果sql里没有join子表或查询子表的话，查询后返回的对象是不具备对象关系的，即Collection的对象为null）
+            </li>
+            <li>DAO层过于简单，对象组装的工作量较大。</li>
+            <li>不支持级联更新、级联删除。</li>
+            <li>编写动态sql时,不方便调试，尤其逻辑复杂时。</li>
+            <li>提供的写动态sql的xml标签功能简单（连struts都比不上），编写动态sql仍然受限，且可读性低。</li>
+            <li>若不查询主键字段，容易造成查询出的对象有“覆盖”现象。参数的数据类型支持不完善。（如参数为Date类型时，容易报没有get、set方法，需在参数上加@param）</li>
+            <li>多参数时，使用不方便，功能不够强大。（目前支持的方法有map、对象、注解@param以及默认采用012索引位的方式）</li>
+            <li>缓存使用不当，容易产生脏数据。</li>
+          </ol>
+          <h4 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h4>
+          <p>Hibernate是一种Java语言下的对象关系映射(ORM)解决方案。它是使用GNU宽通用公共许可证发行的自由、开源的软件。它为面向对象的领域模型到传统的关系型数据库的映射，提供了一个使用方便的持久化框架。
+          </p>
+          <p><strong>优点</strong></p>
+          <ol>
+            <li>消除了代码的映射规则，它全部被分离到XML或者注解里面去配置。</li>
+            <li>无需再管理数据库连接，它也配置到XML里面。</li>
+            <li>一个会话中，不要操作多个对象，只要操作Sesison即可。</li>
+            <li>关闭资源只需要关闭一个Session即可。</li>
+          </ol>
+          <p><strong>缺点</strong></p>
+          <ol>
+            <li>全表映射带来的不便，比如更新时需要发送所有的字段。</li>
+            <li>无法根据不同的条件组装不同的SQL。　</li>
+            <li>对多表关联和复杂的SQL查询支持较差。</li>
+            <li>需要自己写SQL，返回后，需要自己将数据组装到POJO中。</li>
+            <li>不能有效支持存储过程。虽然有HQL，但是性能较差，大型互联网往往需要优化SQL，而Hibernate做不到。</li>
+          </ol>
+          <h3 id="框架选择"><a href="#框架选择" class="headerlink" title="框架选择"></a>框架选择</h3>
+          <p>Hibernate作为Java
+            ORM框架，它确实编程简易，需要我们提供映射的规则，完全可以通过IDE生成。同时无需编写SQL确实开发效率优于MyBatis。而且，它也提供了缓存、日志、级联、等强大的功能，但是Hibernate的缺陷也是十分的明显的。就是在多表关联复杂的SQL时，数据系统权限限制时，根据条件变化的SQL时。存储过程等使用场景。Hibernate十分不便。而性能又难以通过SQL来优化。所以Hibernate一般只适用于场景不太复杂的、性能要求不太苛刻的时候使用。 
+             </p>
+          <p>MyBatis
+            是一个灵活的、可以动态生成映射关系的框架，它几乎可以替代JDBC。拥有动态列、动态表名，存储过程都支持。同时提供了简易的缓存（如(默认)一级缓存，还有二级缓存）、日志、级联。但是它的缺陷是需要你提供映射规则和SQL，所以它的开发工作量一般要比Hibernate略大一些。
+          </p>
+          <p>但总体来说，MyBatis具有高度灵活、可优化、易维护等特点, 所以目前还是myBatis比较合适我们。</p>
+          <link rel="stylesheet" href="/css/markmap.css" type="text/css">
+        </div>
+        <div class="article-footer">
+          <blockquote class="mt-2x">
+            <ul class="post-copyright list-unstyled">
+              <li class="post-copyright-link hidden-xs"><strong>本文链接：</strong> <a
+                  href="https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/"
+                  title="JDBC ORM模型基于JAVA操作数据库" target="_blank"
+                  rel="external">https://blog.beyhub.com/post/jdbc-orm模型基于java操作数据库/</a></li>
+              <li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a
+                  href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0
+                  CN协议</a> 许可协议。转载请注明出处！</li>
+            </ul>
+          </blockquote>
+          <hr>
+        </div>
+      </article>
+      <section id="comments">
+        <div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener"
+              href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+      </section>
+    </div>
+    <nav class="bar bar-footer clearfix" data-stick-bottom>
+      <div class="bar-inner">
+        <ul class="pager pull-left">
+          <li class="prev"><a
+              href="/post/hashmap%E3%80%81hashtable%E7%AD%89map%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%8E%9F%E7%90%86/"
+              title="HashMap、Hashtable等Map接口的实现和原理"><i class="icon icon-angle-left"
+                aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a></li>
+          <li class="next"><a
+              href="/post/mysql%E7%B4%A2%E5%BC%95%E5%BA%95%E5%B1%82%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"
+              title="MySQL索引底层的数据结构与算法"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right"
+                aria-hidden="true"></i></a></li>
+        </ul>
+        <div class="bar-right"></div>
+      </div>
+    </nav>
+  </main>
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    <ul class="social-links">
+      <li><a href="https://github.com/lesterlaucn" target="_blank" title="Github" data-toggle="tooltip"
+          data-placement="top"><i class="icon icon-github"></i></a></li>
+      <li><a href="http://weibo.com/lyc90" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i
+            class="icon icon-weibo"></i></a></li>
+      <li><a href="https://twitter.com/lesterlaucn" target="_blank" title="Twitter" data-toggle="tooltip"
+          data-placement="top"><i class="icon icon-twitter"></i></a></li>
+      <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i
+            class="icon icon-rss"></i></a></li>
+    </ul>
+    <div class="copyright">&copy; 2022 刘远程 (Lester Lau)<div class="publishby">Theme by <a
+          href="https://github.com/cofess" target="_blank">me </a>base on <a
+          href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.</div>
+    </div>
+  </footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+  <script src="/js/plugin.min.js"></script>
+  <script src="/js/application.js"></script>
+  <script>window.INSIGHT_CONFIG = { TRANSLATION: { POSTS: "文章", PAGES: "页面", CATEGORIES: "分类", TAGS: "标签", UNTITLED: "(未命名)" }, ROOT_URL: "/", CONTENT_URL: "/content.json" }</script>
+  <script src="/js/insight.js"></script>
+  <script
+    defer>var disqus_config = function () { this.page.url = "https://blog.beyhub.com/post/jdbc-orm%E6%A8%A1%E5%9E%8B%E5%9F%BA%E4%BA%8Ejava%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/", this.page.identifier = "2021/JDBC-ORM模型基于JAVA操作数据库" }; !function () { var t = document, e = t.createElement("script"); e.src = "//cai-ju-dong-li.disqus.com/embed.js", e.setAttribute("data-timestamp", +new Date), (t.head || t.body).appendChild(e) }()</script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>$(document).ready(function () {
       let imgs = $('article img');
       imgs.attr('src', '/' + imgs.attr('src'))
     }
@@ -26,4 +407,10 @@
         hash: false,
         loop: false,
       });
-    });</script><script src="https://cdn.jsdelivr.net/npm/d3@5"></script><script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.4/dist/browser/view.min.js"></script><script>const mindmaps=document.querySelectorAll(".markmap-svg");for(const a of mindmaps)markmap.markmap(a,JSON.parse(a.innerHTML))</script></body></html>
+    });</script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.7.4/dist/browser/view.min.js"></script>
+  <script>const mindmaps = document.querySelectorAll(".markmap-svg"); for (const a of mindmaps) markmap.markmap(a, JSON.parse(a.innerHTML))</script>
+</body>
+
+</html>

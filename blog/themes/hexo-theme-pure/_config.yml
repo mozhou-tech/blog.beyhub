@@ -31,7 +31,7 @@ site:
     url: /images/common/avatar.jpg
   title: 采菊东篱 # 页面title
   favicon: /favicon.png
-  board: <p>永远只相信事实及其推论</p> # 站点公告
+  board: <p>永远只相信可验证的事实及其推论</p> # 站点公告
   copyright: true # 底部版权信息
 
 # config
@@ -192,7 +192,9 @@ profile:
     - 全栈开发
     - Gopher
     - 大数据
+    - 机器学习
     - 智能硬件
+    - 机器人
   # My Personal Projects
   projects:
     📣 智能语音助手Kim: https://github.com/lesterlaucn/kim-voice-assistant
