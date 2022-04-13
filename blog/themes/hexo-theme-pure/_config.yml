@@ -186,10 +186,6 @@ profile:
     Kubernetes: ★★★☆☆
     Flink: ★★★☆☆
     HTML+CSS: ★★★★☆
-  # My Personal Links
-  links:
-    Github: https://github.com/lesterlaucn
-    Blog: https://blog.beyhub.com
   # My Personal Labels
   labels:
     - 架构师
@@ -199,5 +195,4 @@ profile:
     - 智能硬件
   # My Personal Projects
   projects:
-    lesterlaucn/gulp-startpro: https://github.com/lesterlaucn/gulp-startpro
-    lesterlaucn/hexo-theme-pure: https://github.com/lesterlaucn/hexo-theme-pure
+    📣 智能语音助手Kim: https://github.com/lesterlaucn/kim-voice-assistant
