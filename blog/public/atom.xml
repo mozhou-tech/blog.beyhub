@@ -33,113 +33,13 @@
     <category term="云原生" scheme="https://blog.beyhub.com/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"/>
     
     
+    <category term="K3s" scheme="https://blog.beyhub.com/tags/K3s/"/>
+    
     <category term="Kubernetes" scheme="https://blog.beyhub.com/tags/Kubernetes/"/>
     
     <category term="Traefik" scheme="https://blog.beyhub.com/tags/Traefik/"/>
     
     <category term="Proxy" scheme="https://blog.beyhub.com/tags/Proxy/"/>
-    
-    <category term="K3s" scheme="https://blog.beyhub.com/tags/K3s/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>二分法查找</title>
-    <link href="https://blog.beyhub.com/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE/"/>
-    <id>https://blog.beyhub.com/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE/</id>
-    <published>2022-04-12T02:45:18.000Z</published>
-    <updated>2022-04-12T07:46:27.445Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" href="/css/markmap.css" type="text/css">]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;</summary>
-      
-    
-    
-    
-    <category term="算法" scheme="https://blog.beyhub.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="二分法" scheme="https://blog.beyhub.com/tags/%E4%BA%8C%E5%88%86%E6%B3%95/"/>
-    
-    <category term="BinarySearch" scheme="https://blog.beyhub.com/tags/BinarySearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>快速搭建K3S环境</title>
-    <link href="https://blog.beyhub.com/post/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAk3s%E7%8E%AF%E5%A2%83/"/>
-    <id>https://blog.beyhub.com/post/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAk3s%E7%8E%AF%E5%A2%83/</id>
-    <published>2022-04-12T02:42:45.000Z</published>
-    <updated>2022-04-12T02:42:47.480Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" href="/css/markmap.css" type="text/css">]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;</summary>
-      
-    
-    
-    
-    <category term="后端开发" scheme="https://blog.beyhub.com/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="云原生" scheme="https://blog.beyhub.com/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小米AX6000聪明上网</title>
-    <link href="https://blog.beyhub.com/post/%E5%B0%8F%E7%B1%B3ax6000%E8%81%AA%E6%98%8E%E4%B8%8A%E7%BD%91/"/>
-    <id>https://blog.beyhub.com/post/%E5%B0%8F%E7%B1%B3ax6000%E8%81%AA%E6%98%8E%E4%B8%8A%E7%BD%91/</id>
-    <published>2022-04-12T02:42:37.000Z</published>
-    <updated>2022-04-12T03:12:10.378Z</updated>
-    
-    <content type="html"><![CDATA[<p>家里的小米4A路由器总是掉线，终于不忍了，经过比较后换了一台AX6000路由器。</p><p><img src="/images/image-20220412111020855.png" alt="image-20220412111020855"></p><link rel="stylesheet" href="/css/markmap.css" type="text/css">]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;家里的小米4A路由器总是掉线，终于不忍了，经过比较后换了一台AX6000路由器。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/image-20220412111020855.png&quot; alt=&quot;image-20220412111020855&quot;&gt;&lt;/p&gt;
-&lt;link r</summary>
-      
-    
-    
-    
-    <category term="工作效率" scheme="https://blog.beyhub.com/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/"/>
-    
-    
-    <category term="untagged" scheme="https://blog.beyhub.com/tags/untagged/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于K3S快速搭建Flink Session Cluster</title>
-    <link href="https://blog.beyhub.com/post/%E5%9F%BA%E4%BA%8Ek3s%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAflink-session-cluster/"/>
-    <id>https://blog.beyhub.com/post/%E5%9F%BA%E4%BA%8Ek3s%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAflink-session-cluster/</id>
-    <published>2022-04-12T02:42:30.000Z</published>
-    <updated>2022-04-12T02:42:32.432Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" href="/css/markmap.css" type="text/css">]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;</summary>
-      
-    
-    
-    
-    <category term="未分类" scheme="https://blog.beyhub.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
-    
-    
-    <category term="untagged" scheme="https://blog.beyhub.com/tags/untagged/"/>
     
   </entry>
   
@@ -161,6 +61,29 @@
     
     
     <category term="MySQL" scheme="https://blog.beyhub.com/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>二分法查找深入解析</title>
+    <link href="https://blog.beyhub.com/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90/"/>
+    <id>https://blog.beyhub.com/post/%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90/</id>
+    <published>2021-08-12T02:45:18.000Z</published>
+    <updated>2022-04-13T09:46:49.062Z</updated>
+    
+    <content type="html"><![CDATA[<p>二分法是一种普通又重要的算法思想，二分搜索又称折半搜索，区别于线性查找O(n)的时间复杂度，二分法的时间复杂度降到了O(logN)。但二分法的使用也是有条件的，它要求原始序列具有<code>单调性</code>。本文会详细介绍二分法的前提、推论以及例题，力求深入浅出。</p><span id="more"></span><h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><h3 id="分治思想与二分法"><a href="#分治思想与二分法" class="headerlink" title="分治思想与二分法"></a>分治思想与二分法</h3><p>分治算法的主要思想是将原问题分成若干个子问题，解决这些子问题再最终合并出原问题的答案。在计算过程中，子问题会被递归地分解成更小的子问题，直到子问题满足边界条件。最后，算法会层层递回原问题的答案。</p><p><img src="/images/3-200623091020529.gif" alt="分治算法"></p><p>二分算法是比较一次，直接扔掉不符合要求的那一半。（如果中间的不行，则某一边一定不行）</p><p>分治不能这么做，它只是做了划分，并没有减小问题规模。（两边分别做，然后整体做一次，其中<strong>对整体的操作要求为O(n)复杂度</strong>才可以，<strong>一般要求两边都要有序，可以在归并排序的思路上更改</strong>）</p><h3 id="二分法的前提条件"><a href="#二分法的前提条件" class="headerlink" title="二分法的前提条件"></a>二分法的前提条件</h3><p>二分法只能在有序序列上使用。但有时候局部有序也是可以使用的，参考例题<code>寻找峰值</code>。</p><h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>二分法的每一次遍历都会排除一半的数据，这意味着搜索的目标数据集会迅速减小。</p><p>假设共有N个元素，每次查找的区间大小就是N，N&#x2F;2，N&#x2F;4，…，N&#x2F;2^k^（接下来操作元素的剩余个数），其中k就是循环的次数。<br>由于N&#x2F;2^k^取整后&gt;&#x3D;1，即令N&#x2F;2^2^&#x3D;1，可得k&#x3D;log2N,（是以2为底，N的对数）时间复杂度为O(logN)</p><h3 id="线性搜索"><a href="#线性搜索" class="headerlink" title="线性搜索"></a>线性搜索</h3><p>线性搜索或顺序搜索是一种寻找某一特定值的搜索算法，指按一定的顺序检查数组中每一个元素，直到找到所要寻找的特定值为止。是最简单的一种搜索算法。</p><p><img src="/images/v2-37e8bdaa4c5137b4d3bab14f68ff08bb_720w.jpg" alt="线性搜索linear Search - 知乎"></p><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h4><p><img src="/images/3-200623093535Y7.gif" alt="二分查找"></p><h4 id="二分搜索树"><a href="#二分搜索树" class="headerlink" title="二分搜索树"></a>二分搜索树</h4><p>我们先来看二叉树查找时磁盘IO的次：定义一个树高为4的二叉树，查找值为10：</p><table><thead><tr><th>IO次数</th><th>示意图</th><th>说明</th></tr></thead><tbody><tr><td>0</td><td><img src="/images/831179-20170726143530968-1723188378.png" alt="img"></td><td></td></tr><tr><td>1</td><td><img src="/images/831179-20170726143633812-1305883574.png" alt="img"></td><td></td></tr><tr><td>2</td><td><img src="/images/831179-20170726143710687-1584250871.png" alt="img"></td><td></td></tr><tr><td>3</td><td><img src="/images/831179-20170726143746265-1830805635.png" alt="img"></td><td></td></tr><tr><td>4</td><td><img src="/images/831179-20170726143823171-110597765.png" alt="img"></td><td></td></tr></tbody></table><p>从二叉树的查找过程了来看，树的高度和磁盘IO的次数都是4，所以最坏的情况下磁盘IO的次数由树的高度来决定。</p><p>从前面分析情况来看，<strong>减少磁盘IO的次数就必须要压缩树的高度</strong>，让瘦高的树尽量变成矮胖的树，所以B-Tree就在这样伟大的时代背景下诞生了。</p><h3 id="二分法的推广用法"><a href="#二分法的推广用法" class="headerlink" title="二分法的推广用法"></a>二分法的推广用法</h3><h4 id="在海量数据或数据流中完成搜索"><a href="#在海量数据或数据流中完成搜索" class="headerlink" title="在海量数据或数据流中完成搜索"></a>在海量数据或数据流中完成搜索</h4><p>在海量（长度不可知）的单调序列中，可以以一定的步长跳跃式的搜索。</p><p>例如在递增的序列中寻找值X，约定步长为10000，N次跳跃后发现比X大的值，此时在索引(N-1)*10000和N*10000之间进行二分法搜索。</p><h4 id="三分法与二分法的区别"><a href="#三分法与二分法的区别" class="headerlink" title="三分法与二分法的区别"></a>三分法与二分法的区别</h4><p>二分法适用于单调函数，而单峰函数用二分明显不太好了，对于有些单峰函数，可以求导后转化为单调函数，从而使用二分，然而很多情况求导是很麻烦的，这时就需要用到三分了。</p><p><strong>算法介绍</strong></p><ol><li><p>先将区间三分,每个区间的长度为1&#x2F;3(right-left)</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mid1=left+(right-left)/<span class="number">3</span>;</span><br><span class="line">mid2=right-(right-left)/<span class="number">3</span>;</span><br></pre></td></tr></table></figure></li><li><p>比较mid1和mid2谁更靠近极值，如果mid1更靠近极值，右区间改为mid2,否则左区间改为mid1(后面的代码都是   以求最大值为例）</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(calc(mid1)&lt;calc(mid2))</span><br><span class="line">left=mid1;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">right=mid2;</span><br></pre></td></tr></table></figure></li><li><p>重复1,2过程，直到不满足left+eps&lt;right,也就是找到最值</p></li></ol><p><strong>算法模板</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Calc</span><span class="params">(Type a)</span></span>&#123;</span><br><span class="line">    <span class="comment">/* 根据题目的意思计算 */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Solve</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> Left, right;</span><br><span class="line">    <span class="keyword">double</span> mid, midmid;</span><br><span class="line">    <span class="keyword">double</span> mid_value, midmid_value;</span><br><span class="line">    left = min; right = max;</span><br><span class="line">    <span class="keyword">while</span> (left + eps &lt; Right)</span><br><span class="line">    &#123;</span><br><span class="line">        mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">        midmid = (mid + right) / <span class="number">2</span>;</span><br><span class="line">        mid_area = Calc(mid);</span><br><span class="line">        midmid_area = Calc(midmid);</span><br><span class="line">        <span class="keyword">if</span> (mid_area &gt;= midmid_area) right = midmid;</span><br><span class="line">        <span class="keyword">else</span> left = mid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="二分法与跳表"><a href="#二分法与跳表" class="headerlink" title="二分法与跳表"></a>二分法与跳表</h4><p>跳表的原理类似二分查找，但是数据结构用得链表，跳表在原有的有序链表上面增加了多级索引，通过索引来实现快速查找。理论有点抽象，下面也用个图来说明一下:</p><p><img src="/images/16ab914cac222133~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp" alt="skip_list"></p><p>上图例子中是使用了一个单链表实现的简单的跳表， Node类里next指向下一个节点, value是当前的值，图上面数字是节点中的值，索引的Node是一个指针, 指向原始的节点。 上图的链表数值依次是 2,  5 , 10, 12, 18 , 22,  25,  26。假如在链表中要找是否有12,  需要从单链表头开始遍历，到第4个就找到18。当建立了如上图的2层索引后，首先从第一层索引开始， 2 -&gt; 18 ， 18大于12不对，所以第二层索引 2 -&gt; 10 找到10的位置，然后10 -&gt;12 就找到了12。当数据量很大，查找的时间复杂度为O(logn)。图中索引是每隔一个节点建的索引(每隔1个相当于每次减半)，你也可以设计每隔3个节点建一个索引。索引层级也要根据数据量增加，单链表也可以改成双链表。</p><p>上面分析了跳表搜索的过程，接着聊聊数据插入过程，假如接下来要插入 6、7、 8、 9这几个元素，需要保持跳表节点顺序，可以利用索引找到第二层索引的中2 (第二层索引的10 大于 6, 7, 8 , 9)。插入元素后情况如下图所示：</p><p><img src="/images/16ab914cad7cb5bf~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp" alt="skip_list"></p><p>看上图所示，如果需要找9，你会发现查找速度下降，原因是由于插入数据导致原有索引性能退化啦，需要重新生成索引才能保证查找的速度。同样的，删除节点时通过索引快速找到需要删除的节点，删除后也同样需要维持新索引。创建索引会占据一定性能，在插入或者删除数据时，如果没插入或删除一个元素就重新创建索引又有点浪费，所以需要平衡一下，比如记录最底层的索引间的元素个数间隔，超过多少个再重新创建索引。</p><h3 id="应用案例"><a href="#应用案例" class="headerlink" title="应用案例"></a>应用案例</h3><h4 id="RDBMS中B-Tree索引的实现"><a href="#RDBMS中B-Tree索引的实现" class="headerlink" title="RDBMS中B-Tree索引的实现"></a>RDBMS中B-Tree索引的实现</h4><blockquote><p>m阶B-Tree满足以下条件：</p><ol><li>每个节点最多拥有m个子树</li><li>根节点至少有2个子树</li><li>分支节点至少拥有m&#x2F;2颗子树（除根节点和叶子节点外都是分支节点）</li><li>所有叶子节点都在同一层、每个节点最多可以有m-1个key，并且以升序排列</li></ol></blockquote><p> 如下有一个3阶的B树，查找元素21的过程：</p><table><thead><tr><th>IO次数</th><th>示意图</th><th>说明</th></tr></thead><tbody><tr><td>0</td><td><img src="/images/831179-20170726165129453-1906239446.png" alt="img"></td><td>查找元素21</td></tr><tr><td>1</td><td><img src="/images/831179-20170726170324406-1007994414.png" alt="img"></td><td></td></tr><tr><td>2</td><td><img src="/images/831179-20170726170352562-425177951.png" alt="img"></td><td>这里有一次内存比对：<code>21</code>分别跟3与12比对</td></tr><tr><td>3</td><td><img src="/images/831179-20170726170529078-18287855.png" alt="img"></td><td>这里有一次内存比对，<code>21</code>分别跟14与21比对</td></tr></tbody></table><p>从查找过程中发现，B树的比对次数和磁盘IO的次数与二叉树相差不了多少，所以这样看来并没有什么优势。</p><p>但是仔细一看会发现，<strong>比对是在内存中完成中，不涉及到磁盘IO，耗时可以忽略不计。另外B树中一个节点中可以存放很多的key（个数由树阶决定）。</strong></p><p><strong>相同数量的key在B树中生成的节点要远远少于二叉树中的节点，相差的节点数量就等同于磁盘IO的次数。这样到达一定数量后，性能的差异就显现出来了。</strong></p><h2 id="算法模板"><a href="#算法模板" class="headerlink" title="算法模板"></a>算法模板</h2><h3 id="搜索插入位置-leetcode-44"><a href="#搜索插入位置-leetcode-44" class="headerlink" title="搜索插入位置[leetcode 44]"></a>搜索插入位置[leetcode 44]</h3><p><a href="https://leetcode-cn.com/problems/search-insert-position/">https://leetcode-cn.com/problems/search-insert-position/</a></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> n = nums.length;</span><br><span class="line">      <span class="keyword">int</span> left = <span class="number">0</span>, right = n - <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">while</span> (left &lt;= right) &#123; <span class="comment">// while灵活控制指针动作</span></span><br><span class="line">        <span class="keyword">int</span> mid = ((right - left) &gt;&gt; <span class="number">1</span>) + left; <span class="comment">// 右移模拟2的整除运算</span></span><br><span class="line">        <span class="keyword">if</span> (target &lt;= nums[mid]) &#123;</span><br><span class="line">          right = mid - <span class="number">1</span>; <span class="comment">// ?</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          left = mid + <span class="number">1</span>; <span class="comment">// ?</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="排列硬币-leetcode-441"><a href="#排列硬币-leetcode-441" class="headerlink" title="排列硬币[leetcode 441]"></a>排列硬币[leetcode 441]</h3><p>你总共有 n 枚硬币，并计划将它们按阶梯状排列。对于一个由 k 行组成的阶梯，其第 i 行必须正好有 i 枚硬币。阶梯的最后一行 可能 是不完整的。</p><p><a href="https://leetcode-cn.com/problems/arranging-coins/solution/pai-lie-ying-bi-by-leetcode-solution-w52c/">https://leetcode-cn.com/problems/arranging-coins/solution/pai-lie-ying-bi-by-leetcode-solution-w52c/</a></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">arrangeCoins</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">1</span>, right = n;</span><br><span class="line">        <span class="comment">// 总行数在1和硬币总块数之间</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (right - left + <span class="number">1</span>) / <span class="number">2</span> + left;</span><br><span class="line">            <span class="comment">// 注意等差数列的求和公式 Sn=n(a1+an)/2 </span></span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">long</span>) mid * (mid + <span class="number">1</span>) / <span class="number">2</span> &lt;= n) &#123;</span><br><span class="line">                left = mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="X的平方根-leetcode-69"><a href="#X的平方根-leetcode-69" class="headerlink" title="X的平方根[leetcode 69]"></a>X的平方根[leetcode 69]</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = x, res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = ((right - left) &gt;&gt; <span class="number">1</span>) + left;</span><br><span class="line">            <span class="comment">// mid 小，</span></span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">long</span>) mid * mid &lt;= x) &#123;</span><br><span class="line">                res = mid;      <span class="comment">// 相当于向下取整</span></span><br><span class="line">                left = mid + <span class="number">1</span>; <span class="comment">// mid本身排除在外</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right = mid - <span class="number">1</span>; <span class="comment">// mid 本身排除在外</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="猜数字大小-leetcode-374"><a href="#猜数字大小-leetcode-374" class="headerlink" title="猜数字大小[leetcode 374]"></a>猜数字大小[leetcode 374]</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> <span class="keyword">extends</span> <span class="title">GuessGame</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">guessNumber</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (guess(n) == <span class="number">0</span>) <span class="keyword">return</span> n;</span><br><span class="line">        <span class="keyword">int</span> flag = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">1</span>, right = n;</span><br><span class="line">        <span class="keyword">int</span> mid = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right &amp;&amp; flag != <span class="number">0</span>) &#123;</span><br><span class="line">            mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            flag = guess(mid);</span><br><span class="line">            <span class="keyword">if</span> (flag == -<span class="number">1</span>) right = mid;</span><br><span class="line">            <span class="keyword">if</span> (flag == <span class="number">1</span>) left = mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="寻找峰值-leetcode-162-中等"><a href="#寻找峰值-leetcode-162-中等" class="headerlink" title="寻找峰值[leetcode 162 中等]"></a>寻找峰值[leetcode 162 中等]</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">爬坡法</span></span><br><span class="line"><span class="comment">规律一：如果nums[i] &gt; nums[i+1]，则在i之前一定存在峰值元素</span></span><br><span class="line"><span class="comment">规律二：如果nums[i] &lt; nums[i+1]，则在i+1之后一定存在峰值元素</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">func <span class="title">findPeakElement</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="keyword">int</span> </span>&#123;</span><br><span class="line">   <span class="keyword">var</span> left, right = <span class="number">0</span>, len(nums) - <span class="number">1</span></span><br><span class="line">   <span class="keyword">for</span> left &lt; right &#123; <span class="comment">// 为何不能取等？</span></span><br><span class="line">      mid := (left + right) &gt;&gt; <span class="number">1</span></span><br><span class="line">      <span class="comment">// 如果num[mid] &gt; nums[mid+1] 左侧一定有峰值</span></span><br><span class="line">      <span class="keyword">if</span> nums[mid] &gt; nums[mid+<span class="number">1</span>] &#123;</span><br><span class="line">         right = mid</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         left = mid + <span class="number">1</span> </span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> left</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol><li><a href="https://juejin.cn/post/6844903843990339597">https://juejin.cn/post/6844903843990339597</a></li><li><a href="https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html">https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html</a></li></ol><link rel="stylesheet" href="/css/markmap.css" type="text/css">]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;二分法是一种普通又重要的算法思想，二分搜索又称折半搜索，区别于线性查找O(n)的时间复杂度，二分法的时间复杂度降到了O(logN)。但二分法的使用也是有条件的，它要求原始序列具有&lt;code&gt;单调性&lt;/code&gt;。本文会详细介绍二分法的前提、推论以及例题，力求深入浅出。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="https://blog.beyhub.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="二分法" scheme="https://blog.beyhub.com/tags/%E4%BA%8C%E5%88%86%E6%B3%95/"/>
+    
+    <category term="分治" scheme="https://blog.beyhub.com/tags/%E5%88%86%E6%B2%BB/"/>
     
   </entry>
   

@@ -2,8 +2,12 @@
 title: 基于K3S快速搭建Flink Session Cluster
 date: 2022-04-12 10:42:30
 tags:
-  - untagged
+  - Flink
+  - K3s
+  - Kubernetes
+  - Traefik
 categories:
-  - 未分类
+  - 大数据
 toc: true
 ---
+
