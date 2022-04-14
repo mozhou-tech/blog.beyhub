@@ -2,9 +2,10 @@
 title: "BPM工作流引擎Activiti"
 date: 2020-04-11T11:11:52+08:00
 categories: 
-    - "Java"
+    - 后端开发
 tags:
-    - "BPMN"     
+    - BPMN
+    - 工作流
 toc: true  
 ---
 

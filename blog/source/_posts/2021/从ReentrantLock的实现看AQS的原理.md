@@ -5,7 +5,7 @@ tags:
   - Java
   - 高并发
 categories:
-  - 后端
+  - 后端开发
 toc: true
 sidebar: true
 date: 2021-04-12 23:12:22
@@ -905,4 +905,3 @@ public class LeeMain {
 -   [不可不说的Java“锁”事](https://tech.meituan.com/2018/11/15/java-lock.html)
 -   [一张图读懂公平锁与非公平锁](https://www.jianshu.com/p/f584799f1c77)
 -   [公平锁和非公平锁的区别](https://blog.csdn.net/qq_35190492/article/details/104943579)
-    

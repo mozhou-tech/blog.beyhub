@@ -1,11 +1,10 @@
 ---
-title: "基于quartz的任务调度"
+title: 基于quartz的任务调度
 date: 2020-04-10T09:28:50+08:00
 draft: true
 categories:
-- 后端
+- 后端开发
 tags:
-- "定时任务"
 - 分布式
 ---
 

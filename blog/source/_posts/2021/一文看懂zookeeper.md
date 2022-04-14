@@ -1,11 +1,12 @@
 ---
-title: "一文看懂Zookeeper"
+title: 一文看懂Zookeeper
 date: 2020-03-25T12:12:30+08:00
-draft: false
+toc: true
 categories:
-  - "分布式"
+  - 后端开发
 tags:
-  - "zookeeper"
+  - 分布式
+  - zookeeper
 ---
 Apache ZooKeeper是Apache软件基金会的一个软件项目，它为大型分布式计算提供开源的分布式配置服务、同步服务和命名注册。 ZooKeeper曾经是Hadoop的一个子项目，但现在是一个独立的顶级项目。ZooKeeper的架构通过冗余服务实现高可用性（英语：High-availability cluster）。
 
@@ -13,18 +14,6 @@ Apache ZooKeeper是Apache软件基金会的一个软件项目，它为大型分�
 <!--more-->
 
 ## 简介
-1. 概述
-1. 应用场景
-目录服务
-配置管理
-同步
-集群节点选举
-消息队列
-通知系统
-1. 下载地址
-1. 数据结构
-文件系统+通知机制（观察者模式）
-
 ## 知识点
 
 ### 选举机制（重要）
