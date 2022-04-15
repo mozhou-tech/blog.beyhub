@@ -27,6 +27,7 @@ date: 2022-04-12 15:44:46
 
 ```yaml
 additionalArguments:
+	- --serversTransport.insecureSkipVerify=true # 跳过证书验证
   - --entrypoints.mysql.address=:3306/tcp  
 ingressRoute:
   dashboard:

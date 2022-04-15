@@ -43,4 +43,13 @@ C语言编程网:
   desc: Java/人工智能
 ArtifactHub:
   link: https://artifacthub.io/
-  desc: K8s包中央仓库
+  desc: Helm Charts中央仓库
+ROS.org:
+  link: http://wiki.ros.org/
+  desc: 机器人操作系统
+Go Doc:
+  link: https://go.dev/doc/
+  desc: Go官方文档
+云原生中文:
+  link: https://jimmysong.io/kubernetes-handbook/
+  desc: Kubernetes 中文指南
