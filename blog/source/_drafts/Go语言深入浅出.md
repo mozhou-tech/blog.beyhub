@@ -8,7 +8,7 @@ toc: true
 date: 2022-04-13 09:15:21
 ---
 
-## 背景
+## 背景知识
 
 ### Java和Go的语法区别
 
@@ -32,6 +32,8 @@ date: 2022-04-13 09:15:21
 #### go build
 
 #### go install
+
+#### go tool pprof
 
 ## 运行时库
 
@@ -117,9 +119,65 @@ copy(slice1, slice2) // 只会复制slice2的3个元素到slice1的前3个位置
 
 #### 引用类型：Interface
 
-#### 引用类型：map
+接口定义了一组抽象方法的集合，但是没有实现。所有类型（包括自定义类型）都实现了空接口interface{}，所以空接口可以被当做任意类型的数值。interface的初始化零值为nil。
 
-#### 引用类型：管道channel
+Go语言通过interface实现了面向对象的很多特性，这些接口通常只包含0-3个方法。
+
+- 特点
+
+> 1. 类型不用显示的声明实现了接口，只需要实现接口的所有方法，这样的隐式实现解耦了实现接口的包和定义接口的包；
+> 2. 同一接口可以被多个不同类型实现；
+> 3. 类型需要实现接口方法集中的所有方法。
+> 4. 与Java和C++相比，Go中的接口有强大的灵活性
+> 5. 一个接口可以包含一个或多个其它接口，但不能嵌入自身，也不能嵌入结构体
+
+- 定义并实现接口示例
+
+  > ```go
+  > type A interface {
+  > 	a()
+  > }
+  > type B interface {
+  > 	A				// 内嵌 interface A
+  > 	b()    // B的抽象方法
+  > }
+  > type C struct {
+  > 	B      // 结构体C实现接口B
+  > }
+  > func (r *C) a() {	   // 具体实现
+  > 	fmt.Println("a")
+  > }
+  > func (r *C) b()  {   // 具体实现
+  > 	fmt.Println("b")
+  > }
+  > func main() {
+  > 	c:=C{}
+  > 	c.a()
+  > 	c.b()
+  > }
+  > // print
+  > // a
+  > // b
+  > ```
+
+#### 引用类型：map字典
+
+```go
+// 从字典m删除键为k的元素
+delete(m, k)
+```
+
+#### 引用类型：通道channel
+
+channel是协程之间共享数据的通道（而非Java中的共享内存），可以通过内置的close()函数关闭
+
+| 通道类型 | 阻塞条件                                            | 是否同步 |
+| -------- | --------------------------------------------------- | -------- |
+| 无缓冲区 | 发送和接收的协程没有同时准备好                      | 同步消息 |
+| 有缓冲区 | 缓冲区满时发送方阻塞 / 通道中没有新的值时接收方阻塞 | 异步消息 |
+| nil      | 总是阻塞                                            | -        |
+
+通道关闭后，无法向通道继续发送数据，
 
 #### 值类型：函数
 
@@ -128,6 +186,14 @@ copy(slice1, slice2) // 只会复制slice2的3个元素到slice1的前3个位置
 ```go
 var dfs func(*TreeNode) # 声明一个函数类型
 ```
+
+递归：函数体内间接或直接的调用自身
+
+回调：一个函数作为参数传入另一个参数，并在另一个函数中调用
+
+匿名函数（闭包）：没有名称的函数，必须赋值给一个变量使用；
+
+> 闭包函数的作用域：可以捕获其所在代码块上下文中的变量的引用，而与实际使用时，表面的作用域无关。 
 
 #### 引用类型：指针
 
@@ -148,6 +214,84 @@ int64  : -9223372036854775808 to 9223372036854775807
 
 #### 值类型：结构体
 
+特点
+
+1. 结构体及其包含的数据在内存中是连续的，这带来很大的性能优势
+
+2. 递归结构体，通过引用自身的指针来定义（二叉树和链表）
+
+3. field的可见性：名称首字母的大小写
+
+4. 结构体标签（tag）
+
+   > ```go
+   > type Student struct {
+   > 	name string "学生名字"
+   > 	Age  int    "学生年龄"
+   > 	Room int    "json:Roomid"
+   > }
+   > func main() {
+   > 	st := Student{"Li", 14, 102}
+   > 	fmt.Println(reflect.TypeOf(st).Field(0).Tag)
+   > 	fmt.Println(reflect.TypeOf(st).Field(1).Tag)
+   > 	fmt.Println(reflect.TypeOf(st).Field(2).Tag)
+   > }
+   > ```
+
+5. 匿名字段：没有显式的名字，类型就是字段（所以，每个结构体中同一类型只能有一个匿名字段）
+
+   > ```go
+   > type Person struct {
+   >    name string "学生名字"
+   >    Age  int    "学生年龄"
+   > }
+   > type Student struct {
+   >    Person  // 匿名字段，只有类型
+   >    Room int "json:Roomid"
+   > }
+   > ```
+
+6. 嵌入与聚合：结构体中包含匿名（内嵌）字段叫做嵌入或者内嵌。如果结构体中字段包含了类型名和字段名，则叫做聚合。
+
+   > ```go
+   > type Human struct {
+   > 	name string
+   > }
+   > type Person struct {
+   > 	Human   		// 内嵌
+   > }
+   > type Person2 struct {
+   > 	*Human			// 内嵌
+   > }
+   > type Person3 struct {
+   > 	human Human			// 聚合
+   > }
+   > ```
+   >
+   > 嵌入方式：
+   >
+   > 1. 接口中嵌入接口：
+   > 2. 接口中嵌入结构体：不合法，无法通过编译
+   > 3. 结构体中内嵌接口：
+   > 4. 结构体中嵌入结构体：不可嵌入自身的值类型（指针可以）
+
+7. 方法
+
+   > 通过接收器与结构体绑定的函数
+
+#### 值类型：复数
+
+```go
+// 构造一个实部为1，虚部为2的复数
+c := complex(-1, 2)
+// 读取实部
+r := real(c)
+// 读取虚部
+i := imag(c)
+// cmplx包，复数操作函数包
+cmplx.Abs(c)
+```
+
 ### 控制语句
 
 #### defer
@@ -164,9 +308,15 @@ Go语言中的break，fallthrough
 
 #### error
 
+
+
 #### panic
 
+表示严重且不可恢复的异常。
+
 #### recover
+
+从panic或error场景中恢复。
 
 ## 语言特性
 
@@ -204,6 +354,12 @@ func main() {
 
 ### math
 
+### runtime
+
+#### runtime/pprof （net/http/pprof）
+
+用于监控Go的堆栈、CPU的耗时等性能信息。
+
 ### bytes
 
 ### strings
@@ -213,6 +369,82 @@ func main() {
 ### strconv
 
 ### unsafe
+
+### atomic
+
+提供了原子操作的方法。
+
+### sync
+
+#### 互斥锁 sync.Mutex（全局锁）
+
+传统的并发程序通常使用互斥锁对共享资源进行访问，而Go提倡使用通道实现资源共享和通信。
+
+Mutex只有两个方法：调用Lock()获得锁（同一个协程不能重复Lock），UnLock()释放锁。只允许一个协程的读或者写。
+
+```go
+var lck sync.Mutex // 定义一个互斥锁
+func foo(){
+  lck.Lock() // 会阻塞到获取锁
+  defer lck.Unlock() // defer语句在函数返回时获取锁
+}
+```
+
+#### 读写锁 sync.RWMutex
+
+多读单写的互斥锁
+
+#### sync.WaitGroup
+
+主线程使用Add()方法设置等待的协程数量，并在完成后调用Done()方法。同时Wait方法可以阻塞主线程，直到所有协程完成后才会向下执行。
+
+#### sync.Once.Do()
+
+保证Do()方法只执行一次
+
+```go
+package main
+import (
+  "fmt"
+  "sync"
+  "time"
+)
+// 只会打印一次
+func main() {
+  var once sync.Once
+  for i := 0; i < 5; i++ {
+    go func(i int) {
+      fun1 := func() {
+        fmt.Printf("i:=%d\n", i)
+      }
+      once.Do(fun1)
+    }(i)
+  }
+  time.Sleep(50 * time.Millisecond) // 为了防止主goroutine直接运行完了，啥都看不到
+}
+```
+
+#### sync.Map
+
+线程安全的字典。
+
+### testing
+
+*\_test.go
+
+### reflect
+
+### context
+
+### os
+
+### net
+
+### http
+
+### encoding
+
+#### json
 
 ## 工程结构
 
@@ -292,6 +524,10 @@ var value2 int = 3
 type fooType{}
 ```
 
+### 基准测试
+
+如果开发的是Web程序，可以引入包\_ "net/http/pprof"，在浏览器中访问 http://localhost:port/debug/pprof/
+
 ## 常见问题
 
 ### 函数
@@ -299,6 +535,12 @@ type fooType{}
 #### 函数的参数传递是值传递还是引用传递
 
 #### 匿名函数的延时绑定问题
+
+#### Go语言中有类吗？
+
+在经典的面向对象语言中（Java、C++、C#等），将数据和方法封装为类，类中包含两者且不能剥离。而Go语言中，数据和方法是正交关系。
+
+结构体可以看做类的简化形式。
 
 ### 数据类型
 
