@@ -21,50 +21,56 @@ date: 2022-04-13 09:15:21
 | 名词 | 解释               |
 | ---- | ------------------ |
 | gc   | Go  compiler       |
-| GC   | Garbage Collection |
+| GOGC | Garbage Collection |
 
 ## 编译器
 
-### 编译命令
+## 基本语法
 
-#### go mod tidy
+### 命令行
+
+#### go mod
+
+| 命令        | 功能 |
+| ----------- | ---- |
+| go mod tidy |      |
 
 #### go build
 
+
+
 #### go install
 
-#### go tool pprof
+#### go tool
 
-## 运行时库
-
-
-
-## 基本语法
-
-在switch或select语句中，break的作用是跳过整个代码块，执行swith或select之后的代码。
-
-### 作用域
-
-1. 花括号标识一个代码块，一般都存在作用域划分的作用（花括号内的局部变量互相屏蔽）
-2. 全局变量在代码块内部可以被覆盖声明，因此要避免重名（在开发规范中约定）
-
-### 常量
-
-```golang
-const MaxUint = ^uint(0) 
-```
+| 命令          | 功能 |
+| ------------- | ---- |
+| go tool pprof |      |
 
 ### 变量声明
 
-```go
-// 声明多个
-var maxCount,base,count int
-// 短式声明（只能在函数内使用）
-v:=999
-s:="hello world!"
-// 多赋值
-base, count,s := 1, 0,"hello world!"
-```
+- 变量的作用域
+
+  > 1. 花括号标识一个代码块，一般都存在作用域划分的作用（花括号内的局部变量互相屏蔽）
+  > 2. 全局变量在代码块内部可以被覆盖声明，因此要避免重名（在开发规范中约定）
+
+- 常量
+
+  > ```go
+  >  const MaxUint = ^uint(0) 
+  > ```
+
+- 变量
+
+  > ```go
+  > // 声明多个
+  > var maxCount,base,count int
+  > // 短式声明（只能在函数内使用）
+  > v:=999
+  > s:="hello world!"
+  > // 多赋值
+  > base, count,s := 1, 0,"hello world!"
+  > ```
 
 ### 数据类型
 
@@ -177,7 +183,7 @@ channel是协程之间共享数据的通道（而非Java中的共享内存），
 | 有缓冲区 | 缓冲区满时发送方阻塞 / 通道中没有新的值时接收方阻塞 | 异步消息 |
 | nil      | 总是阻塞                                            | -        |
 
-通道关闭后，无法向通道继续发送数据，
+通道关闭后，无法向通道继续发送数据。
 
 #### 值类型：函数
 
@@ -187,11 +193,11 @@ channel是协程之间共享数据的通道（而非Java中的共享内存），
 var dfs func(*TreeNode) # 声明一个函数类型
 ```
 
-递归：函数体内间接或直接的调用自身
+- 递归：函数体内间接或直接的调用自身
 
-回调：一个函数作为参数传入另一个参数，并在另一个函数中调用
+- 回调：一个函数作为参数传入另一个参数，并在另一个函数中调用
 
-匿名函数（闭包）：没有名称的函数，必须赋值给一个变量使用；
+- 匿名函数（闭包）：
 
 > 闭包函数的作用域：可以捕获其所在代码块上下文中的变量的引用，而与实际使用时，表面的作用域无关。 
 
@@ -300,15 +306,19 @@ cmplx.Abs(c)
 
 #### switch
 
+在switch或select语句中，break的作用是跳过整个代码块，执行swith或select之后的代码。
+
 Go语言中的break，fallthrough
 
-####  func
+#### select
+
+#### if
+
+#### for
 
 ### 异常处理
 
 #### error
-
-
 
 #### panic
 
@@ -318,17 +328,17 @@ Go语言中的break，fallthrough
 
 从panic或error场景中恢复。
 
-## 语言特性
-
-### 组合与方法集
+### 组合的方法集
 
 golang中没有继承的概念，代码复用是通过组合的方式实现。
 
-### 闭包
-
-### 泛型
-
 ### CGO
+
+## 设计模式
+
+### 嵌入
+
+### 聚合
 
 ## SDK核心包
 
@@ -372,7 +382,7 @@ func main() {
 
 ### atomic
 
-提供了原子操作的方法。
+提供了原子操作的方法，类似JDK juc包中的原子类。
 
 ### sync
 
@@ -444,7 +454,9 @@ func main() {
 
 ### encoding
 
-#### json
+### json
+
+### time
 
 ## 工程结构
 
@@ -528,6 +540,16 @@ type fooType{}
 
 如果开发的是Web程序，可以引入包\_ "net/http/pprof"，在浏览器中访问 http://localhost:port/debug/pprof/
 
+## 第三方库
+
+### 基于OpenCV的跨平台GUI自动化库
+
+https://github.com/go-vgo/robotgo
+
+### Web框架
+
+https://github.com/gin-gonic/gin
+
 ## 常见问题
 
 ### 函数
@@ -553,8 +575,6 @@ type fooType{}
 Yes and no. Although Go has types and methods and allows an object-oriented style of programming, there is no type hierarchy. The concept of “interface” in Go provides a different approach that we believe is easy to use and in some ways more general. There are also ways to embed types in other types to provide something analogous—but not identical—to subclassing. Moreover, methods in Go are more general than in C++ or Java: they can be defined for any sort of data, even built-in types such as plain, “unboxed” integers. They are not restricted to structs (classes).
 
 Also, the lack of a type hierarchy makes “objects” in Go feel much more lightweight than in languages such as C++ or Java.
-
-
 
 ## 参考资料
 

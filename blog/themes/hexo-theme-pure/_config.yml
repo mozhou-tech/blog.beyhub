@@ -31,7 +31,7 @@ site:
     url: /images/common/avatar.jpg
   title: 采菊东篱 # 页面title
   favicon: /favicon.png
-  board: <p>永远只相信可验证的事实及其推论</p> # 站点公告
+  board: <p>好记性，不如烂笔头</p> # 站点公告
   copyright: true # 底部版权信息
 
 # config
