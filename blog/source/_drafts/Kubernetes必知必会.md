@@ -18,6 +18,59 @@ toc: true
 
 #### Pod
 
+Pod 是 Kubernetes 的原子对象。Pod 表示您的集群上一组正在运行的容器（containers）。 
+
+通常创建 Pod 是为了运行单个主容器。Pod 还可以运行可选的边车（sidecar）容器，以添加诸如日志记录之类的补充特性。通常用 Deployment 来管理 Pod。
+
+##### Pod Disruption Budget
+
+亦称作:PDB
+Pod 干扰预算（Pod Disruption Budget，PDB） 使应用所有者能够为多实例应用创建一个对象，来确保一定数量的具有指定标签的 Pod 在任何时候都不会被主动驱逐。 
+
+##### Pod 优先级（Pod Priority）
+
+Pod 优先级表示一个 Pod 相对于其他 Pod 的重要性。 
+
+Pod 优先级 允许用户为 Pod 设置高于或低于其他 Pod 的优先级 -- 这对于生产集群 工作负载而言是一个重要的特性。
+
+##### Pod 安全策略
+
+为 Pod 的创建和更新操作启用细粒度的授权。 
+
+Pod 安全策略是集群级别的资源，它控制着 Pod 规约中的安全性敏感的内容。 PodSecurityPolicy对象定义了一组条件以及相关字段的默认值，Pod 运行时必须满足这些条件。Pod 安全策略控制实现上体现为一个可选的准入控制器。
+
+##### Pod 干扰
+
+pod 干扰 是指节点上的 pod 被自愿或非自愿终止的过程。 
+
+自愿干扰是由应用程序所有者或集群管理员有意启动的。非自愿干扰是无意的，可能由不可避免的问题触发，如节点耗尽资源或意外删除。
+
+##### Pod 水平自动扩缩器（Horizontal Pod Autoscaler）
+
+亦称作:HPA
+Horizontal Pod Autoscaler（Pod 水平自动扩缩器）是一种 API 资源，它根据目标 CPU 利用率或自定义度量目标扩缩 Pod 副本的数量。 
+
+HPA 通常用于 ReplicationControllers 、Deployments 或者 ReplicaSets 上。 HPA 不能用于不支持扩缩的对象，例如 DaemonSets。
+
+##### Pod 生命周期
+
+关于 Pod 在其生命周期中处于哪个阶段的更高层次概述。 
+
+Pod 生命周期 是关于 Pod 处于哪个阶段的概述。包含了下面5种可能的的阶段: Running、Pending、Succeeded、 Failed、Unknown。关于 Pod 的阶段的更高级描述请查阅 PodStatus phase 字段。
+
+##### 静态 Pod（Static Pod）
+
+由特定节点上的 kubelet 守护进程直接管理的 pod，API 服务器不了解它的存在。
+
+##### 驱逐
+
+驱逐即终止节点上一个或多个 Pod 的过程。 驱逐的两种类型
+
+- 节点压力驱逐
+- API 发起的驱逐
+
+##### Pod 常用操作
+
 ```shell
 # 查看Pod运行状态
 kubectl get pod task-pv-pod
@@ -33,14 +86,14 @@ kubectl get pod nginx-deployment-1006230814-6winp -o yaml
 
 > **Bare Pod**，所谓 Bare Pod 是指直接用 PodSpec 来创建的 Pod（即不在 ReplicaSet 或者 ReplicationController 的管理之下的 Pod）。这些 Pod 在 Node 重启后不会自动重启，但 Job 则会创建新的 Pod 继续任务。所以，推荐使用 Job 来替代 Bare Pod，即便是应用只需要一个 Pod。
 
-- Pod文件拷贝
+Pod文件拷贝
 
-  > ```shell
-  > # 这样可以把主机目录文件拷贝到容器内
-  > kubectl cp /主机目录/文件路径 <namespace>/<podName>:examples/streaming/StateMachineExample.jar
-  > # 这样可以把容器内文件cp到主机目录(相对于目前的WORKDIR)
-  > kubectl cp <namespace>/<podName>:examples/streaming/StateMachineExample.jar ~/StateMachineExample.jar
-  > ```
+> ```shell
+> # 这样可以把主机目录文件拷贝到容器内
+> kubectl cp /主机目录/文件路径 <namespace>/<podName>:examples/streaming/StateMachineExample.jar
+> # 这样可以把容器内文件cp到主机目录(相对于目前的WORKDIR)
+> kubectl cp <namespace>/<podName>:examples/streaming/StateMachineExample.jar ~/StateMachineExample.jar
+> ```
 
 #### ReplicaSet
 
@@ -278,7 +331,9 @@ $ kubectl logs $pods -c pi
 
 #### Node
 
-Node 是 Kubernetes 集群的工作节点，可以是物理机也可以是虚拟机。
+Kubernetes 中的工作机器称作节点。 
+
+工作机器可以是虚拟机也可以是物理机，取决于集群的配置。 其上部署了运行 Pods 所必需的本地守护进程或服务， 并由主控组件来管理。 节点上的的守护进程包括 kubelet、 kube-proxy 以及一个 Docker 这种 实现了 CRI 的容器运行时。
 
 ```bash
 # 禁止 Pod 调度到该节点上。
@@ -320,6 +375,16 @@ kubectl create ns namespace
 #### Service
 
 #### Secret
+
+Secret 用于存储敏感信息，如密码、 OAuth 令牌和 SSH 密钥。
+
+Secret 允许用户对如何使用敏感信息进行更多的控制，并减少信息意外暴露的风险。 默认情况下，Secret 值被编码为 base64 字符串并以非加密的形式存储，但可以配置为 静态加密（Encrypt at rest）。 Pod 通过挂载卷中的文件的方式引用 Secret，或者通过 kubelet 为 pod 拉取镜像时引用。 Secret 非常适合机密数据使用，而 ConfigMaps 适用于非机密数据。
+
+##### ServiceAccount
+
+为在 Pod 中运行的进程提供标识。 
+
+当 Pod 中的进程访问集群时，API 服务器将它们作为特定的服务帐户进行身份验证， 例如 default ，创建 Pod 时，如果你没有指定服务帐户，它将自动被赋予同一个 名字空间中的 default 服务账户。
 
 #### ConfigMap
 
@@ -760,6 +825,8 @@ spec:
 
 #### PersistentVolumeClaim
 
+申领持久卷（PersistentVolume）中定义的存储资源，以便可以将其挂载为容器（container）中的卷。 
+
 `PersistentVolumeClaim`（PVC）是用户存储的请求。它与 Pod 相似。Pod 消耗节点资源，PVC 消耗 PV 资源。Pod 可以请求特定级别的资源（CPU 和内存）。声明可以请求特定的大小和访问模式（例如，可以以读/写一次或 只读多次模式挂载）。
 
 1. 创建PersistentVolumeClaim
@@ -885,6 +952,562 @@ Taint 和 toleration 相互配合，可以用来避免 pod 被分配到不合适
 #### 垃圾回收
 
 Kubernetes 垃圾收集器的角色是删除指定的对象，这些对象曾经有但以后不再拥有 Owner 了。
+
+## 其它词汇概念
+
+#### API Group
+
+Kubernetes API 中的一组相关路径。 
+
+通过更改 API server 的配置，可以启用或禁用每个 API Group。 你还可以禁用或启用指向特定资源的路径。 API group 使扩展 Kubernetes API 更加的容易。 API group 在 REST 路径和序列化对象的 apiVersion 字段中指定。
+
+- 阅读 API Group 了解更多信息。
+
+#### API 发起的驱逐
+
+API 发起的驱逐是一个先调用 Eviction API 创建 Eviction 对象，再由该对象体面地中止 Pod 的过程。 
+
+你可以通过 kube-apiserver 的客户端，比如 kubectl drain 这样的命令，直接调用 Eviction API 发起驱逐。 当 Eviction 对象创建出来之后，该对象将驱动 API 服务器终止选定的Pod。
+
+API 发起的驱逐不同于 节点压力引发的驱逐。
+
+#### cAdvisor
+
+cAdvisor (Container Advisor) 为容器用户提供对其运行中的容器 的资源用量和性能特征的知识。 
+
+cAdvisor 是一个守护进程，负责收集、聚合、处理并输出运行中容器的信息。 具体而言，针对每个容器，该进程记录容器的资源隔离参数、历史资源用量、 完整历史资源用量和网络统计的直方图。这些数据可以按容器或按机器层面输出。
+
+#### CIDR
+
+CIDR (无类域间路由) 是一种描述 IP 地址块的符号，被广泛使用于各种网络配置中。CIDR 标记使用一个斜线/分隔符，后面跟一个十进制数值表示地址中网络部分所占的位数。例如，205.123.196.183/25 中的 25 表示地址中 25 位用于网络 ID，相应的掩码为 255.255.255.128。
+
+在 Kubernetes 的上下文中，每个节点 以 CIDR 形式（含起始地址和子网掩码）获得一个 IP 地址段， 从而能够为每个 Pod 分配一个独一无二的 IP 地址。 虽然其概念最初源自 IPv4，CIDR 已经被扩展为涵盖 IPv6。
+
+#### containerd
+
+强调简单性、健壮性和可移植性的一种容器运行时 
+
+containerd 是一种容器运行时，能在 Linux 或者 Windows 后台运行。 containerd 能取回、存储容器镜像，执行容器实例，提供网络访问等。
+
+#### CRI-O
+
+该工具可让你通过 Kubernetes CRI 使用 OCI 容器运行时。 
+
+CRI-O 是 CRI 的一种实现， 使得你可以使用与开放容器倡议（Open Container Initiative，OCI） 运行时规范 兼容的容器。
+
+部署 CRI-O 允许 Kubernetes 使用任何符合 OCI 要求的运行时作为容器运行时 去运行 Pods， 并从远程容器仓库获取 OCI 容器镜像。
+
+#### CustomResourceDefinition
+
+通过定制化的代码给您的 Kubernetes API 服务器增加资源对象，而无需编译完整的定制 API 服务器。 
+
+当 Kubernetes 公开支持的 API 资源不能满足您的需要时，定制资源对象（Custom Resource Definitions）让您可以在您的环境上扩展 Kubernetes API。
+
+#### Docker
+
+Docker（这里特指 Docker 引擎） 是一种可以提供操作系统级别虚拟化（也称作容器）的软件技术。 
+
+Docker 使用了 Linux 内核中的资源隔离特性（如 cgroup 和内核命名空间）以及支持联合文件系统（如 OverlayFS 和其他）， 允许多个相互独立的“容器”一起运行在同一 Linux 实例上，从而避免启动和维护虚拟机（VMs）的开销。
+
+#### EndpointSlice
+
+一种将网络端点与 Kubernetes 资源组合在一起的方法。 
+
+#### etcd
+
+etcd 是兼具一致性和高可用性的键值数据库，可以作为保存 Kubernetes 所有集群数据的后台数据库。 
+
+您的 Kubernetes 集群的 etcd 数据库通常需要有个备份计划。javascript:void(0))
+
+#### Finalizer
+
+Finalizer 是带有命名空间的键，告诉 Kubernetes 等到特定的条件被满足后， 再完全删除被标记为删除的资源。 Finalizer 提醒控制器清理被删除的对象拥有的资源。
+
+当你告诉 Kubernetes 删除一个指定了 Finalizer 的对象时， Kubernetes API 通过填充 .metadata.deletionTimestamp 来标记要删除的对象， 并返回202状态码 (HTTP "已接受") 使其进入只读状态。 此时控制平面或其他组件会采取 Finalizer 所定义的行动， 而目标对象仍然处于终止中（Terminating）的状态。 这些行动完成后，控制器会删除目标对象相关的 Finalizer。 当 metadata.finalizers 字段为空时，Kubernetes 认为删除已完成。
+
+#### FlexVolume
+
+FlexVolume 是一个已弃用的接口，用于创建树外卷插件。 容器存储接口（CSI） 是比 Flexvolume 更新的接口，它解决了 Flexvolume 的一些问题。 
+
+Flexvolume 允许用户编写自己的驱动程序，并在 Kubernetes 中加入对用户自己的数据卷的支持。 FlexVolume 驱动程序的二进制文件和依赖项必须安装在主机上。 这需要 root 权限。如果可能的话，SIG Storage 建议实现 CSI 驱动程序， 因为它解决了 Flexvolumes 的限制。
+
+- Kubernetes 文档中的 Flexvolume
+- 更多关于 Flexvolumes 的信息
+- 存储供应商的卷插件 FAQ
+
+#### Helm Chart
+
+Helm Chart 是一组预先配置的 Kubernetes 资源所构成的包，可以使用 Helm 工具对其进行管理。 
+
+Chart 提供了一种可重现的用来创建和共享 Kubernetes 应用的方法。 单个 Chart 可用来部署简单的系统（例如一个 memcached Pod）， 也可以用来部署复杂的系统（例如包含 HTTP 服务器、数据库、缓存等组件的完整 Web 应用堆栈）。
+
+#### HostAliases
+
+主机别名 (HostAliases) 是一组 IP 地址和主机名的映射，用于注入到 Pod 内的 hosts 文件。 
+
+HostAliases 是一个包含主机名和 IP 地址的可选列表，配置后将被注入到 Pod 内的 hosts 文件中。 该选项仅适用于没有配置 hostNetwork 的 Pod.
+
+#### Istio
+
+Istio 是个开放平台（非 Kubernetes 特有），提供了一种统一的方式来集成微服务、管理流量、实施策略和汇总度量数据。 
+
+添加 Istio 时不需要修改应用代码。它是基础设施的一层，介于服务和网络之间。 当它和服务的 Deployment 相结合时，就构成了通常所谓的服务网格（Service Mesh）。 Istio 的控制面抽象掉了底层的集群管理平台，这一集群管理平台可以是 Kubernetes、Mesosphere 等。
+
+#### Kops
+
+kops 是一个命令行工具，可以帮助您创建、销毁、升级和维护生产级，高可用性的 Kubernetes 集群。 
+
+注意：官方仅支持 AWS，GCE 和 VMware vSphere 的支持还处于 alpha* 阶段。
+
+kops 为您的集群提供了：
+
+- 全自动化安装
+- 基于 DNS 的集群标识
+- 自愈功能：所有组件都在自动伸缩组（Auto-Scaling Groups）中运行
+- 有限的操作系统支持 (推荐使用 Debian，支持 Ubuntu 16.04，试验性支持 CentOS & RHEL)
+- 高可用 (HA) 支持
+- 直接提供或者生成 Terraform 清单文件的能力
+
+您也可以将自己的集群作为一个构造块，使用 Kubeadm 构造集群。kops 是建立在 kubeadm 之上的。
+
+#### kube-apiserver
+
+API 服务器是 Kubernetes 控制面的组件， 该组件公开了 Kubernetes API。 API 服务器是 Kubernetes 控制面的前端。 
+
+Kubernetes API 服务器的主要实现是 kube-apiserver。 kube-apiserver 设计上考虑了水平伸缩，也就是说，它可通过部署多个实例进行伸缩。 你可以运行 kube-apiserver 的多个实例，并在这些实例之间平衡流量。
+
+#### kube-controller-manager
+
+运行控制器进程的控制平面组件。 
+
+从逻辑上讲，每个控制器都是一个单独的进程， 但是为了降低复杂性，它们都被编译到同一个可执行文件，并在一个进程中运行。
+
+#### kube-proxy
+
+kube-proxy 是集群中每个节点上运行的网络代理， 实现 Kubernetes 服务（Service） 概念的一部分。 
+
+kube-proxy 维护节点上的网络规则。这些网络规则允许从集群内部或外部的网络会话与 Pod 进行网络通信。
+
+如果操作系统提供了数据包过滤层并可用的话，kube-proxy 会通过它来实现网络规则。否则， kube-proxy 仅转发流量本身。
+
+#### kube-scheduler
+
+控制平面组件，负责监视新创建的、未指定运行节点（node）的 Pods，选择节点让 Pod 在上面运行。 
+
+调度决策考虑的因素包括单个 Pod 和 Pod 集合的资源需求、硬件/软件/策略约束、亲和性和反亲和性规范、数据位置、工作负载间的干扰和最后时限。
+
+#### Kubeadm
+
+用来快速安装 Kubernetes 并搭建安全稳定的集群的工具。 
+
+你可以使用 kubeadm 安装控制面和 工作节点 组件。|
+
+#### Kubectl
+
+亦称作:kubectl
+kubectl 是使用 Kubernetes API 与 Kubernetes 集群的控制面进行通信的命令行工具。 
+
+你可以使用 kubectl 创建、检视、更新和删除 Kubernetes 对象。
+
+#### Kubelet
+
+一个在集群中每个节点（node）上运行的代理。 它保证容器（containers）都 运行在 Pod 中。 
+
+kubelet 接收一组通过各类机制提供给它的 PodSpecs，确保这些 PodSpecs 中描述的容器处于运行状态且健康。 kubelet 不会管理不是由 Kubernetes 创建的容器。
+
+#### Kubernetes API
+
+Kubernetes API 是通过 RESTful 接口提供 Kubernetes 功能服务并负责集群状态存储的应用程序。 
+
+Kubernetes 资源和"意向记录"都是作为 API 对象储存的，并可以通过调用 RESTful 风格的 API 进行修改。 API 允许以声明方式管理配置。 用户可以直接和 Kubernetes API 交互，也可以通过 kubectl 这样的工具进行交互。 核心的 Kubernetes API 是很灵活的，可以扩展以支持定制资源。
+
+#### LimitRange
+
+提供约束来限制命名空间中每个 容器（Containers） 或 Pod 的资源消耗。 
+
+LimitRange 按照类型来限制命名空间中对象能够创建的数量，以及单个 容器（Containers） 或 Pod 可以请求/使用的计算资源量。
+
+#### Master
+
+遗留术语，作为运行 控制平面 的 节点 的同义词使用。 
+
+该术语仍被一些配置工具使用，如 kubeadm 以及托管的服务，为 节点（nodes） 添加 kubernetes.io/role 的 标签（label），以及管理控制平面 Pod 的调度。
+
+#### Minikube
+
+Minikube 是用来在本地运行 Kubernetes 的一种工具。 
+
+Minikube 在用户计算机上的一个虚拟机内运行单节点 Kubernetes 集群。 你可以使用 Minikube 在学习环境中尝试 Kubernetes.
+
+#### Operator 模式
+
+operator 模式 是一种系统设计, 将 控制器（Controller） 关联到一个或多个自定义资源。 
+
+除了使用作为 Kubernetes 自身一部分的内置控制器之外，你还可以通过 将控制器添加到集群中来扩展 Kubernetes。
+
+如果正在运行的应用程序能够充当控制器并通过 API 访问的方式来执行任务操控 那些在控制平面中定义的自定义资源，这就是一个 operator 模式的示例。
+
+#### QoS 类（QoS Class）
+
+QoS Class（Quality of Service Class）为 Kubernetes 提供了一种将集群中的 Pod 分为几个类型并做出有关调度和驱逐决策的方法。 
+
+Pod 的 QoS 类是基于 Pod 在创建时配置的计算资源请求和限制。QoS 类用于制定有关 Pod 调度和逐出的决策。 Kubernetes 可以为 Pod 分配以下 QoS 类：Guaranteed，Burstable 或者 BestEffort。
+
+#### UID
+
+Kubernetes 系统生成的字符串，唯一标识对象。 
+
+在 Kubernetes 集群的整个生命周期中创建的每个对象都有一个不同的 uid，它旨在区分类似实体的历史事件。
+
+#### 上游（Uptream）
+
+可能指的是：核心 Kubernetes 仓库或作为当前仓库派生来源的仓库。 
+
+- 在 Kubernetes社区：对话中通常使用 upstream 来表示核心 Kubernetes 代码库，也就是更广泛的 kubernetes 生态系统、其他代码或第三方工具所依赖的仓库。 例如，社区成员可能会建议将某个功能特性贡献到 upstream，使其位于核心代码库中，而不是维护于插件或第三方工具中。
+- 在 GitHub 或 git 中：约定是将源仓库称为 upstream，而派生的仓库则被视为 downstream。
+
+#### 下游（Downstream）
+
+可以指：Kubernetes 生态系统中依赖于核心 Kubernetes 代码库或分支代码库的代码。 
+
+- 在 Kubernetes 社区中：下游(downstream) 在人们交流中常用来表示那些依赖核心 Kubernetes 代码库的生态系统、代码或者第三方工具。例如，Kubernete 的一个新特性可以被下游(downstream) 应用采用，以提升它们的功能性。
+- 在 GitHub 或 git 中：约定用下游(downstream) 表示分支代码库，源代码库被认为是上游(upstream)。
+
+#### 临时容器（Ephemeral Container）
+
+您可以在 Pod 中临时运行的一种 容器（Container） 类型。 
+
+如果想要调查运行中有问题的 Pod，可以向该 Pod 添加一个临时容器并进行诊断。 临时容器没有资源或调度保证，因此不应该使用它们来运行任何部分的工作负荷本身。
+
+#### 事件（Event）
+
+每个 Event 是集群中某处发生的事件的报告。 它通常用来表述系统中的某种状态变化。 
+
+事件的保留时间有限，随着时间推进，其触发方式和消息都可能发生变化。 事件用户不应该对带有给定原因（反映下层触发源）的时间特征有任何依赖， 也不要寄希望于对应该原因的事件会一直存在。
+
+事件应该被视为一种告知性质的、尽力而为的、补充性质的数据。
+
+在 Kubernetes 中，审计 机制会生成一种不同种类的 Event 记录（API 组为 audit.k8s.io）。
+
+#### 云供应商（Cloud Provider）
+
+亦称作:云服务供应商（Cloud Service Provider）
+一个提供云计算平台的商业机构或其他组织。 
+
+云供应商，有时也称作云服务供应商（CSPs）提供云计算平台或服务。
+
+很多云供应商提供托管的基础设施（也称作基础设施即服务或 IaaS）。 针对托管的基础设施，云供应商负责服务器、存储和网络，而用户（你） 负责管理其上运行的各层软件，例如运行一个 Kubernetes 集群。
+
+你也会看到 Kubernetes 被作为托管服务提供；有时也称作平台即服务或 PaaS。 针对托管的 Kubernetes，你的云供应商负责 Kubernetes 的控制面以及 节点 及他们所依赖的基础设施： 网络、存储以及其他一些诸如负载均衡器之类的元素。
+
+#### 云原生计算基金会（CNCF）
+
+云原生计算基金会（CNCF）建立了可持续的生态系统，并在围绕着 项目 建立一个社区，将容器编排微服务架构的一部分。 Kubernetes 是一个云原生计算基金会项目. 
+
+云原生计算基金会（CNCF）是 Linux 基金会 的下属基金会。它的使命是让云原生计算无处不在。
+
+#### 云控制器管理器（Cloud Controller Manager）
+
+云控制器管理器是指嵌入特定云的控制逻辑的 控制平面组件。 云控制器管理器使得你可以将你的集群连接到云提供商的 API 之上， 并将与该云平台交互的组件同与你的集群交互的组件分离开来。 
+
+通过分离 Kubernetes 和底层云基础设置之间的互操作性逻辑， 云控制器管理器组件使云提供商能够以不同于 Kubernetes 主项目的 步调发布新特征。
+
+#### 亲和性（Affinity）
+
+在 Kubernetes 中，亲和性（affinity）是一组规则，它们为调度程序提供在何处放置 Pods 提示信息。 
+
+亲和性有两种：
+
+- 节点亲和性
+- Pod 间亲和性
+
+这些规则是使用 Kubernetes 标签（label） 和 pods 中指定的 选择算符定义的， 这些规则可以是必需的或首选的，这取决于你希望调度程序执行它们的严格程度。
+
+#### 代理（Proxy）
+
+在计算机领域，代理指的是充当远程服务中介的服务器。 
+
+客户端与代理进行交互；代理将客户端的数据复制到实际服务器；实际服务器回复代理；代理将实际服务器的回复发送给客户端。
+
+kube-proxy 是集群中每个节点上运行的网络代理，实现了部分 Kubernetes 服务（Service） 概念。
+
+你可以将 kube-proxy 作为普通的用户态代理服务运行。 如果你的操作系统支持，则可以在混合模式下运行 kube-proxy；该模式使用较少的系统资源即可达到相同的总体效果。
+
+准入控制器（Admission Controller）
+
+在对象持久化之前拦截 Kubernetes Api 服务器请求的一段代码 
+
+- 
+
+  初始化容器（Init Container）
+
+  应用容器运行前必须先运行完成的一个或多个初始化容器。 
+
+- 
+
+  副本控制器（Replication Controller）
+
+  一种工作管理多副本应用的负载资源，能够确保特定个数的 Pod 实例处于运行状态。 
+
+- 
+
+  动态卷供应（Dynamic Volume Provisioning）
+
+  允许用户请求自动创建存储 卷。 
+
+- 
+
+  卷插件（Volume Plugin）
+
+  卷插件可以让 Pod 集成存储。 
+
+#### 垃圾收集
+
+垃圾收集是 Kubernetes 用于清理集群资源的各种机制的统称。 
+
+Kubernetes 使用垃圾收集机制来清理资源，例如： 未使用的容器和镜像、 失败的 Pod、 目标资源拥有的对象、 已完成的 Job、 过期或出错的资源。
+
+#### 基于角色的访问控制（RBAC）
+
+管理授权决策，允许管理员通过 Kubernetes API 动态配置访问策略。 
+
+#### 安全上下文（Security Context）
+
+securityContext 字段定义 Pod 或 容器的特权和访问控制设置。 
+
+在一个 securityContext 字段中，你可以设置进程所属用户和用户组、权限相关设置。你也可以设置安全策略（例如：SELinux、AppArmor、seccomp）。
+
+PodSpec.securityContext 字段配置会应用到一个 Pod 中的所有的 container 。
+
+#### 容器存储接口（Container Storage Interface，CSI）
+
+容器存储接口 （CSI） 定义了存储系统暴露给容器的标准接口。 
+
+CSI 允许存储驱动提供商为 Kubernetes 创建定制化的存储插件， 而无需将这些插件的代码添加到 Kubernetes 代码仓库（外部插件）。 要使用某个存储提供商的 CSI 驱动，你首先要 将它部署到你的集群上。 然后你才能创建使用该 CSI 驱动的 Storage Class 。
+
+- Kubernetes 文档中关于 CSI 的描述
+- 可用的 CSI 驱动列表
+
+#### 容器环境变量（Container Environment Variables）
+
+容器环境变量提供了 name=value 形式的、在 pod 中运行的容器所必须的一些重要信息。 
+
+容器环境变量为运行中的容器化应用提供必要的信息，同时还提供与 容器 重要资源相关的其他信息，例如：文件系统信息、容器自身的信息以及其他像服务端点（Service endpoints）这样的集群资源信息。javascript:void(0))
+
+#### 容器生命周期钩子（Container Lifecycle Hooks）
+
+生命周期钩子暴露容器管理生命周期中的事件，允许用户在事件发生时运行代码。 
+
+#### 容器网络接口（CNI）
+
+容器网络接口 (CNI) 插件是遵循 appc/CNI 协议的一类网络插件。 
+
+#### 容器运行时接口（CRI）
+
+容器运行时接口 (CRI) 是一组与节点上 kubelet 集成的容器运行时 API 
+
+#### 容器运行时（Container Runtime）
+
+容器运行环境是负责运行容器的软件。 
+
+#### 容器（Container）
+
+容器是可移植、可执行的轻量级的镜像，包含其中的软件及其相关依赖。 
+
+#### 容忍度（Toleration）
+
+一个核心对象，由三个必需的属性组成：key、value 和 effect。 容忍度允许将 Pod 调度到具有对应污点 的节点或节点组上。 
+
+#### 对象（Object）
+
+Kubernetes 系统中的实体。Kubernetes API 用这些实体表示集群的状态。 
+
+#### 工作组（Working Group，WG）
+
+工作组是为了方便讨论和（或）推进执行一些短周期、窄范围、或者从委员会和 SIG 分离出来的项目、以及跨 SIG 的活动。 
+
+#### 工作负载（Workload）
+
+工作负载是在 Kubernetes 上运行的应用程序。 
+
+#### 干扰（Disruption）
+
+干扰是指导致一个或者多个 Pod 服务停止的事件。 干扰会影响工作负载资源，比如 Deployment 这种依赖于受影响 Pod 的资源。 
+
+#### 应用开发者（Application Developer）
+
+编写可以在 Kubernetes 集群上运行的应用的人。 
+
+各种容器化应用运行所在的层。
+
+#### 抢占（Preemption）
+
+Kubernetes 中的抢占逻辑通过驱逐节点（Node） 上的低优先级Pod 来帮助悬决的 Pod 找到合适的节点。 
+
+#### 控制器（Controller）
+
+在 Kubernetes 中，控制器通过监控集群 的公共状态，并致力于将当前状态转变为期望的状态。 
+
+控制器（控制平面的一部分） 通过 apiserver 监控你的集群中的公共状态。
+
+其中一些控制器是运行在控制平面内部的，对 Kubernetes 来说，他们提供核心控制操作。 比如：部署控制器（deployment controller）、守护控制器（daemonset controller）、 命名空间控制器（namespace controller）、持久化数据卷控制器（persistent volume controller）（等）都是运行在 kube-controller-manager 中的。
+
+#### 控制平面（Control Plane）
+
+控制平面（Control Plane）是指容器编排层，它暴露 API 和接口来定义、 部署容器和管理容器的生命周期。 
+
+这个编排层是由多个不同的组件组成，例如以下（但不限于）几种：
+
+- etcd
+- API 服务器
+- 调度器
+- 控制器管理器
+- 云控制器管理器
+
+这些组件可以以传统的系统服务运行也可以以容器的形式运行.运行这些组件的主机过去称为 master 节点。
+
+#### 控制组（cgroup）
+
+一组具有可选资源隔离、审计和限制的 Linux 进程。 
+
+Cgroup 是一个 Linux 内核特性，对一组进程的资源使用（CPU、内存、磁盘 I/O 和网络等）进行限制、审计和隔离。
+
+#### 数据平面（Data Plane）
+
+提供诸如 CPU，内存，网络和存储的能力，以便容器可以运行并连接到网络。 
+
+#### 日志（Logging）
+
+日志是 集群（cluster） 或应用程序记录的事件列表。 
+
+应用程序和系统日志可以帮助您了解集群内部发生的情况。日志对于调试问题和监视集群活动非常有用。
+
+#### 服务代理（Service Broker）
+
+由第三方提供并维护的一组托管服务的访问端点。 
+
+#### 服务目录（Service Catalog）
+
+服务目录是一种扩展 API，它能让 Kubernetes 集群中运行的应用易于使用外部托管的的软件服务，例如云供应商提供的数据仓库服务。 
+
+#### 污点（Taint）
+
+污点是一种一个核心对象，包含三个必需的属性：key、value 和 effect。 污点会阻止在节点 或节点组上调度 Pods。 
+
+污点和容忍度一起工作， 以确保不会将 Pod 调度到不适合的节点上。 同一节点上可标记一个或多个污点。 节点应该仅调度那些带着能与污点相匹配容忍度的 Pod。
+
+#### 混排切片（Shuffle Sharding）
+
+混排切片（Shuffle Sharding）是指一种将请求指派给队列的技术，其隔离性好过对队列个数哈希取模的方式。 
+
+我们通常会关心不同的请求序列间的相互隔离问题，目的是为了确保密度较高的 请求序列不会湮没密度较低的序列。 将请求放入不同队列的一种简单方法是对请求的某些特征值执行哈希函数， 将结果对队列的个数取模，从而得到要使用的队列的索引。 这一哈希函数使用请求的与其序列相对应的特征作为其输入。例如，在因特网上， 这一特征通常指的是由源地址、目标地址、协议、源端口和目标端口所组成的 五元组。
+
+这种简单的基于哈希的模式有一种特性，高密度的请求序列（流）会湮没那些被 哈希到同一队列的其他低密度请求序列（流）。 为大量的序列提供较好的隔离性需要提供大量的队列，因此是有问题的。 混排切片是一种更为灵活的机制，能够更好地将低密度序列与高密度序列隔离。 混排切片的术语采用了对一叠扑克牌进行洗牌的类比，每个队列可类比成一张牌。 混排切片技术首先对请求的特定于所在序列的特征执行哈希计算，生成一个长度 为十几个二进制位或更长的哈希值。 接下来，用该哈希值作为信息熵的来源，对一叠牌来混排，并对整个一手牌（队列）来洗牌。 最后，对所有处理过的队列进行检查，选择长度最短的已检查队列作为请求的目标队列。 在队列数量适中的时候，检查所有已处理的牌的计算量并不大，对于任一给定的 低密度的请求序列而言，有相当的概率能够消除给定高密度序列的湮没效应。 当队列数量较大时，检查所有已处理队列的操作会比较耗时，低密度请求序列 消除一组高密度请求序列的湮没效应的机会也随之降低。因此，选择队列数目 时要颇为谨慎。
+
+#### 清单（Manifest）
+
+JSON 或 YAML 格式的 Kubernetes API 对象规范。 
+
+清单指定了在应用该清单时 kubernetes 将维护的对象的期望状态。每个配置文件可包含多个清单。
+
+#### 特别兴趣小组（SIG）
+
+共同管理大范畴 Kubernetes 开源项目中某组件或方面的一组社区成员。 
+
+SIG 中的成员对推进某个领域（如体系结构、API 机制构件或者文档）具有相同的兴趣。 SIGs 必须遵从 governance guidelines 的规定， 不过可以有自己的贡献策略以及通信渠道（方式）。
+
+更多的详细信息可参阅 kubernetes/community 仓库以及 SIGs 和工作组（Working Groups）的最新列表。
+
+#### 用户名字空间
+
+用来模拟 root 用户的内核功能特性。用来支持“Rootless 容器”。 
+
+用户名字空间（User Namespace）是一种 Linux 内核功能特性，允许非 root 用户 模拟超级用户（"root"）的特权，例如用来运行容器却不必成为容器之外的超级用户。
+
+用户名字空间对于缓解因潜在的容器逃逸攻击而言是有效的。
+
+在用户名字空间语境中，名字空间是 Linux 内核的功能特性而不是 Kubernetes 意义上的 名字空间概念。
+
+#### 端点（Endpoints）
+
+端点负责记录与服务的选择器相匹配的 Pods 的 IP 地址。 
+
+端点可以手动配置到服务（Service）上，而不必指定选择器标识。
+
+EndpointSlice提供了一种可伸缩、可扩展的替代方案。
+
+#### 网络策略
+
+网络策略是一种规范，规定了允许 Pod 组之间、Pod 与其他网络端点之间以怎样的方式进行通信。 
+
+网络策略帮助您声明式地配置允许哪些 Pod 之间接、哪些命名空间之间允许进行通信，并具体配置了哪些端口号来执行各个策略。NetworkPolicy 资源使用标签来选择 Pod，并定义了所选 Pod 可以接受什么样的流量。网络策略由网络提供商提供的并被 Kubernetes 支持的网络插件实现。请注意，当没有控制器实现网络资源时，创建网络资源将不会生效。
+
+#### 聚合层（Aggregation Layer）
+
+聚合层允许您在自己的集群上安装额外的 Kubernetes 风格的 API。 
+
+当您配置了 Kubernetes API Server 来 支持额外的 API，您就可以在 Kubernetes API 中增加 APIService 对象来 "申领（Claim）" 一个 URL 路径。
+
+#### 节点压力驱逐
+
+亦称作:kubelet eviction
+节点压力驱逐是 kubelet 主动终止 Pod 以回收节点上资源的过程。 
+
+kubelet 监控集群节点上的 CPU、内存、磁盘空间和文件系统 inode 等资源。 当这些资源中的一个或多个达到特定消耗水平时， kubelet 可以主动使节点上的一个或多个 Pod 失效，以回收资源并防止饥饿。
+
+节点压力驱逐不用于 API 发起的驱逐。
+
+#### 设备插件（Device Plugin）
+
+设备插件工作在节点主机上，给 Pods 提供访问资源的权限，比如特定厂商初始化或者安装的本地硬件。 
+
+设备插件将资源告知 kubelet ，以便相关节点上运行的工作负载Pod可以访问硬件功能。
+
+更多信息请查阅设备插件
+
+#### 证书（Certificate）
+
+证书是个安全加密文件，用来确认对 Kubernetes 集群访问的合法性。 
+
+证书可以让 Kubernetes 集群中运行的应用程序安全的访问 Kubernetes API。证书可以确认客户端是否被允许访问 API。
+
+#### 资源配额（Resource Quotas）
+
+资源配额提供了限制每个 命名空间 的资源消耗总和的约束。 
+
+限制了命名空间中每种对象可以创建的数量，也限制了项目中可被资源对象利用的计算资源总数。
+
+#### 选择算符（Selector）
+
+选择算符允许用户通过标签（labels）对一组资源对象进行筛选过滤。 
+
+在查询资源列表时，选择算符可以通过标签对资源进行过滤筛选。
+
+#### 量纲（Quantity）
+
+使用全数字来表示较小数值或使用 SI 后缀表示较大数值的表示法。 
+
+量纲是使用紧凑的全数字表示法来表示小数值或带有国际计量单位制（SI） 的大数值的表示法。 小数用 milli 单位表示，而大数用 kilo、mega 或 giga 单位表示。
+
+例如，数字 1.5 表示为 1500m， 而数字 1000 表示为 1k，1000000 表示为 1M。 你还可以指定二进制表示法后缀；数字 2048 可以写成 2Ki。
+
+公认的十进制（10 的幂数）单位是 m（milli）、k（kilo，有意小写）、 M（mega）、G（giga）、T（terra）、P（peta）、E（exa）。
+
+公认的二进制（2 的幂数）单位是 Ki (kibi)、Mi (mebi)、Gi (gibi)、 Ti (tebi)、 Pi (pebi)、 Ei (exbi)
+
+#### 镜像（Image）
+
+镜像是保存的容器实例，它打包了应用运行所需的一组软件。 
+
+镜像是软件打包的一种方式，可以将镜像存储在容器镜像仓库、拉取到本地系统并作为应用来运行。 镜像中包含的元数据指明了运行什么可执行程序、是由谁构建的以及其他信息。javascript:void(0))
+
+安装附加组件 阐释了更多关于如何在集群内使用附加组件，并列出了一些流行的附加组件。
+
+#### 集群（Cluster）
+
+集群由一组被称作节点的机器组成。这些节点上运行 Kubernetes 所管理的容器化应用。集群具有至少一个工作节点。 
+
+工作节点托管作为应用负载的组件的 Pod 。控制平面管理集群中的工作节点和 Pod 。 为集群提供故障转移和高可用性，这些控制平面一般跨多主机运行，集群跨多个节点运行。
 
 ## 问题排查
 
