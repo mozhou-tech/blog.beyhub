@@ -33,6 +33,15 @@ kubectl get pod nginx-deployment-1006230814-6winp -o yaml
 
 > **Bare Pod**，所谓 Bare Pod 是指直接用 PodSpec 来创建的 Pod（即不在 ReplicaSet 或者 ReplicationController 的管理之下的 Pod）。这些 Pod 在 Node 重启后不会自动重启，但 Job 则会创建新的 Pod 继续任务。所以，推荐使用 Job 来替代 Bare Pod，即便是应用只需要一个 Pod。
 
+- Pod文件拷贝
+
+  > ```shell
+  > # 这样可以把主机目录文件拷贝到容器内
+  > kubectl cp /主机目录/文件路径 <namespace>/<podName>:examples/streaming/StateMachineExample.jar
+  > # 这样可以把容器内文件cp到主机目录(相对于目前的WORKDIR)
+  > kubectl cp <namespace>/<podName>:examples/streaming/StateMachineExample.jar ~/StateMachineExample.jar
+  > ```
+
 #### ReplicaSet
 
 ReplicationController 用来确保容器应用的副本数始终保持在用户定义的副本数，即如果有容器异常退出，会自动创建新的 Pod 来替代；而如果异常多出来的容器也会自动回收。

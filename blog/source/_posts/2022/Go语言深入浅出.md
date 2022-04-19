@@ -31,13 +31,12 @@ date: 2022-04-13 09:15:21
 
 #### go mod
 
-| 命令        | 功能 |
-| ----------- | ---- |
-| go mod tidy |      |
+| 命令         | 功能 |
+| ------------ | ---- |
+| go mod tidy  |      |
+| go mod proxy |      |
 
 #### go build
-
-
 
 #### go install
 
@@ -579,3 +578,5 @@ Also, the lack of a type hierarchy makes “objects” in Go feel much more ligh
 ## 参考资料
 
 1. https://go.dev/doc/
+
+持续完善中....
