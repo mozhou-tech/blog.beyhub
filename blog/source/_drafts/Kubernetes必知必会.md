@@ -374,6 +374,35 @@ kubectl create ns namespace
 
 #### Service
 
+对接Ingress，维护一组相同功能的Pod实例。
+
+##### ClusterIP
+
+##### NodePort
+
+##### LoadBalance
+
+暴露EXTERNAL-IP
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: amqp-svc
+  namespace: flink
+  labels:
+    app: flink
+spec:
+  ports:
+    - port: 5672
+      name: rabbitmq
+      protocol: TCP
+      targetPort: 5672
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: rabbitmq
+```
+
 #### Secret
 
 Secret 用于存储敏感信息，如密码、 OAuth 令牌和 SSH 密钥。
@@ -1509,7 +1538,7 @@ kubelet 监控集群节点上的 CPU、内存、磁盘空间和文件系统 inod
 
 工作节点托管作为应用负载的组件的 Pod 。控制平面管理集群中的工作节点和 Pod 。 为集群提供故障转移和高可用性，这些控制平面一般跨多主机运行，集群跨多个节点运行。
 
-## 问题排查
+## 其它问题
 
 ### 获取集群事件
 
@@ -1517,6 +1546,10 @@ kubelet 监控集群节点上的 CPU、内存、磁盘空间和文件系统 inod
 # 获取集群事件
 kubectl get events -n namespace
 ```
+
+### 如何将Pod服务暴露
+
+
 
 ## 参考资料
 

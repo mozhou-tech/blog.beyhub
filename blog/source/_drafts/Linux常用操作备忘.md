@@ -25,7 +25,8 @@ passwd root
 #### 方法一：/etc/rc.local文件中添加自启动命令
 
 1. `执行命令`： 编辑"/etc/rc.local"，添加你想开机运行的命令
-2. `运行程序脚本`：然后在文件最后一行添加要执行程序的全路径。例如，每次开机时要执行一个hello.sh，这个脚本放在/usr下面，那就可以在"/etc/rc.local"中加一行"/usr/./hello.sh"，或者" cd /opt && ./hello.sh "（注意，你的命令应该添加在：exit 0 之前）
+2. `运行程序脚本`：然后在文件最后一行添加要执行程序的全路径。
+   例如，每次开机时要执行一个hello.sh，这个脚本放在/usr下面，那就可以在"/etc/rc.local"中加一行"/usr/./hello.sh"，或者" cd /opt && ./hello.sh "（注意，你的命令应该添加在：exit 0 之前）
 3. 默认使用root用户执行，`su anyuan - -c xxx切换到指定用户`
 
 #### 方法二：/etc/init.d目录下添加自启动脚本
