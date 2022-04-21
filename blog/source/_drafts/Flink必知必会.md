@@ -10,176 +10,6 @@ date: 2022-04-13 15:11:05
 
 ---
 
-## 概念速览
-
-### 集群
-
-#### Flink Application Cluster
-
-A Flink Application Cluster is a dedicated Flink Cluster that only executes Flink Jobs from one Flink Application. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Application.
-
-#### Flink TaskManager
-
-TaskManager 是 Flink Cluster 的工作进程。Task 被调度到 TaskManager 上执行。TaskManager 相互通信，只为在后续的 Task 之间交换数据。
-
-#### Flink JobManager
-
-Flink JobManager 是 Flink Cluster 的主节点。它包含三个不同的组件：Flink Resource Manager、Flink Dispatcher、运行每个 Flink Job 的 Flink JobMaster。
-
-在作业执行期间，**JobManager 会持续跟踪各个 task**，决定何时调度下一个或一组 task，处理已完成的 task 或执行失败的情况。
-
-JobManager 会接收到一个 JobGraph ，用来描述由多个算子顶点 ( JobVertex ) 组成的数据流图，以及中间结果数据 ( IntermediateDataSet )。每个算子都有自己的可配置属性，比如并行度和运行的代码。除此之外，JobGraph 还包含算子代码执行所必须的依赖库。
-
-JobManager 会将 JobGraph 转换成 ExecutionGraph 。可以将 ExecutionGraph 理解为并行版本的 JobGraph，对于每一个顶点 JobVertex，它的每个并行子 task 都有一个 ExecutionVertex 。一个并行度为 100 的算子会有 1 个 JobVertex 和 100 个 ExecutionVertex。ExecutionVertex 会跟踪子 task 的执行状态。 同一个 JobVertex 的所有 ExecutionVertex 都通过 ExecutionJobVertex 来持有，并跟踪整个算子的运行状态。ExecutionGraph 除了这些顶点，还包含中间数据结果和分片情况 IntermediateResult 和 IntermediateResultPartition 。前者跟踪中间结果的状态，后者跟踪每个分片的状态。
-
-![JobGraph and ExecutionGraph](images/job_and_execution_graph.svg)
-
-#### Flink JobMaster
-
-JobMaster 是在 Flink JobManager 运行中的组件之一。JobManager 负责监督单个作业 Task 的执行。以前，整个 Flink JobManager 都叫做 JobManager。
-
-#### Flink Job Cluster
-
-A Flink Job Cluster is a dedicated Flink Cluster that only executes a single Flink Job. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Job.
-
-#### Flink Cluster
-
-一般情况下，Flink 集群是由一个 Flink JobManager 和一个或多个 Flink TaskManager 进程组成的分布式系统。
-
-#### Flink Session Cluster
-
-长时间运行的 Flink Cluster，它可以接受多个 Flink Job 的执行。此 Flink Cluster 的生命周期不受任何 Flink Job 生命周期的约束限制。以前，Flink Session Cluster 也称为 session mode 的 Flink Cluster，和 Flink Application Cluster 相对应。
-
-#### Flink Application
-
-A Flink application is a Java Application that submits one or multiple Flink Jobs from the main() method (or by some other means). Submitting jobs is usually done by calling execute() on an execution environment.
-
-The jobs of an application can either be submitted to a long running Flink Session Cluster, to a dedicated Flink Application Cluster, or to a Flink Job Cluster.
-
-#### State Backend
-
-对于流处理程序，Flink Job 的 State Backend 决定了其 state 是如何存储在每个 TaskManager 上的（ TaskManager 的 Java 堆栈或嵌入式 RocksDB），以及它在 checkpoint 时的写入位置（ Flink JobManager 的 Java 堆或者 Filesystem）。
-
-### 任务
-
-#### Flink Job
-
-A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
-
-#### Sub-Task
-
-Sub-Task 是负责处理数据流 Partition 的 Task。“Sub-Task"强调的是同一个 Operator 或者 Operator Chain 具有多个并行的 Task 。
-
-#### Task
-
-Task 是 Physical Graph 的节点。它是基本的工作单元，由 Flink 的 runtime 来执行。Task 正好封装了一个 Operator 或者 Operator Chain 的 parallel instance。
-
-#### Transformation
-
-Transformation 应用于一个或多个数据流或数据集，并产生一个或多个输出数据流或数据集。Transformation 可能会在每个记录的基础上更改数据流或数据集，但也可以只更改其分区或执行聚合。虽然 Operator 和 Function 是 Flink API 的“物理”部分，但 Transformation 只是一个 API 概念。具体来说，大多数（但不是全部）Transformation 是由某些 Operator 实现的。
-
-#### DataStream API
-
-Flink中的DataStream任务用于实现data streams的转换，data stream可以来自不同的数据源，比如消息队列，socket，文件等。使用DataStream API需要使用stream env。
-
-#### TableAPI & SQL
-
-Table API 和 SQL 集成在同一套 API 中。 这套 API 的核心概念是`Table`，用作查询的输入和输出。 本文介绍 Table API 和 SQL 查询程序的通用结构、如何注册 `Table` 、如何查询 `Table` 以及如何输出 `Table` 。
-
-所有用于批处理和流处理的 Table API 和 SQL 程序都遵循相同的模式。下面的代码示例展示了 Table API 和 SQL 程序的通用结构。
-
-#### Flink中的Environment
-
-Flink有以下几种Environment
-
-1. 批处理Environment，ExecutionEnvironment
-
-```java
-ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
-```
-
-2.流处理Environment，StreamExecutionEnvironment
-
-```
-StreamExecutionEnvironment env= StreamExecutionEnvironment.getExecutionEnvironment();
-```
-
-3. 本机Environment，LocalEnvironment
-
-```
-ExecutionEnvironment env= LocalEnvironment.getExecutionEnvironment();
-```
-
-4. java集合Environment，CollectionEnvironment
-
-```
-ExecutionEnvironment env = CollectionEnvironment.getExecutionEnvironment();
-```
-
-创建Environment的方法
-
-1. getExecutionEnvironment ，含义就是本地运行就是 createLocalEnvironment，如果是通过client提交到集群上，就返回集群的环境
-
-```java
-Creates an execution environment that represents the context ``in` `which` `the program is currently executed.``  ``* If the program is invoked standalone, this method returns a ``local` `execution environment, as returned by``  ``* {@link ``#createLocalEnvironment()}. If the program is invoked from within the command line client to be``  ``* submitted to a cluster, this method returns the execution environment of this cluster.
-```
-
-2. createLocalEnvironment ，返回本地执行环境，需要在调用时指定默认的并行度，比如
-
-```java
-LocalStreamEnvironment env1 = StreamExecutionEnvironment.createLocalEnvironment(1);
-LocalEnvironment env2 = ExecutionEnvironment.createLocalEnvironment(1);
-```
-
-3. createRemoteEnvironment， 返回集群执行环境，将 Jar 提交到远程服务器。需要在调用时指定 JobManager 的 IP 和端口号，并指定要在集群中运行的 Jar 包，比如
-
-```java
-StreamExecutionEnvironment env1 = StreamExecutionEnvironment.createRemoteEnvironment("127.0.0.1", 8080, "/path/word_count.jar");
-ExecutionEnvironment env2 = ExecutionEnvironment.createRemoteEnvironment("127.0.0.1", 8080, "/path/word_count.jar");
-```
-
-#### Event
-
-Event 是对应用程序建模的域的状态更改的声明。它可以同时为流或批处理应用程序的 input 和 output，也可以单独是 input 或者 output 中的一种。Event 是特殊类型的 Record。
-
-#### Function
-
-Function 是由用户实现的，并封装了 Flink 程序的应用程序逻辑。大多数 Function 都由相应的 Operator 封装。
-
-#### Instance
-
-Instance 常用于描述运行时的特定类型(通常是 Operator 或者 Function)的一个具体实例。由于 Apache Flink 主要是用 Java 编写的，所以，这与 Java 中的 Instance 或 Object 的定义相对应。在 Apache Flink 的上下文中，parallel instance 也常用于强调同一 Operator 或者 Function 的多个 instance 以并行的方式运行。
-
-#### Logical Graph/JobGraph
-
-A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
-
-Logical graphs are also often referred to as *dataflow graphs*.
-
-#### Managed State
-
-Managed State 描述了已在框架中注册的应用程序的托管状态。对于托管状态，Apache Flink 会负责持久化和重伸缩等事宜。
-
-#### Operator
-
-Logical Graph 的节点。算子执行某种操作，该操作通常由 Function 执行。Source 和 Sink 是数据输入和数据输出的特殊算子。
-
-#### Operator Chain
-
-算子链由两个或多个连续的 Operator 组成，两者之间没有任何的重新分区。同一算子链内的算子可以彼此直接传递 record，而无需通过序列化或 Flink 的网络栈。
-
-#### Partition
-
-分区是整个数据流或数据集的独立子集。通过将每个 Record 分配给一个或多个分区，来把数据流或数据集划分为多个分区。在运行期间，Task 会消费数据流或数据集的分区。改变数据流或数据集分区方式的转换通常称为重分区。
-
-#### Physical Graph/ExecutionGraph
-
-Physical graph 是一个在分布式运行时，把 Logical Graph 转换为可执行的结果。节点是 Task，边表示数据流或数据集的输入/输出关系或 partition。
-
-#### Record
-
-Record 是数据集或数据流的组成元素。Operator 和 Function接收 record 作为输入，并将 record 作为输出发出。
-
 ## 应用开发
 
 ### 基本概念
@@ -545,7 +375,7 @@ In order to use state TTL one must first build a `StateTtlConfig` configuration 
 
 如果读取的是HDFS上的文件，那么需要导入Hadoop依赖
 
-```
+```xml
 <dependency>
 	<groupId>org.apache.hadoop</groupId>
 	<artifactId>hadoop-client</artifactId>
@@ -1111,7 +941,7 @@ splitStream.select("even").print()
     env.execute()
 ```
 
-##### Iterate【重要】
+##### IterateStream【重要】
 
 DataStream → IterativeStream → DataStream
 
@@ -1130,7 +960,7 @@ val stream = initStream.map(_.toLong)
 stream.iterate {
     iteration => {
         //定义迭代逻辑
-        val iterationBody = iteration.map ( x => {
+        val iterationBody = iteration.map (x => {
             println(x)
             if(x > 0) x - 1
             else x
@@ -3141,6 +2971,178 @@ Flink 具有监控 API ，可用于查询正在运行的作业以及最近完成
 | v1   | **/taskmanagers/:taskmanagerid/thread-dump** | GET    | Returns the thread dump of the requested TaskManager.        |
 
 
+
+## 概念速览
+
+### 集群
+
+#### Flink Application Cluster
+
+A Flink Application Cluster is a dedicated Flink Cluster that only executes Flink Jobs from one Flink Application. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Application.
+
+#### Flink TaskManager
+
+TaskManager 是 Flink Cluster 的工作进程。Task 被调度到 TaskManager 上执行。TaskManager 相互通信，只为在后续的 Task 之间交换数据。
+
+#### Flink JobManager
+
+Flink JobManager 是 Flink Cluster 的主节点。它包含三个不同的组件：Flink Resource Manager、Flink Dispatcher、运行每个 Flink Job 的 Flink JobMaster。
+
+在作业执行期间，**JobManager 会持续跟踪各个 task**，决定何时调度下一个或一组 task，处理已完成的 task 或执行失败的情况。
+
+JobManager 会接收到一个 JobGraph ，用来描述由多个算子顶点 ( JobVertex ) 组成的数据流图，以及中间结果数据 ( IntermediateDataSet )。每个算子都有自己的可配置属性，比如并行度和运行的代码。除此之外，JobGraph 还包含算子代码执行所必须的依赖库。
+
+JobManager 会将 JobGraph 转换成 ExecutionGraph 。可以将 ExecutionGraph 理解为并行版本的 JobGraph，对于每一个顶点 JobVertex，它的每个并行子 task 都有一个 ExecutionVertex 。一个并行度为 100 的算子会有 1 个 JobVertex 和 100 个 ExecutionVertex。ExecutionVertex 会跟踪子 task 的执行状态。 同一个 JobVertex 的所有 ExecutionVertex 都通过 ExecutionJobVertex 来持有，并跟踪整个算子的运行状态。ExecutionGraph 除了这些顶点，还包含中间数据结果和分片情况 IntermediateResult 和 IntermediateResultPartition 。前者跟踪中间结果的状态，后者跟踪每个分片的状态。
+
+![JobGraph and ExecutionGraph](images/job_and_execution_graph.svg)
+
+#### Flink JobMaster
+
+JobMaster 是在 Flink JobManager 运行中的组件之一。JobManager 负责监督单个作业 Task 的执行。以前，整个 Flink JobManager 都叫做 JobManager。
+
+#### Flink Job Cluster
+
+A Flink Job Cluster is a dedicated Flink Cluster that only executes a single Flink Job. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Job.
+
+#### Flink Cluster
+
+一般情况下，Flink 集群是由一个 Flink JobManager 和一个或多个 Flink TaskManager 进程组成的分布式系统。
+
+#### Flink Session Cluster
+
+长时间运行的 Flink Cluster，它可以接受多个 Flink Job 的执行。此 Flink Cluster 的生命周期不受任何 Flink Job 生命周期的约束限制。以前，Flink Session Cluster 也称为 session mode 的 Flink Cluster，和 Flink Application Cluster 相对应。
+
+#### Flink Application
+
+A Flink application is a Java Application that submits one or multiple Flink Jobs from the main() method (or by some other means). Submitting jobs is usually done by calling execute() on an execution environment.
+
+The jobs of an application can either be submitted to a long running Flink Session Cluster, to a dedicated Flink Application Cluster, or to a Flink Job Cluster.
+
+#### State Backend
+
+对于流处理程序，Flink Job 的 State Backend 决定了其 state 是如何存储在每个 TaskManager 上的（ TaskManager 的 Java 堆栈或嵌入式 RocksDB），以及它在 checkpoint 时的写入位置（ Flink JobManager 的 Java 堆或者 Filesystem）。
+
+### 开发 API
+
+#### Transformation
+
+Transformation 应用于一个或多个数据流或数据集，并产生一个或多个输出数据流或数据集。Transformation 可能会在每个记录的基础上更改数据流或数据集，但也可以只更改其分区或执行聚合。虽然 Operator 和 Function 是 Flink API 的“物理”部分，但 Transformation 只是一个 API 概念。具体来说，大多数（但不是全部）Transformation 是由某些 Operator 实现的。
+
+#### DataStream API
+
+Flink中的DataStream任务用于实现data streams的转换，data stream可以来自不同的数据源，比如消息队列，socket，文件等。使用DataStream API需要使用stream env。
+
+#### TableAPI & SQL
+
+Table API 和 SQL 集成在同一套 API 中。 这套 API 的核心概念是`Table`，用作查询的输入和输出。 本文介绍 Table API 和 SQL 查询程序的通用结构、如何注册 `Table` 、如何查询 `Table` 以及如何输出 `Table` 。
+
+所有用于批处理和流处理的 Table API 和 SQL 程序都遵循相同的模式。下面的代码示例展示了 Table API 和 SQL 程序的通用结构。
+
+#### Flink中的Environment
+
+Flink有以下几种Environment
+
+1. 批处理Environment，ExecutionEnvironment
+
+```java
+ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+```
+
+2.流处理Environment，StreamExecutionEnvironment
+
+```
+StreamExecutionEnvironment env= StreamExecutionEnvironment.getExecutionEnvironment();
+```
+
+3. 本机Environment，LocalEnvironment
+
+```
+ExecutionEnvironment env= LocalEnvironment.getExecutionEnvironment();
+```
+
+4. java集合Environment，CollectionEnvironment
+
+```
+ExecutionEnvironment env = CollectionEnvironment.getExecutionEnvironment();
+```
+
+创建Environment的方法
+
+1. getExecutionEnvironment ，含义就是本地运行就是 createLocalEnvironment，如果是通过client提交到集群上，就返回集群的环境
+
+```java
+Creates an execution environment that represents the context ``in` `which` `the program is currently executed.``  ``* If the program is invoked standalone, this method returns a ``local` `execution environment, as returned by``  ``* {@link ``#createLocalEnvironment()}. If the program is invoked from within the command line client to be``  ``* submitted to a cluster, this method returns the execution environment of this cluster.
+```
+
+2. createLocalEnvironment ，返回本地执行环境，需要在调用时指定默认的并行度，比如
+
+```java
+LocalStreamEnvironment env1 = StreamExecutionEnvironment.createLocalEnvironment(1);
+LocalEnvironment env2 = ExecutionEnvironment.createLocalEnvironment(1);
+```
+
+3. createRemoteEnvironment， 返回集群执行环境，将 Jar 提交到远程服务器。需要在调用时指定 JobManager 的 IP 和端口号，并指定要在集群中运行的 Jar 包，比如
+
+```java
+StreamExecutionEnvironment env1 = StreamExecutionEnvironment.createRemoteEnvironment("127.0.0.1", 8080, "/path/word_count.jar");
+ExecutionEnvironment env2 = ExecutionEnvironment.createRemoteEnvironment("127.0.0.1", 8080, "/path/word_count.jar");
+```
+
+#### Partition
+
+分区是整个数据流或数据集的独立子集。通过将每个 Record 分配给一个或多个分区，来把数据流或数据集划分为多个分区。在运行期间，Task 会消费数据流或数据集的分区。改变数据流或数据集分区方式的转换通常称为重分区。
+
+### 任务流转
+
+#### Flink Job
+
+A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
+
+#### Sub-Task
+
+Sub-Task 是负责处理数据流 Partition 的 Task。“Sub-Task"强调的是同一个 Operator 或者 Operator Chain 具有多个并行的 Task 。
+
+#### Task
+
+Task 是 Physical Graph 的节点。它是基本的工作单元，由 Flink 的 runtime 来执行。Task 正好封装了一个 Operator 或者 Operator Chain 的 parallel instance。
+
+#### Function
+
+Function 是由用户实现的，并封装了 Flink 程序的应用程序逻辑。大多数 Function 都由相应的 Operator 封装。
+
+#### Instance
+
+Instance 常用于描述运行时的特定类型(通常是 Operator 或者 Function)的一个具体实例。由于 Apache Flink 主要是用 Java 编写的，所以，这与 Java 中的 Instance 或 Object 的定义相对应。在 Apache Flink 的上下文中，parallel instance 也常用于强调同一 Operator 或者 Function 的多个 instance 以并行的方式运行。
+
+#### Event
+
+Event 是对应用程序建模的域的状态更改的声明。它可以同时为流或批处理应用程序的 input 和 output，也可以单独是 input 或者 output 中的一种。Event 是特殊类型的 Record。
+
+#### Logical Graph/JobGraph
+
+A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
+
+Logical graphs are also often referred to as *dataflow graphs*.
+
+#### Managed State
+
+Managed State 描述了已在框架中注册的应用程序的托管状态。对于托管状态，Apache Flink 会负责持久化和重伸缩等事宜。
+
+#### Operator
+
+Logical Graph 的节点。算子执行某种操作，该操作通常由 Function 执行。Source 和 Sink 是数据输入和数据输出的特殊算子。
+
+#### Operator Chain
+
+算子链由两个或多个连续的 Operator 组成，两者之间没有任何的重新分区。同一算子链内的算子可以彼此直接传递 record，而无需通过序列化或 Flink 的网络栈。
+
+#### Physical Graph/ExecutionGraph
+
+Physical graph 是一个在分布式运行时，把 Logical Graph 转换为可执行的结果。节点是 Task，边表示数据流或数据集的输入/输出关系或 partition。
+
+#### Record
+
+Record 是数据集或数据流的组成元素。Operator 和 Function接收 record 作为输入，并将 record 作为输出发出。
 
 ## FAQ
 

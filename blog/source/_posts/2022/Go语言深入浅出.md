@@ -8,6 +8,16 @@ toc: true
 date: 2022-04-13 09:15:21
 ---
 
+Go的语法接近C语言，但对于变量的声明有所不同。Go支持垃圾回收功能。Go的并行计算模型是以东尼·霍尔的通信顺序进程（CSP）为基础，采取类似模型的其他语言包括Occam和Limbo[3]，Go也具有这个模型的特征，比如通道传输。通过goroutine和通道等并行构造可以建造线程池和管道等[8]。在1.8版本中开放插件（Plugin）的支持，这意味着现在能从Go中动态加载部分函数。
+
+<img src="images/Golang.png" alt="img" style="zoom:50%;" />
+
+与C++相比，Go并不包括如枚举、异常处理、继承、泛型、断言、虚函数等功能，但增加了 切片(Slice) 型、并发、管道、垃圾回收功能、接口等特性的语言级支持[3]。Go 2.0版本将支持泛型[9]，对于断言的存在，则持负面态度，同时也为自己不提供类型继承来辩护。
+
+不同于Java，Go原生提供了关联数组（也称为哈希表（Hashes）或字典（Dictionaries））。
+
+<!--more-->
+
 ## 背景知识
 
 ### Java和Go的语法区别
@@ -575,8 +585,33 @@ Yes and no. Although Go has types and methods and allows an object-oriented styl
 
 Also, the lack of a type hierarchy makes “objects” in Go feel much more lightweight than in languages such as C++ or Java.
 
+#### Go 面试官问我如何实现面向对象？
+#### Go 结构体和结构体指针调用有什么区别吗？
+#### Go new 和 make 是什么，差异在哪？
+#### 什么是协程，协程和线程的区别和联系？
+
+### 调度模型
+
+#### GMP 模型，为什么要有 P？
+
+#### Go 结构体是否可以比较，为什么？
+
+#### 单核 CPU，开两个 Goroutine，其中一个死循环，会怎么样？
+
+#### 进程、线程都有 ID，为什么 Goroutine 没有 ID？
+#### Goroutine 数量控制在多少合适，会影响 GC 和调度？
+#### 详解 Go 程序的启动流程，你知道 g0，m0 是什么吗？
+#### Goroutine 泄露的情况有哪些？
+#### Go 在什么时候会抢占 P？
+#### 会诱发 Goroutine 挂起的 27 个原因
+
+### 数据结构
+
+#### Go interface 的一个 “坑” 及原理分析
+#### Go defer 万恶的闭包问题
+#### 为什么 Go map 和 slice 是非线程安全的？
+#### Go sync.map 和原生 map 谁的性能好，为什么？
+
 ## 参考资料
 
 1. https://go.dev/doc/
-
-持续完善中....
