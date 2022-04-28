@@ -184,6 +184,8 @@ delete(m, k)
 
 #### 引用类型：通道channel
 
+> Do not communicate by sharing memory; instead, share memory by communicating.
+
 channel是协程之间共享数据的通道（而非Java中的共享内存），可以通过内置的close()函数关闭
 
 | 通道类型 | 阻塞条件                                            | 是否同步 |
@@ -469,6 +471,10 @@ func main() {
 
 ## 工程结构
 
+### 参考资料
+
+https://github.com/golang-standards/project-layout
+
 ### 环境变量与项目目录
 
 - GOROOT 安装目录
@@ -615,3 +621,4 @@ Also, the lack of a type hierarchy makes “objects” in Go feel much more ligh
 ## 参考资料
 
 1. https://go.dev/doc/
+1. https://go.dev/doc/modules/publishing

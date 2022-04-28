@@ -27,6 +27,22 @@ Flink提供了不同的抽象级别以开发流式或者批处理应用程序
 
 ### DataStream API
 
+#### Enviroment
+
+环境配置参数
+
+https://nightlies.apache.org/flink/flink-docs-master/zh/docs/deployment/config/
+
+![image-20220422135454607](images/image-20220422135454607.png)
+
+```
+//        StreamExecutionEnvironment.createLocalEnvironment();
+//        StreamExecutionEnvironment.createLocalEnvironment(3);
+//        StreamExecutionEnvironment.createLocalEnvironment(new Configuration());
+//        StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());
+//        StreamExecutionEnvironment.createRemoteEnvironment()
+```
+
 #### 执行模式（流/批）
 
 ##### 如何选择
@@ -2866,6 +2882,47 @@ Standalone模式（独立模式）下JobManager的高可用性的基本思想是
 ### Flink on Kubernetes（推荐）
 
 参考另一篇文章【基于K3S快速搭建Flink集群】
+
+#### 部署到SessionCluster
+
+```java
+// flink.k8s.io为jobmanager的地址
+final StreamExecutionEnvironment env = StreamExecutionEnvironment
+        .createRemoteEnvironment("flink.k8s.io", 80,
+                "/Users/jerrylau/workspace/anyuan/Projects/modelib-bootstrap/modelib/target/modelib-1.0-SNAPSHOT.jar");
+```
+
+maven打包默认是uber-jar，job发布到集群时，参照以下build配置
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>2.4.3</version>
+            <configuration>
+                <filters>
+                    <filter>
+                        <artifact>org.apache.flink:flink-connector-rabbitmq</artifact>
+                        <includes>
+                            <include>org/apache/flink/streaming/connectors/**</include>
+                        </includes>
+                    </filter>
+                </filters>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
 
 ### Flink on Yarn
 

@@ -59,3 +59,18 @@ LiveVideoStack:
 为什么这么设计:
   link: https://draveness.me/whys-the-design/
   desc: 大佬博客
+ClickHouse:
+  link: https://clickhouse.com/docs/en/intro
+  desc: 官方文档
+AI知识库:
+  link: https://easyai.tech/
+  desc: AI知识库
+versus:
+  link: https://versus.com/cn
+  desc: 万物皆可对比
+煎鱼:
+  link: https://eddycjy.com/
+  desc: 脑子进煎鱼了
+Kaggle:
+  link: https://www.kaggle.com/
+  desc: 数据建模和数据分析竞赛平台
